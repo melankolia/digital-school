@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app style="height: 100vh">
     <router-view />
   </v-app>
 </template>
@@ -12,3 +12,7 @@ export default {
   }),
 };
 </script>
+
+<style lang="scss">
+@import "assets/scss/style";
+</style>

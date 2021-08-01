@@ -1,0 +1,13 @@
+$body-font-family: "Poppins";
+$font-family: "Poppins";
+
+.v-application {
+  [class*="text-"] {
+    font-family: $font-family, sans-serif !important;
+  }
+  font-family: $font-family, sans-serif !important;
+}
+
+.v-btn {
+  text-transform: none !important;
+}

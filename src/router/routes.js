@@ -1,8 +1,9 @@
 const TheContainer = () => import("@/container");
 const Home = () => import("@/views/Home");
 const About = () => import("@/views/About");
+const Login = () => import("@/views/Login");
 
-import { HOME, ABOUT } from "./name.types";
+import { HOME, ABOUT, LOGIN } from "./name.types";
 
 export const configRoutes = [
   {
@@ -16,12 +17,23 @@ export const configRoutes = [
         path: "/",
         name: HOME,
         component: Home,
+        meta: {
+          requiresAuth: true,
+        },
       },
       {
         path: "/about",
         name: ABOUT,
         component: About,
+        meta: {
+          requiresAuth: true,
+        },
       },
     ],
+  },
+  {
+    path: "/login",
+    name: LOGIN,
+    component: Login,
   },
 ];
