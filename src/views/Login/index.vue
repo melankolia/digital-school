@@ -5,7 +5,7 @@
         class="primary d-flex flex-column justify-end"
         :style="`height: 100%; background-image: url(${backgroundImage})`"
       >
-        <div class="d-flex flex-row align-center ml-10 mb-11">
+        <div class="d-flex flex-row align-center mx-10 mb-11">
           <img
             width="102"
             height="99"
@@ -51,6 +51,9 @@
             small
             filled
             outlined
+            :append-icon="e1 ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="() => (e1 = !e1)"
+            :type="e1 ? 'password' : 'text'"
           />
           <v-checkbox label="Remember Me" color="checkboxBg" />
           <v-btn
@@ -81,6 +84,7 @@ export default {
       backgroundImage: BackgroundImage,
       loading: false,
       valid: false,
+      e1: true,
       rules: {
         email: [(v) => !!v || "Email is Required !"],
         password: [(v) => !!v || "Password is Required !"],

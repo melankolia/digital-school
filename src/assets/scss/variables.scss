@@ -11,3 +11,7 @@ $font-family: "Poppins";
 .v-btn {
   text-transform: none !important;
 }
+
+.theme--light.v-text-field--filled > .v-input__control > .v-input__slot {
+  background: #eff0f6 !important;
+}
