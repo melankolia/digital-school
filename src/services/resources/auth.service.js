@@ -1,9 +1,9 @@
 import AuthInstance from "@/services/auth.instance";
-import { LOGIN } from "@/services/constants";
+import { USER } from "@/services/constants";
 
 const AuthService = {
   login(data) {
-    return AuthInstance.post(LOGIN, data);
+    return AuthInstance.post(USER.LOGIN, data);
   },
 };
 

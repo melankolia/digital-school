@@ -5,7 +5,11 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(function (config) {
+  config.headers["Access-Control-Allow-Headers"] =
+    "Authorization, X-Requested-With, Content-Type, Accept";
   config.headers["Access-Control-Allow-Origin"] = "*";
+  config.headers["Access-Control-Allow-Methods"] =
+    "GET, POST, PUT, DELETE, OPTIONS";
   return config;
 });
 
