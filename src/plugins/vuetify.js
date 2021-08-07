@@ -16,7 +16,7 @@ export default new Vuetify({
         checkboxBg: "#A0A3BD",
         subMenu: "#F3F3F3",
         tabMenu: "#4E4B66",
-        buttonWhite: "#FFFFFFFF",
+        buttonWhite: "#FFFFFF",
       },
     },
   },
