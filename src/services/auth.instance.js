@@ -4,14 +4,14 @@ const instance = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL,
 });
 
-instance.interceptors.request.use(function (config) {
-  config.headers["Access-Control-Allow-Headers"] =
-    "Authorization, X-Requested-With, Content-Type, Accept";
-  config.headers["Access-Control-Allow-Origin"] = "*";
-  config.headers["Access-Control-Allow-Methods"] =
-    "GET, POST, PUT, DELETE, OPTIONS";
-  return config;
-});
+// instance.interceptors.request.use(function (config) {
+// config.headers["Access-Control-Allow-Headers"] =
+//   "Authorization, X-Requested-With, Content-Type, Accept";
+// config.headers["Access-Control-Allow-Origin"] = "*";
+// config.headers["Access-Control-Allow-Methods"] =
+//   "GET, POST, PUT, DELETE, OPTIONS";
+//   return config;
+// });
 
 const AuthInstance = {
   async query(resource, params) {
