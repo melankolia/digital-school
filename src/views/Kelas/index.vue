@@ -24,16 +24,7 @@
       </v-tab>
     </v-tabs>
     <div
-      class="
-        d-flex
-        flex-row
-        justify-space-between
-        header
-        my-6
-        pa-3
-        rounded-lg
-        header-drop-shadow
-      "
+      class="d-flex flex-row justify-space-between header my-6 pa-3 rounded-lg"
     >
       <div style="width: 288px">
         <v-text-field
@@ -143,7 +134,7 @@
                 solo
                 hide-details
                 dense
-                style="width: 74px"
+                style="width: 80px"
                 class="rounded-lg mr-4"
                 color="primary"
                 item-text="text"
