@@ -1,7 +1,17 @@
 import axios from "axios";
+import store from "@/store";
 
 const instance = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL,
+});
+
+instance.CancelToken = axios.CancelToken;
+instance.isCancel = axios.isCancel;
+
+instance.interceptors.request.use(function (config) {
+  const token = store.state.auth.auth.token;
+  config.headers.Authorization = token ? `Bearer ${token}` : "";
+  return config;
 });
 
 const MainInstance = {
@@ -39,6 +49,10 @@ const MainInstance = {
 
   async deleteSlug(resource, slug, config) {
     return instance.delete(`${resource}/${slug}`, config);
+  },
+
+  cancelRequest() {
+    return instance.CancelToken;
   },
 };
 

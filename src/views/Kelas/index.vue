@@ -12,15 +12,9 @@
         </p>
       </v-btn>
     </div>
-    <v-tabs color="tabMenu">
-      <v-tab>
-        <p class="ma-0 tabs-title">Lihat Semua Kelas</p>
-      </v-tab>
-      <v-tab>
-        <p class="ma-0 tabs-title">IPA</p>
-      </v-tab>
-      <v-tab>
-        <p class="ma-0 tabs-title">IPS</p>
+    <v-tabs v-model="tab" color="tabMenu">
+      <v-tab v-for="item in tabs" :key="item.val">
+        <p class="ma-0 tabs-title">{{ item.text }}</p>
       </v-tab>
     </v-tabs>
     <div
@@ -28,6 +22,7 @@
     >
       <div style="width: 288px">
         <v-text-field
+          v-model="search"
           prepend-inner-icon="mdi-magnify"
           placeholder="Cari wali kelas atau kelas"
           hide-details
@@ -38,6 +33,7 @@
       </div>
       <div style="width: 150px">
         <v-select
+          v-model="sortBy"
           :items="itemSortBy"
           placeholder="Sort By"
           solo
@@ -74,6 +70,7 @@
         }"
         :options.sync="options"
         :server-items-length="totalItem"
+        :loading="loading"
         hide-default-header
         hide-default-footer
       >
@@ -129,7 +126,7 @@
           >
             <div class="d-flex flex-row align-center justify-center pr-7">
               <v-select
-                v-model="props.options.itemsPerPage"
+                v-model="options.itemsPerPage"
                 :items="props.itemsPerPageOptions"
                 solo
                 hide-details
@@ -153,10 +150,22 @@
               </p>
             </div>
             <div>
-              <v-btn depressed outlined class="rounded-lg px-6 mr-3">
+              <v-btn
+                @click="options.page--"
+                :disabled="prevDisabled"
+                depressed
+                outlined
+                class="rounded-lg px-6 mr-3"
+              >
                 Prev
               </v-btn>
-              <v-btn depressed color="primary" class="rounded-lg px-6">
+              <v-btn
+                @click="options.page++"
+                :disabled="nextDisabled"
+                depressed
+                color="primary"
+                class="rounded-lg px-6"
+              >
                 Next
               </v-btn>
             </div>
@@ -168,9 +177,13 @@
 </template>
 
 <script>
+import KelasService from "@/services/resources/kelas.service";
+
 export default {
   data() {
     return {
+      search: "",
+      sortBy: "ASC",
       itemSortBy: [
         {
           text: "a-z Nama",
@@ -193,93 +206,95 @@ export default {
         { text: "Tahun Ajaran", value: "tahunAjaran", sortable: false },
         { text: "Aksi", value: "action", sortable: false },
       ],
-      items: [
-        {
-          kelas_id: "ae450482-7abb-4b36-9f58-a2a9f3578ee1",
-          nomor: 1,
-          kelas: "X IPA 1",
-          walikelas: "Luffy",
-          tahunAjaran: "2019-2020",
-        },
-        {
-          kelas_id: "2f2d261a-297b-45ef-97e5-a436f983470a",
-          nomor: 2,
-          kelas: "X IPA 2",
-          walikelas: "Faris",
-          tahunAjaran: "2019-2020",
-        },
-        {
-          kelas_id: "de963785-9c90-46fa-a43a-cb327b82e4b7",
-          nomor: 3,
-          kelas: "X IPA 3",
-          walikelas: "Luffyy",
-          tahunAjaran: "2019-2020",
-        },
-        {
-          kelas_id: "c9c94804-bc25-4e0d-b324-7a5323d493d8",
-          nomor: 4,
-          kelas: "X IPS 1",
-          walikelas: "Zoro",
-          tahunAjaran: "2020-2021",
-        },
-        {
-          kelas_id: "0cc50e92-2907-4ee6-b580-0df0eedb1d58",
-          nomor: 5,
-          kelas: "X IPS 2",
-          walikelas: "Kora",
-          tahunAjaran: "2020-2021",
-        },
-        {
-          kelas_id: "b50b673f-6983-4307-98fa-a4f11107a970",
-          nomor: 6,
-          kelas: "X IPS 3",
-          walikelas: "Jila",
-          tahunAjaran: "2020-2021",
-        },
-        {
-          kelas_id: "9cfd743b-ef86-4c20-bec7-a8c93b5ecb65",
-          nomor: 7,
-          kelas: "X IPS 4",
-          walikelas: "Pola",
-          tahunAjaran: "2020-2021",
-        },
-        {
-          kelas_id: "56ae28fb-3a61-4fcc-8b18-cc87db2e5581",
-          nomor: 8,
-          kelas: "XI IPS 1",
-          walikelas: "Yuna",
-          tahunAjaran: "2020-2021",
-        },
-        {
-          kelas_id: "10deb80d-d37c-488a-892a-27dc0c39da48",
-          nomor: 9,
-          kelas: "XI IPS 2",
-          walikelas: "Judi",
-          tahunAjaran: "2020-2021",
-        },
-        {
-          kelas_id: "7f348a08-0a22-4ee9-bc68-513a9f38c64d",
-          nomor: 10,
-          kelas: "XI IPS 3",
-          walikelas: "Ojana",
-          tahunAjaran: "2020-2021",
-        },
+      items: [],
+      loading: false,
+      options: {
+        page: 1,
+      },
+      tab: "all",
+      tabs: [
+        { text: "Lihat Semua Kelas", val: "all" },
+        { text: "IPA", val: "ipa" },
+        { text: "IPS", val: "ips" },
       ],
-      options: {},
       totalItem: 10,
-      pageCount: 0,
+      totalPage: 1,
       rowsPerPageItems: [10, 20, 50, 100],
+      doubleClickPrevent: false,
     };
   },
   methods: {
-    handleClick(arg) {
-      console.log(arg);
-    },
     customWidth(head) {
       if (head == "walikelas") return "40%";
       else if (head == "no") return "10%";
       else if (head == "kelas") return "22%";
       else if (head == "tahunAjaran") return "20%";
+    },
+    getList() {
+      const { page, itemsPerPage } = this.options;
+      this.createToken(KelasService.cancelReq().source());
+      this.loading = true;
+      KelasService.getAllKelas(
+        {
+          search: this.search,
+          tab: this.tabs[this.tab].val,
+          page,
+          limit: itemsPerPage,
+          sort: this.sortBy,
+        },
+        { cancelToken: this.cancelRequest.token }
+      )
+        .then(({ data: { code, message, data, meta } }) => {
+          if (code == 200) {
+            data.map((d, index) => {
+              d.nomor = itemsPerPage * (page - 1) + (index + 1);
+            });
+            this.items = [...data];
+            this.totalItem = meta.totalData;
+            this.totalPage = meta.totalPage;
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Memuat Data Semua Kelas",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          // this.$store.commit("snackbar/setSnack", {
+          //   show: true,
+          //   message:
+          //     err.response?.data?.message || "Gagal Memuat Data Semua Kelas",
+          //   color: "error",
+          // });
+        })
+        .finally(() => (this.loading = false));
+    },
+  },
+  computed: {
+    prevDisabled() {
+      return this.options.page <= 1;
+    },
+    nextDisabled() {
+      return this.totalPage <= this.options.page;
+    },
+    paginationProperties() {
+      return [this.tab, this.search, this.sortBy].join();
+    },
+  },
+  watch: {
+    options: {
+      handler() {
+        this.fetchListDebounce(this.getList);
+      },
+      deep: true,
+    },
+    paginationProperties: {
+      handler() {
+        this.fetchListDebounce(this.getList);
+      },
+      deep: true,
     },
   },
 };

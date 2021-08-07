@@ -4,14 +4,18 @@ import { SET_AUTH } from "../constants/mutations.type";
 import AuthService from "@/services/resources/auth.service";
 
 const state = {
-  ...initialAuthState(),
+  auth: initialAuthState(),
 };
 
-const getters = {};
+const getters = {
+  getToken(state) {
+    return state.token;
+  },
+};
 
 const mutations = {
   [SET_AUTH](state, payload) {
-    state = {
+    state.auth = {
       ...payload,
     };
   },
