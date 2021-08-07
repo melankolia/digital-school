@@ -77,6 +77,7 @@
 import BackgroundImage from "@/assets/image/background.png";
 import { mapActions } from "vuex";
 import { LOGIN } from "@/store/constants/actions.type";
+import { HOME } from "@/router/name.types";
 
 export default {
   data() {
@@ -108,6 +109,7 @@ export default {
                 message: "Login Berhasil",
                 color: "success",
               });
+              this.$router.replace({ name: HOME });
             } else {
               this.$store.commit("snackbar/setSnack", {
                 show: true,
