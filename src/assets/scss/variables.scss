@@ -15,3 +15,7 @@ $font-family: "Poppins";
 .theme--light.v-text-field--filled > .v-input__control > .v-input__slot {
   background: #eff0f6 !important;
 }
+
+.v-navigation-drawer__border {
+  z-index: -1;
+}

@@ -1,21 +1,25 @@
 <template>
-  <div>
-    <Appbar />
-    <v-main>
-      <v-container fluid>
-        <router-view />
-      </v-container>
-    </v-main>
-  </div>
+  <v-main :style="{ 'padding-left': mini ? '104px' : '308px' }">
+    <Sidebar @handlerMini="mini = $event" />
+    <v-container fluid>
+      <router-view />
+    </v-container>
+  </v-main>
 </template>
 
 <script>
-const Appbar = () => import("./Appbar");
+const Sidebar = () => import("./SideBar");
+
 export default {
   components: {
-    Appbar,
+    Sidebar,
+  },
+  data() {
+    return {
+      mini: true,
+    };
   },
 };
 </script>
 
-<style></style>
+<style scoped></style>

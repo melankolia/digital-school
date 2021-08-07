@@ -14,6 +14,7 @@ export default new Vuetify({
         secondary: "#ADE8F4",
         header: "#F7F7FC",
         checkboxBg: "#A0A3BD",
+        subMenu: "#F3F3F3",
       },
     },
   },

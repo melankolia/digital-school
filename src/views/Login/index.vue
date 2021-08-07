@@ -36,10 +36,10 @@
           <p class="app-name">BUKU INDUK SMANSA</p>
           <p class="login-name">Login</p>
           <v-divider class="mb-6" />
-          <p class="label-style mb-3">Email</p>
+          <p class="label-style mb-3">Username</p>
           <v-text-field
-            v-model="payload.email"
-            :rules="rules.email"
+            v-model="payload.username"
+            :rules="rules.username"
             small
             filled
             outlined
@@ -77,6 +77,7 @@
 import BackgroundImage from "@/assets/image/background.png";
 import { mapActions } from "vuex";
 import { LOGIN } from "@/store/constants/actions.type";
+import { HOME } from "@/router/name.types";
 
 export default {
   data() {
@@ -86,11 +87,11 @@ export default {
       valid: false,
       e1: true,
       rules: {
-        email: [(v) => !!v || "Email is Required !"],
+        username: [(v) => !!v || "Username is Required !"],
         password: [(v) => !!v || "Password is Required !"],
       },
       payload: {
-        email: null,
+        username: null,
         password: null,
       },
     };
@@ -100,10 +101,32 @@ export default {
     onSubmit() {
       if (this.$refs.formLogin.validate()) {
         this.loading = true;
-        this[LOGIN]()
-          .then((result) => console.log({ onSubmit: result }))
-          .catch((err) => console.error(err))
+        this[LOGIN](this.payload)
+          .then(({ status, message }) => {
+            if (status == 200) {
+              this.$store.commit("snackbar/setSnack", {
+                show: true,
+                message: "Login Berhasil",
+                color: "success",
+              });
+              this.$router.replace({ name: HOME });
+            } else {
+              this.$store.commit("snackbar/setSnack", {
+                show: true,
+                message: message || "Login Gagal",
+                color: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: err || "Login Gagal",
+              color: "error",
+            });
+          })
           .finally(() => (this.loading = false));
+        this.loading = true;
       }
     },
   },
