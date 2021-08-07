@@ -15,7 +15,7 @@
         <v-list>
           <v-list-item
             style="transition: all 0.7s"
-            :class="{ 'px-2 pt-10': mini, 'pl-10 pt-10': !mini }"
+            :class="{ 'px-2 pt-4': mini, 'pl-10 pt-4': !mini }"
           >
             <v-list-item-avatar>
               <v-img src="@/assets/image/smansa.png"></v-img>
@@ -56,6 +56,7 @@
               :key="'b' + si"
               :to="subItem.to"
               :active-class="'subMenu black--text'"
+              exact
             >
               <v-list-item-action
                 :class="{ 'mr-4': !mini }"
@@ -114,6 +115,8 @@
 </template>
 
 <script>
+import { SISWA, ABOUT } from "@/router/name.types";
+
 export default {
   data() {
     return {
@@ -125,7 +128,7 @@ export default {
           subItems: [
             {
               title: "Kelas",
-              to: "/about",
+              to: { name: SISWA.KELAS.BROWSE },
             },
             {
               title: "Seluruh Siswa",
@@ -136,24 +139,34 @@ export default {
               to: "/",
             },
           ],
-          active: false,
+          active: true,
         },
         {
           icon: "mdi-book-open-variant",
           title: "Guru",
-          to: "/about",
+          subItems: [
+            {
+              title: "Seluruh Guru",
+              to: { name: ABOUT },
+            },
+          ],
           active: false,
         },
         {
           icon: "mdi-account-multiple-outline",
           title: "Tenaga Ahli",
-          to: "/about",
+          subItems: [
+            {
+              title: "Seluruh Tenaga Ahli",
+              to: { name: ABOUT },
+            },
+          ],
           active: false,
         },
         {
           icon: "mdi-library",
           title: "Alumni",
-          to: "/about",
+          to: { name: ABOUT },
           active: false,
         },
       ],

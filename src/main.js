@@ -10,6 +10,9 @@ Vue.config.productionTip = false;
 import "./filter/currency.filter";
 import "./filter/case.filter";
 
+// Vue Mixin
+import "./mixin";
+
 new Vue({
   router,
   store,
