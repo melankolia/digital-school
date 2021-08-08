@@ -12,25 +12,13 @@
           <span> Kembali </span>
         </p>
       </v-btn>
-      <div>
-        <v-btn depressed color="primary" class="rounded-lg mr-4">
-          <p class="header-button-title ma-0">
-            <v-icon class="mr-1" small>mdi-plus</v-icon>
-            <span> Tambah Kelas </span>
-          </p>
-        </v-btn>
-        <v-btn depressed class="rounded-lg outlined-custom">
-          <p class="header-button-export ma-0">
-            <v-icon class="mr-1" small>mdi-download</v-icon>
-            <span> Export Kelas {{ kelas }} </span>
-          </p>
-        </v-btn>
-      </div>
     </div>
     <div class="d-flex flex-row justify-space-between mb-9 mt-1">
       <div>
-        <p class="header-title mb-1">Tabel Siswa - Seluruh Kelas {{ kelas }}</p>
-        <p class="header-subtitle mb-1">Daftar siswa Kelas {{ kelas }}</p>
+        <p class="header-title mb-1">Tabel Siswa</p>
+        <p class="header-subtitle mb-1">
+          Daftar Seluruh Siswa SMAN 1 Kota Jambi
+        </p>
       </div>
     </div>
     <v-tabs v-model="tab" color="tabMenu">
@@ -45,7 +33,7 @@
         <v-text-field
           v-model="search"
           prepend-inner-icon="mdi-magnify"
-          placeholder="Cari NIS, NISN atau Nama Siswa"
+          placeholder="Cari Nama"
           hide-details
           solo
           dense
@@ -168,7 +156,7 @@
 </template>
 
 <script>
-import KelasService from "@/services/resources/kelas.service";
+import siswaService from "@/services/resources/siswa.service";
 import { SISWA } from "@/router/name.types";
 const CustomFooter = () => import("@/components/Table/Footer");
 
@@ -178,8 +166,6 @@ export default {
   },
   data() {
     return {
-      id: this.$route.params?.secureId,
-      kelas: this.$route.query?.kelas,
       search: "",
       sortBy: "ASC",
       itemSortBy: [
@@ -237,19 +223,19 @@ export default {
     },
     getList() {
       const { page, itemsPerPage } = this.options;
-      this.createToken(KelasService.cancelReq().source());
+      this.createToken(siswaService.cancelReq().source());
       this.loading = true;
-      KelasService.getAllPerKelas(
-        {
-          kelas_id: this.id,
-          search: this.search || null,
-          tab: this.tabs[this.tab].val,
-          page,
-          limit: itemsPerPage,
-          sort: this.sortBy,
-        },
-        { cancelToken: this.cancelRequest.token }
-      )
+      siswaService
+        .getAllSiswa(
+          {
+            search: this.search || null,
+            tab: this.tabs[this.tab].val,
+            page,
+            limit: itemsPerPage,
+            sort: this.sortBy,
+          },
+          { cancelToken: this.cancelRequest.token }
+        )
         .then(({ data: { code, message, data, meta } }) => {
           if (code == 200) {
             data.map((d, index) => {
