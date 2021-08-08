@@ -56,7 +56,6 @@
               :key="'b' + si"
               :to="subItem.to"
               :active-class="'subMenu black--text'"
-              exact
             >
               <v-list-item-action
                 :class="{ 'mr-4': !mini }"

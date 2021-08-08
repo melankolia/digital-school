@@ -43,9 +43,11 @@
             small
             filled
             outlined
+            class="username"
           />
           <p class="label-style mb-3">Password</p>
           <v-text-field
+            class="password"
             v-model="payload.password"
             :rules="rules.password"
             small
@@ -55,7 +57,7 @@
             @click:append="() => (e1 = !e1)"
             :type="e1 ? 'password' : 'text'"
           />
-          <v-checkbox label="Remember Me" color="checkboxBg" />
+          <v-checkbox class="checkbox" label="Remember Me" color="checkboxBg" />
           <v-btn
             class="py-6"
             block
@@ -133,7 +135,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .school-name {
   font-size: 40px;
   font-style: normal;
@@ -182,5 +184,11 @@ export default {
 
 .buku-style {
   margin: 160px 120px 0 103px;
+}
+
+.checkbox > .v-input__control,
+.username > .v-input__control,
+.password > .v-input__control {
+  border: none;
 }
 </style>
