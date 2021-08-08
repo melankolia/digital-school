@@ -7,6 +7,6 @@ export const siswa = "siswa";
 export const SISWA = {
   KELAS: {
     BROWSE: `${siswa}.kelas`,
-    PER_SISWA: `${siswa}.kelas.siswa`,
+    PER_KELAS: `${siswa}.kelas.perkelas`,
   },
 };
