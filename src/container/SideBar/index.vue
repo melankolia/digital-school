@@ -131,7 +131,7 @@ export default {
             },
             {
               title: "Seluruh Siswa",
-              to: "/",
+              to: "/siswa",
             },
             {
               title: "Rekapitulasi Siswa",

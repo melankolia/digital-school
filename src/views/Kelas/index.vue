@@ -193,7 +193,7 @@ export default {
       this.loading = true;
       KelasService.getAllKelas(
         {
-          search: this.search,
+          search: this.search || null,
           tab: this.tabs[this.tab].val,
           page,
           limit: itemsPerPage,
