@@ -2,7 +2,9 @@
   <v-main :style="{ 'padding-left': mini ? '104px' : '308px' }">
     <Sidebar @handlerMini="mini = $event" />
     <v-container fluid>
-      <router-view />
+      <transition name="slide-fade" mode="out-in">
+        <router-view />
+      </transition>
     </v-container>
   </v-main>
 </template>

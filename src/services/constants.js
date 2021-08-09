@@ -11,5 +11,14 @@ export const KELAS = {
 const siswa = "siswa/v1";
 export const SISWA = {
   ALL: `${siswa}/all-siswa`,
+  DETAIL: {
+    TENTANG_DIRI: `${siswa}/tentang-diri`,
+    TEMPAT_TINGGAL: `${siswa}/tempat-tinggal`,
+    PENDIDIKAN: `${siswa}/pendidikan`,
+    KESEHATAN: `${siswa}/kesehatan`,
+    HOBI: `${siswa}/hobi`,
+    ORANG_TUA: `${siswa}/orang-tua`,
+    PINDAHAN: `${siswa}/pindah`,
+  },
   PER_KELAS: `${siswa}/all`,
 };

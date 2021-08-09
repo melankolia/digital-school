@@ -107,7 +107,6 @@
                   v-on="on"
                   small
                   depressed
-                  @click="() => handleClick(item)"
                   color="primary"
                   class="rounded-lg"
                   style="width: 83px; height: 29px"
@@ -128,7 +127,7 @@
               </v-hover>
             </template>
             <v-list>
-              <v-list-item link>
+              <v-list-item @click="() => handleDetail(item)" link>
                 <img class="mr-4" src="@/assets/icons/detail.svg" />
                 <p class="selection-item ma-0">Buka Detail</p>
               </v-list-item>
@@ -220,6 +219,12 @@ export default {
     },
     handleBack() {
       this.$router.replace({ name: SISWA.KELAS.BROWSE });
+    },
+    handleDetail(item) {
+      this.$router.push({
+        name: SISWA.KELAS.SISWA.DETAIL,
+        params: { secureId: item.siswa_id },
+      });
     },
     getList() {
       const { page, itemsPerPage } = this.options;

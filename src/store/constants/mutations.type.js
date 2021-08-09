@@ -5,3 +5,5 @@ export const SET_AUTH = "setAuth";
 export const CHECK_AUTH = "checkAuth";
 
 export const RESET_IDENTIY = "resetIdentiy";
+export const SET_SISWA_INFO = "setSiswaInfo";
+export const RESET_SISWA_INFO = "resetSiswaInfo";

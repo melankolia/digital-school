@@ -4,6 +4,7 @@ const About = () => import("@/views/About");
 const Login = () => import("@/views/Login");
 const Kelas = () => import("@/views/Kelas");
 const Siswa = () => import("@/views/Siswa");
+const KelasSiswaDetail = () => import("@/views/Kelas/Siswa/Detail");
 const KelasPerSiswa = () => import("@/views/Kelas/Siswa");
 
 import { HOME, ABOUT, LOGIN, SISWA } from "./name.types";
@@ -41,12 +42,30 @@ export const configRoutes = [
             },
           },
           {
-            path: "siswa/:secureId",
-            name: SISWA.KELAS.PER_KELAS,
-            component: KelasPerSiswa,
-            meta: {
-              requiresAuth: true,
+            path: "siswa",
+            component: {
+              render(c) {
+                return c("router-view");
+              },
             },
+            children: [
+              {
+                path: "detail/:secureId",
+                name: SISWA.KELAS.SISWA.DETAIL,
+                component: KelasSiswaDetail,
+                meta: {
+                  requiresAuth: true,
+                },
+              },
+              {
+                path: ":secureId",
+                name: SISWA.KELAS.PER_KELAS,
+                component: KelasPerSiswa,
+                meta: {
+                  requiresAuth: true,
+                },
+              },
+            ],
           },
         ],
       },
