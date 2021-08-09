@@ -1,5 +1,7 @@
 import axios from "axios";
 import store from "@/store";
+import router from "@/router";
+import { FORCE_LOGOUT } from "@/store/constants/actions.type";
 
 const instance = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL,
@@ -8,11 +10,41 @@ const instance = axios.create({
 instance.CancelToken = axios.CancelToken;
 instance.isCancel = axios.isCancel;
 
+function logout() {
+  store.dispatch(FORCE_LOGOUT).then(() => {
+    const loginpath = window.location.pathname;
+    const loginsearch = window.location.search;
+    router.replace({
+      name: "login",
+      query: { pathname: loginpath, search: loginsearch },
+    });
+    setTimeout(function () {
+      store.commit("snackbar/setSnack", {
+        show: true,
+        message: "Token Expired. Sorry you must login again",
+        color: "error",
+      });
+    }, 500);
+  });
+}
+
 instance.interceptors.request.use(function (config) {
-  const token = store.state.auth.auth.token;
+  const token = store.getters.getToken;
   config.headers.Authorization = token ? `Bearer ${token}` : "";
   return config;
 });
+
+instance.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    const { response } = error;
+    if (response.status === 401) {
+      logout();
+    }
+  }
+);
 
 const MainInstance = {
   async query(resource, params) {
