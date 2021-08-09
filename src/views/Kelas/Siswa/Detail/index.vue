@@ -124,6 +124,9 @@ export default {
   mounted() {
     this.bindingData();
   },
+  destroyed() {
+    this[RESET_SISWA_INFO]();
+  },
 };
 </script>
 

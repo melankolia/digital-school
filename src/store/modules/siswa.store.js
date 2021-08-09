@@ -5,23 +5,23 @@ import {
 } from "@/store/constants/mutations.type";
 
 const state = {
-  kelas: initialSiswaState(),
+  siswa: initialSiswaState(),
 };
 
 const getters = {
   getSiswa(state) {
-    return state.kelas;
+    return state.siswa;
   },
 };
 
 const mutations = {
   [SET_SISWA_INFO](state, payload) {
-    state.kelas = {
+    state.siswa = {
       ...payload,
     };
   },
   [RESET_SISWA_INFO](state) {
-    Object.assign(state.promo, initialSiswaState());
+    Object.assign(state.siswa, initialSiswaState());
   },
 };
 
