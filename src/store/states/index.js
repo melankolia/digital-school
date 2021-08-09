@@ -1,2 +1,4 @@
 import { initialAuthState } from "./auth.state";
-export { initialAuthState };
+import { initialSiswaState } from "./siswa.state";
+
+export { initialAuthState, initialSiswaState };

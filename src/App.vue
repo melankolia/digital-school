@@ -1,7 +1,9 @@
 <template>
   <v-app style="height: 100vh">
     <Snackbar />
-    <router-view />
+    <transition name="slide-fade" mode="out-in">
+      <router-view />
+    </transition>
   </v-app>
 </template>
 

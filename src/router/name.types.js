@@ -11,5 +11,8 @@ export const SISWA = {
   KELAS: {
     BROWSE: `${siswa}.kelas`,
     PER_KELAS: `${siswa}.kelas.perkelas`,
+    SISWA: {
+      DETAIL: `${siswa}.detail`,
+    },
   },
 };
