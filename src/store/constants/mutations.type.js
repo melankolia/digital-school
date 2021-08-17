@@ -11,3 +11,6 @@ export const RESET_SISWA_INFO = "resetSiswaInfo";
 
 export const SET_GURU_INFO = "setGuruInfo";
 export const RESET_GURU_INFO = "resetGuruInfo";
+
+export const SET_TENAGA_AHLI_INFO = "setTenagaAhliInfo";
+export const RESET_TENAGA_AHLI_INFO = "resetTenagaAhliInfo";

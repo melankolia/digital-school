@@ -23,3 +23,9 @@ export const GURU = {
   BROWSE: `${guru}.browse`,
   DETAIL: `${guru}.detail`,
 };
+
+export const tenaga_ahli = "tenaga_ahli";
+export const TENAGA_AHLI = {
+  BROWSE: `${tenaga_ahli}.browse`,
+  DETAIL: `${tenaga_ahli}.detail`,
+};

@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import { SISWA, ABOUT, GURU } from "@/router/name.types";
+import { SISWA, ABOUT, GURU, TENAGA_AHLI } from "@/router/name.types";
 
 export default {
   data() {
@@ -157,7 +157,7 @@ export default {
           subItems: [
             {
               title: "Seluruh Tenaga Ahli",
-              to: { name: ABOUT },
+              to: { name: TENAGA_AHLI.BROWSE },
             },
           ],
           active: false,
