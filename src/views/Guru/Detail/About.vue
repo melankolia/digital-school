@@ -29,25 +29,25 @@
         <tr>
           <td>Tempat Tanggal Lahir</td>
           <td class="text-right text-sub">
-            {{ items.tempat_tanggal_lahir || "-" | toTitle }}
+            {{ items.ttl || "-" | toTitle }}
           </td>
         </tr>
         <tr>
           <td>NIP</td>
           <td class="text-right text-sub">
-            {{ items.NIP || "-" | toTitle }}
+            {{ items.nip_karpeg || "-" | toTitle }}
           </td>
         </tr>
         <tr>
           <td>Pendidikan Terakhir</td>
           <td class="text-right text-sub">
-            {{ items.pendidikan_terakhir || "-" | toTitle }}
+            {{ items.pendidikan || "-" | toTitle }}
           </td>
         </tr>
         <tr>
           <td>Mulai Bertugas Disini</td>
           <td class="text-right text-sub">
-            {{ items.mulai_bertugas_disini || "-" | toTitle }}
+            {{ items.mulai_tugas || "-" | toTitle }}
           </td>
         </tr>
         <tr>
@@ -59,13 +59,13 @@
         <tr>
           <td>Pangkat Golongan</td>
           <td class="text-right text-sub">
-            {{ items.pangkat_golongan || "-" | toTitle }}
+            {{ items.gol_pangkat || "-" }}
           </td>
         </tr>
         <tr>
           <td>Pangkat TMT</td>
           <td class="text-right text-sub">
-            {{ items.pangkat_tmt || "-" | toTitle }}
+            {{ items.tmt_pangkat || "-" | toTitle }}
           </td>
         </tr>
         <tr>
@@ -77,7 +77,7 @@
         <tr>
           <td>Gaji Pokok</td>
           <td class="text-right text-sub">
-            {{ items.gaji_pokok || "-" | toTitle }}
+            {{ items.gaji || "-" | toTitle }}
           </td>
         </tr>
         <tr>
@@ -95,19 +95,19 @@
         <tr>
           <td>K / TK</td>
           <td class="text-right text-sub">
-            {{ items.tk || "-" | toTitle }}
+            {{ items.k_tk || "-" | toTitle }}
           </td>
         </tr>
         <tr>
           <td>Kenaikan YAD Pangkat</td>
           <td class="text-right text-sub">
-            {{ items.kenaikan_yad_pangkat || "-" | toTitle }}
+            <!-- {{ items.yad_gaji || "-" | toTitle }} -->
           </td>
         </tr>
         <tr>
           <td>Kenaikan YAD Gaji Berkala</td>
           <td class="text-right text-sub">
-            {{ items.kenaikan_yad_gaji_berkala || "-" | toTitle }}
+            {{ items.yad_gaji || "-" | toTitle }}
           </td>
         </tr>
         <tr>
@@ -129,7 +129,7 @@
 
 <script>
 const ContentNotFound = () => import("@/components/Content/NotFound");
-import SiswaService from "@/services/resources/siswa.service";
+import GuruService from "@/services/resources/guru.service";
 
 export default {
   components: {
@@ -137,27 +137,25 @@ export default {
   },
   data() {
     return {
-      id: this.$route.params?.secureId,
+      id: this.$route.params?.guruId,
       loading: false,
       items: {
-        tentang_id: null,
-        guru_id: "123",
+        guru_id: null,
         nama: null,
         jenis_kelamin: null,
-        tempat_tanggal_lahir: null,
-        NIP: null,
-        pendidikan_terakhir: null,
-        mulai_bertugas_disini: null,
+        ttl: null,
+        nip_karpeg: null,
+        pendidikan: null,
+        mulai_tugas: null,
         jabatan: null,
-        pangkat_golongan: null,
-        pangkat_tmt: null,
+        gol_pangkat: null,
+        tmt_pangkat: null,
         sk_pertama: null,
-        gaji_pokok: null,
+        gaji: null,
         mk_gol_tahun: null,
         mk_gol_bulan: null,
-        tk: null,
-        kenaikan_yad_pangkat: null,
-        kenaikan_yad_gaji_berkala: null,
+        k_tk: null,
+        yad_gaji: null,
         sertifikasi: null,
         nuptk: null,
       },
@@ -171,14 +169,14 @@ export default {
   methods: {
     getDetail() {
       this.loading = true;
-      SiswaService.getTentangDiri(this.id)
+      GuruService.getDetail(this.id)
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
             this.items = { ...this.items, ...data };
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: message || "Gagal Memuat Data Tentang Diri Siswa",
+              message: message || "Gagal Memuat Data Tentang Diri Guru",
               color: "error",
             });
           }
@@ -186,7 +184,7 @@ export default {
         .catch((err) => {
           this.$store.commit("snackbar/setSnack", {
             show: true,
-            message: "Gagal Memuat Data Tentang Diri Siswa",
+            message: "Gagal Memuat Data Tentang Diri Guru",
             color: "error",
           });
           console.error(err);

@@ -22,3 +22,9 @@ export const SISWA = {
   },
   PER_KELAS: `${siswa}/all`,
 };
+
+const guru = "guru/v1";
+export const GURU = {
+  ALL: `${guru}/all`,
+  DETAIL: `${guru}/detail`,
+};

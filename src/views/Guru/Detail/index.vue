@@ -34,7 +34,7 @@
         </div>
         <div class="d-flex flex-column pr-12 mr-12">
           <p class="header-subtitle">
-            {{ items.nama_guru || "-" | toTitle }} -
+            {{ items.nama || "-" | toTitle }} -
             {{ items.jabatan || "-" | toTitle }}
           </p>
         </div>
@@ -69,10 +69,8 @@ export default {
   data() {
     return {
       items: {
-        nip: null,
-        jenis_kelamin: null,
-        nama_guru: null,
-        nomor: null,
+        NIP: null,
+        nama: null,
         jabatan: null,
         guru_id: null,
       },

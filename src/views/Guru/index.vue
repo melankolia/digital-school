@@ -154,6 +154,7 @@
 </template>
 
 <script>
+import GuruService from "@/services/resources/guru.service";
 import { GURU } from "@/router/name.types";
 import { SET_GURU_INFO } from "@/store/constants/mutations.type";
 import { mapMutations } from "vuex";
@@ -166,34 +167,34 @@ export default {
   data() {
     return {
       search: "",
-      sortBy: "ASC",
+      sortBy: "nama ASC",
       itemSortBy: [
         {
           text: "a-z Nama",
-          value: "ASC",
+          value: "nama ASC",
           icon: "mdi-sort-ascending",
         },
         {
           text: "z-a Nama",
-          value: "DESC",
+          value: "nama DESC",
           icon: "mdi-sort-descending",
         },
         {
           text: "a-z Jabatan",
-          value: "ASC",
+          value: "jabatan ASC",
           icon: "mdi-sort-ascending",
         },
         {
           text: "z-a Jabatan",
-          value: "DESC",
+          value: "jabatan DESC",
           icon: "mdi-sort-descending",
         },
       ],
       headers: [
-        { text: "NIP", value: "nip", sortable: false },
+        { text: "NIP", value: "NIP", sortable: false },
         {
           text: "Nama Lengkap",
-          value: "nama_guru",
+          value: "nama",
           sortable: false,
           width: "321px",
         },
@@ -214,10 +215,10 @@ export default {
   methods: {
     ...mapMutations([SET_GURU_INFO]),
     customWidth(head) {
-      if (head == "nip") return "15%";
-      else if (head == "nama_guru") return "32%";
-      else if (head == "jabatan") return "32%";
-      else if (head == "action") return "21%";
+      if (head == "NIP") return "23%";
+      else if (head == "nama") return "30%";
+      else if (head == "jabatan") return "30%";
+      else if (head == "action") return "17%";
     },
     handleBack() {
       this.$router.replace({ name: GURU.BROWSE });
@@ -226,30 +227,42 @@ export default {
       this.setGuruInfo(item);
       this.$router.push({
         name: GURU.DETAIL,
-        params: { secureId: item.id_guru },
+        params: { guruId: item.guru_id },
       });
     },
     getList() {
+      const { page, itemsPerPage } = this.options;
       this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-        this.items = [
-          {
-            id_guru: 1789,
-            nip: 12345,
-            nama_guru: "Dra. Victoria",
-            jabatan: "Matematika",
-          },
-          {
-            id_guru: 1789,
-            nip: 12345,
-            nama_guru: "Dra. Victoria",
-            jabatan: "Matematika",
-          },
-        ];
-        this.totalItem = this.items.length;
-        this.totalPage = 1;
-      }, 2000);
+      this.createToken(GuruService.cancelReq().source());
+      GuruService.getList(
+        {
+          search: this.search,
+          page,
+          limit: itemsPerPage,
+          sort: this.sortBy,
+        },
+        { cancelToken: this.cancelRequest.token }
+      )
+        .then(({ data: { code, message, data, meta } }) => {
+          if (code == 200) {
+            data.map((d, index) => {
+              d.nomor = itemsPerPage * (page - 1) + (index + 1);
+            });
+            this.items = [...data];
+            this.totalItem = meta.totalData;
+            this.totalPage = meta.totalPage;
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Memuat Data Semua Guru",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        })
+        .finally(() => (this.loading = false));
     },
   },
   computed: {
@@ -273,5 +286,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

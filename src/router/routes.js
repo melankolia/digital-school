@@ -116,7 +116,7 @@ export const configRoutes = [
             },
           },
           {
-            path: ":secureId",
+            path: ":guruId",
             name: GURU.DETAIL,
             component: GuruDetail,
             meta: {
