@@ -2,7 +2,7 @@
   <div class="d-flex flex-column ml-7 mt-4 mb-7 mr-12">
     <div class="d-flex flex-row justify-space-between mb-12">
       <v-btn
-        @click="$router.back()"
+        @click="handleBack"
         depressed
         color="header"
         class="rounded-lg mr-4 outlined-custom"
@@ -13,7 +13,12 @@
         </p>
       </v-btn>
       <div>
-        <v-btn depressed color="primary" class="rounded-lg mr-4">
+        <v-btn
+          @click="handleEdit"
+          depressed
+          color="primary"
+          class="rounded-lg mr-4"
+        >
           <p class="header-button-title ma-0">
             <v-icon class="mr-1" small>mdi-square-edit-outline</v-icon>
             <span> Edit Data </span>
@@ -104,6 +109,7 @@ export default {
   },
   data() {
     return {
+      kelas: this.$route.query?.kelas,
       items: {
         NIS: null,
         NISN: null,
@@ -131,6 +137,26 @@ export default {
   },
   methods: {
     ...mapMutations([RESET_SISWA_INFO]),
+    handleBack() {
+      this.$router.push({
+        name: SISWA.KELAS.PER_KELAS,
+        params: {
+          kelasId: this.items.kelas_id,
+        },
+        query: {
+          kelas: this.kelas,
+        },
+      });
+    },
+    handleEdit() {
+      this.$router.push({
+        name: SISWA.KELAS.SISWA.UPDATE,
+        params: { kelasId: this.items.kelas_id },
+        query: {
+          kelas: this.kelas,
+        },
+      });
+    },
     bindingData() {
       this.items = { ...this.items, ...this.getSiswa };
     },

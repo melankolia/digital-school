@@ -100,7 +100,7 @@ import { SISWA } from "@/router/name.types";
 export default {
   data() {
     return {
-      id: this.$route.query?.secureId,
+      id: this.$route.query?.kelasId,
       kelas: this.$route.query?.kelas,
       payload: {
         tanggal_diterima: null,

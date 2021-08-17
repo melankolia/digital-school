@@ -184,7 +184,7 @@ export default {
     handleClick(item) {
       this.$router.push({
         name: SISWA.KELAS.PER_KELAS,
-        params: { secureId: item.kelas_id },
+        params: { kelasId: item.kelas_id },
         query: { kelas: item.kelas },
       });
     },
