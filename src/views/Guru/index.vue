@@ -41,6 +41,7 @@
       </div>
       <div style="width: 150px">
         <v-select
+          id="list"
           v-model="sortBy"
           :items="itemSortBy"
           placeholder="Sort By"

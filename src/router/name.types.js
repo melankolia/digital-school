@@ -14,6 +14,8 @@ export const SISWA = {
     SISWA: {
       DETAIL: `${siswa}.detail`,
       TABEL_KOMPETENSI: `${siswa}.kompetensi`,
+      CREATE: `${siswa}.create`,
+      UPDATE: `${siswa}.update`,
     },
   },
 };

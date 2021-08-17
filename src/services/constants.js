@@ -6,11 +6,12 @@ export const USER = {
 const kelas = "kelas/v1";
 export const KELAS = {
   ALL: `${kelas}/all`,
+  LOV: `${kelas}/list-kelas`,
 };
 
 const siswa = "siswa/v1";
 export const SISWA = {
-  ALL: `${siswa}/all-siswa`,
+  ALL: `${siswa}/all`,
   DETAIL: {
     TENTANG_DIRI: `${siswa}/tentang-diri`,
     TEMPAT_TINGGAL: `${siswa}/tempat-tinggal`,

@@ -4,6 +4,7 @@ const About = () => import("@/views/About");
 const Login = () => import("@/views/Login");
 const Kelas = () => import("@/views/Kelas");
 const Siswa = () => import("@/views/Siswa");
+const CreateSiswa = () => import("@/views/Kelas/Siswa/Create");
 const KelasSiswaDetail = () => import("@/views/Kelas/Siswa/Detail");
 const KelasPerSiswa = () => import("@/views/Kelas/Siswa");
 const TabelKompetensiSiswa = () =>
@@ -56,9 +57,25 @@ export const configRoutes = [
             },
             children: [
               {
+                path: "create",
+                name: SISWA.KELAS.SISWA.CREATE,
+                component: CreateSiswa,
+                meta: {
+                  requiresAuth: true,
+                },
+              },
+              {
                 path: "detail/:secureId",
                 name: SISWA.KELAS.SISWA.DETAIL,
                 component: KelasSiswaDetail,
+                meta: {
+                  requiresAuth: true,
+                },
+              },
+              {
+                path: "update/:secureId",
+                name: SISWA.KELAS.SISWA.UPDATE,
+                component: CreateSiswa,
                 meta: {
                   requiresAuth: true,
                 },
