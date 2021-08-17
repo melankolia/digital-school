@@ -57,7 +57,7 @@ export const configRoutes = [
             },
             children: [
               {
-                path: "create",
+                path: "create/:kelasId",
                 name: SISWA.KELAS.SISWA.CREATE,
                 component: CreateSiswa,
                 meta: {
@@ -73,7 +73,7 @@ export const configRoutes = [
                 },
               },
               {
-                path: "update/:secureId",
+                path: "update/:secureId/:kelasId",
                 name: SISWA.KELAS.SISWA.UPDATE,
                 component: CreateSiswa,
                 meta: {
@@ -89,7 +89,7 @@ export const configRoutes = [
                 },
               },
               {
-                path: ":secureId",
+                path: ":kelasId",
                 name: SISWA.KELAS.PER_KELAS,
                 component: KelasPerSiswa,
                 meta: {

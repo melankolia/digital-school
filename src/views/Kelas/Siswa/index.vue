@@ -148,7 +148,7 @@
                 <img class="mr-4" src="@/assets/icons/detail.svg" />
                 <p class="selection-item ma-0">Buka Detail</p>
               </v-list-item>
-              <v-list-item link>
+              <v-list-item @click="() => handleEdit(item)" link>
                 <img class="mr-4" src="@/assets/icons/edit-outlined.svg" />
                 <p class="selection-item ma-0">Edit Data</p>
               </v-list-item>
@@ -184,7 +184,7 @@ export default {
   },
   data() {
     return {
-      id: this.$route.params?.secureId,
+      id: this.$route.params?.kelasId,
       kelas: this.$route.query?.kelas,
       search: "",
       sortBy: "ASC",
@@ -244,7 +244,9 @@ export default {
         name: SISWA.KELAS.SISWA.CREATE,
         query: {
           kelas: this.kelas,
-          secureId: this.id,
+        },
+        params: {
+          kelasId: this.id,
         },
       });
     },
@@ -256,6 +258,19 @@ export default {
       this.$router.push({
         name: SISWA.KELAS.SISWA.DETAIL,
         params: { secureId: item.siswa_id },
+        query: {
+          kelas: this.kelas,
+          kelasId: this.id,
+        },
+      });
+    },
+    handleEdit(item) {
+      this.$router.push({
+        name: SISWA.KELAS.SISWA.UPDATE,
+        params: { secureId: item.siswa_id, kelasId: item.kelas_id },
+        query: {
+          kelas: this.kelas,
+        },
       });
     },
     getList() {

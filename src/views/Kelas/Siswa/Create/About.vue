@@ -226,7 +226,8 @@ import { SISWA } from "@/router/name.types";
 export default {
   data() {
     return {
-      id: this.$route.query?.secureId,
+      id: this.$route.query?.kelasId,
+      kelasId: this.$route.params?.kelasId,
       kelas: this.$route.query?.kelas,
       // Kelas Properties
       loadingListKelas: false,
