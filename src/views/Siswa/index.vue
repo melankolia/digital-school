@@ -42,6 +42,7 @@
       </div>
       <div style="width: 150px">
         <v-select
+          id="list"
           v-model="sortBy"
           :items="itemSortBy"
           placeholder="Sort By"
@@ -216,12 +217,12 @@ export default {
     customWidth(head) {
       if (head == "NIS") return "10%";
       else if (head == "NISN") return "10%";
-      else if (head == "nama_siswa") return "39%";
-      else if (head == "nama_kelas") return "10%";
+      else if (head == "nama_siswa") return "30%";
+      else if (head == "nama_kelas") return "20%";
       else if (head == "jenis_kelamin") return "20%";
     },
     handleBack() {
-      this.$router.replace({ name: SISWA.KELAS.BROWSE });
+      this.$router.push({ name: SISWA.KELAS.PER_KELAS });
     },
     handleDetail(item) {
       this.setSiswaInfo(item);

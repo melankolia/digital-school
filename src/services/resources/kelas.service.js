@@ -8,6 +8,9 @@ const KelasService = {
   getAllPerKelas(params, token) {
     return MainInstance.query(SISWA.PER_KELAS, { params, ...token });
   },
+  lovKelas() {
+    return MainInstance.query(KELAS.LOV);
+  },
   cancelReq() {
     return MainInstance.cancelRequest();
   },

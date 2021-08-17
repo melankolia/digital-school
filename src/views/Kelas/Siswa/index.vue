@@ -13,10 +13,15 @@
         </p>
       </v-btn>
       <div>
-        <v-btn depressed color="primary" class="rounded-lg mr-4">
+        <v-btn
+          @click="handleCreate"
+          depressed
+          color="primary"
+          class="rounded-lg mr-4"
+        >
           <p class="header-button-title ma-0">
             <v-icon class="mr-1" small>mdi-plus</v-icon>
-            <span> Tambah Kelas </span>
+            <span> Tambah Siswa </span>
           </p>
         </v-btn>
         <v-btn depressed class="rounded-lg outlined-custom">
@@ -234,8 +239,17 @@ export default {
       else if (head == "nama_kelas") return "10%";
       else if (head == "jenis_kelamin") return "20%";
     },
+    handleCreate() {
+      this.$router.push({
+        name: SISWA.KELAS.SISWA.CREATE,
+        query: {
+          kelas: this.kelas,
+          secureId: this.id,
+        },
+      });
+    },
     handleBack() {
-      this.$router.replace({ name: SISWA.KELAS.BROWSE });
+      this.$router.push({ name: SISWA.KELAS.PER_KELAS });
     },
     handleDetail(item) {
       this.setSiswaInfo(item);
