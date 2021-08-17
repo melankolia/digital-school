@@ -39,15 +39,23 @@
             </p>
           </v-btn>
         </div>
-        <div class="d-flex flex-row justify-space-between pr-12 mr-12">
+        <div class="d-flex flex-column pr-12 mr-12">
           <p class="header-subtitle">
             {{ items.nama_siswa || "-" | toTitle }} -
             {{ items.nama_kelas || "-" | upperCase }}
           </p>
-          <p class="header-subtitle">NIS : {{ items.NIS || "-" | toTitle }}</p>
-          <p class="header-subtitle">
-            NISN : {{ items.NISN || "-" | toTitle }}
-          </p>
+          <div class="d-flex flex-row">
+            <div class="backgroundLabel mr-4">
+              <p class="header-subtitle pa-3 ma-0">
+                NIS : {{ items.NIS || "-" | toTitle }}
+              </p>
+            </div>
+            <div class="backgroundLabel">
+              <p class="header-subtitle pa-3 ma-0">
+                NISN : {{ items.NISN || "-" | toTitle }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
