@@ -8,8 +8,10 @@ const KelasSiswaDetail = () => import("@/views/Kelas/Siswa/Detail");
 const KelasPerSiswa = () => import("@/views/Kelas/Siswa");
 const TabelKompetensiSiswa = () =>
   import("@/views/Kelas/Siswa/TabelKompetensi");
+const Guru = () => import("@/views/Guru");
+const GuruDetail = () => import("@/views/Guru/Detail");
 
-import { HOME, ABOUT, LOGIN, SISWA } from "./name.types";
+import { HOME, ABOUT, LOGIN, SISWA, GURU } from "./name.types";
 
 export const configRoutes = [
   {
@@ -91,6 +93,32 @@ export const configRoutes = [
             path: "/",
             name: SISWA.ALL.BROWSE,
             component: Siswa,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+        ],
+      },
+      {
+        path: "/guru",
+        component: {
+          render(c) {
+            return c("router-view");
+          },
+        },
+        children: [
+          {
+            path: "/",
+            name: GURU.BROWSE,
+            component: Guru,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: ":secureId",
+            name: GURU.DETAIL,
+            component: GuruDetail,
             meta: {
               requiresAuth: true,
             },

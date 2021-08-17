@@ -17,3 +17,9 @@ export const SISWA = {
     },
   },
 };
+
+export const guru = "guru";
+export const GURU = {
+  BROWSE: `${guru}.browse`,
+  DETAIL: `${guru}.detail`,
+};
