@@ -138,15 +138,7 @@ export default {
   methods: {
     ...mapMutations([RESET_SISWA_INFO]),
     handleBack() {
-      this.$router.push({
-        name: SISWA.KELAS.PER_KELAS,
-        params: {
-          kelasId: this.items.kelas_id,
-        },
-        query: {
-          kelas: this.kelas,
-        },
-      });
+      this.$router.back();
     },
     handleEdit() {
       this.$router.push({
