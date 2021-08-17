@@ -128,6 +128,9 @@
             </th>
           </tr>
         </template>
+        <template #item.nilai="{ item }">
+          {{ item.nilai || "Belum Tersedia" }}
+        </template>
         <template #item.ket="{ item }">
           {{ convertKet(item.nilai) }}
         </template>
@@ -159,6 +162,9 @@
               {{ head.text }}
             </th>
           </tr>
+        </template>
+        <template #item.nilai="{ item }">
+          {{ item.nilai || "Belum Tersedia" }}
         </template>
         <template #item.ket="{ item }">
           {{ convertKet(item.nilai) }}
@@ -192,6 +198,9 @@
             </th>
           </tr>
         </template>
+        <template #item.nilai="{ item }">
+          {{ item.nilai || "Belum Tersedia" }}
+        </template>
         <template #item.ket="{ item }">
           {{ convertKet(item.nilai) }}
         </template>
@@ -223,6 +232,9 @@
               {{ head.text }}
             </th>
           </tr>
+        </template>
+        <template #item.nilai="{ item }">
+          {{ item.nilai || "Belum Tersedia" }}
         </template>
         <template #item.ket="{ item }">
           {{ convertKet(item.nilai) }}
@@ -292,9 +304,9 @@ export default {
       listItem: {
         kelompokA: [
           {
-            mapel: "mtk",
-            nilai: 10,
-            sikap: "Sangat Baik",
+            mapel: "Matematika",
+            nilai: null,
+            sikap: null,
           },
           {
             mapel: "mtk",
