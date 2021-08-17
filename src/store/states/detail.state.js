@@ -15,3 +15,10 @@ export const initialGuruState = () => ({
   jabatan: null,
   guru_id: null,
 });
+
+export const initialTenagaAhliState = () => ({
+  NIP: null,
+  nama: null,
+  jabatan: null,
+  tenaga_ahli_id: null,
+});

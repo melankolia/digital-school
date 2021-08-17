@@ -10,8 +10,10 @@ const TabelKompetensiSiswa = () =>
   import("@/views/Kelas/Siswa/TabelKompetensi");
 const Guru = () => import("@/views/Guru");
 const GuruDetail = () => import("@/views/Guru/Detail");
+const TenagaAhli = () => import("@/views/TenagaAhli");
+const TenagaAhliDetail = () => import("@/views/TenagaAhli/Detail");
 
-import { HOME, ABOUT, LOGIN, SISWA, GURU } from "./name.types";
+import { HOME, ABOUT, LOGIN, SISWA, GURU, TENAGA_AHLI } from "./name.types";
 
 export const configRoutes = [
   {
@@ -119,6 +121,32 @@ export const configRoutes = [
             path: ":guruId",
             name: GURU.DETAIL,
             component: GuruDetail,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+        ],
+      },
+      {
+        path: "/tenaga-ahli",
+        component: {
+          render(c) {
+            return c("router-view");
+          },
+        },
+        children: [
+          {
+            path: "/",
+            name: TENAGA_AHLI.BROWSE,
+            component: TenagaAhli,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: ":tenagaAhliId",
+            name: TENAGA_AHLI.DETAIL,
+            component: TenagaAhliDetail,
             meta: {
               requiresAuth: true,
             },

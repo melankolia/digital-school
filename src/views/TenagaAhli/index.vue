@@ -12,17 +12,11 @@
           <span> Kembali </span>
         </p>
       </v-btn>
-      <v-btn depressed color="primary" class="rounded-lg">
-        <p class="header-button-title ma-0">
-          <v-icon class="mr-1" small>mdi-plus</v-icon>
-          <span> Tambah Guru </span>
-        </p>
-      </v-btn>
     </div>
     <div class="d-flex flex-row justify-space-between mb-9 mt-1">
       <div>
-        <p class="header-title mb-1">Tabel Guru (Seluruh Guru)</p>
-        <p class="header-subtitle mb-1">Daftar Guru SMAN 1 Kota Jambi</p>
+        <p class="header-title mb-1">Tabel Tenaga Ahli</p>
+        <p class="header-subtitle mb-1">Daftar Tenaga Ahli SMAN 1 Kota Jambi</p>
       </div>
     </div>
     <div
@@ -151,9 +145,9 @@
 </template>
 
 <script>
-import GuruService from "@/services/resources/guru.service";
-import { GURU } from "@/router/name.types";
-import { SET_GURU_INFO } from "@/store/constants/mutations.type";
+import TenagaAhliService from "@/services/resources/tenaga-ahli.service";
+import { TENAGA_AHLI } from "@/router/name.types";
+import { SET_TENAGA_AHLI_INFO } from "@/store/constants/mutations.type";
 import { mapMutations } from "vuex";
 const CustomFooter = () => import("@/components/Table/Footer");
 
@@ -210,7 +204,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations([SET_GURU_INFO]),
+    ...mapMutations([SET_TENAGA_AHLI_INFO]),
     customWidth(head) {
       if (head == "NIP") return "23%";
       else if (head == "nama") return "30%";
@@ -218,20 +212,20 @@ export default {
       else if (head == "action") return "17%";
     },
     handleBack() {
-      this.$router.replace({ name: GURU.BROWSE });
+      this.$router.replace({ name: TENAGA_AHLI.BROWSE });
     },
     handleDetail(item) {
-      this.setGuruInfo(item);
+      this.setTenagaAhliInfo(item);
       this.$router.push({
-        name: GURU.DETAIL,
-        params: { guruId: item.guru_id },
+        name: TENAGA_AHLI.DETAIL,
+        params: { tenagaAhliId: item.tenaga_ahli_id },
       });
     },
     getList() {
       const { page, itemsPerPage } = this.options;
       this.loading = true;
-      this.createToken(GuruService.cancelReq().source());
-      GuruService.getList(
+      this.createToken(TenagaAhliService.cancelReq().source());
+      TenagaAhliService.getList(
         {
           search: this.search,
           page,
@@ -251,7 +245,7 @@ export default {
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: message || "Gagal Memuat Data Semua Guru",
+              message: message || "Gagal Memuat Data Semua Tenaga Ahli",
               color: "error",
             });
           }
