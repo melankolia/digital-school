@@ -108,7 +108,7 @@ $font-family: "Poppins";
   font-family: "Poppins";
   font-style: normal;
   font-weight: normal;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 30px;
   color: #6e7191;
 }
@@ -157,12 +157,17 @@ $font-family: "Poppins";
 .table-header,
 .table-footer {
   height: 60px;
-  background: #f7f7f7;
+  background: #f7f7f7 !important;
+}
+
+thead > tr > th {
+  height: 60px !important;
 }
 
 tbody > tr > td {
   height: 60px !important;
 }
+
 tbody > tr:hover {
   background: #ade8f433 !important;
 }
@@ -205,4 +210,8 @@ td {
 
 .text-sub {
   color: #6e7191;
+}
+
+tr:nth-child(even) {
+  background: #f7f7fc;
 }

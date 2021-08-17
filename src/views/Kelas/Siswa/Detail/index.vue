@@ -15,7 +15,7 @@
       <div>
         <v-btn depressed color="primary" class="rounded-lg mr-4">
           <p class="header-button-title ma-0">
-            <v-icon class="mr-1" small>mdi-plus</v-icon>
+            <v-icon class="mr-1" small>mdi-square-edit-outline</v-icon>
             <span> Edit Data </span>
           </p>
         </v-btn>
@@ -33,21 +33,34 @@
           <p class="header-title mb-4">
             Tabel Siswa - {{ items.nama_siswa || "-" | toTitle }}
           </p>
-          <v-btn outlined class="rounded-lg outlined-custom" color="primary">
+          <v-btn
+            @click="handleKompetensi"
+            outlined
+            class="rounded-lg outlined-custom"
+            color="primary"
+          >
             <p class="header-button-export ma-0">
               <span> Lihat Kompetensi </span>
             </p>
           </v-btn>
         </div>
-        <div class="d-flex flex-row justify-space-between pr-12 mr-12">
+        <div class="d-flex flex-column pr-12 mr-12">
           <p class="header-subtitle">
             {{ items.nama_siswa || "-" | toTitle }} -
             {{ items.nama_kelas || "-" | upperCase }}
           </p>
-          <p class="header-subtitle">NIS : {{ items.NIS || "-" | toTitle }}</p>
-          <p class="header-subtitle">
-            NISN : {{ items.NISN || "-" | toTitle }}
-          </p>
+          <div class="d-flex flex-row">
+            <div class="backgroundLabel mr-4">
+              <p class="header-subtitle py-2 px-3 ma-0">
+                NIS : {{ items.NIS || "-" | toTitle }}
+              </p>
+            </div>
+            <div class="backgroundLabel">
+              <p class="header-subtitle py-2 px-3 ma-0">
+                NISN : {{ items.NISN || "-" | toTitle }}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -69,6 +82,7 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import { RESET_SISWA_INFO } from "@/store/constants/mutations.type";
+import { SISWA } from "@/router/name.types";
 const About = () => import("@/views/Kelas/Siswa/Detail/About.vue");
 const TempatTinggal = () =>
   import("@/views/Kelas/Siswa/Detail/TempatTinggal.vue");
@@ -120,12 +134,18 @@ export default {
     bindingData() {
       this.items = { ...this.items, ...this.getSiswa };
     },
+    handleKompetensi() {
+      this.$router.push({
+        name: SISWA.KELAS.SISWA.TABEL_KOMPETENSI,
+        params: {
+          siswaId: this.items?.siswa_id,
+          kelasId: this.items?.kelas_id,
+        },
+      });
+    },
   },
   mounted() {
     this.bindingData();
-  },
-  destroyed() {
-    this[RESET_SISWA_INFO]();
   },
 };
 </script>

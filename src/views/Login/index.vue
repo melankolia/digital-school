@@ -2,7 +2,7 @@
   <v-row no-gutters>
     <v-col cols="12" xs="12" sm="6">
       <div
-        class="primary d-flex flex-column justify-end"
+        class="primary d-flex flex-column justify-end image-background"
         :style="`height: 100%; background-image: url(${backgroundImage})`"
       >
         <div class="d-flex flex-row align-center mx-10 mb-11">
@@ -128,7 +128,6 @@ export default {
             });
           })
           .finally(() => (this.loading = false));
-        this.loading = true;
       }
     },
   },
@@ -136,6 +135,10 @@ export default {
 </script>
 
 <style>
+.image-background {
+  background-size: cover;
+}
+
 .school-name {
   font-size: 40px;
   font-style: normal;

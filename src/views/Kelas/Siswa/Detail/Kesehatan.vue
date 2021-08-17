@@ -120,4 +120,8 @@ export default {
 tr:nth-child(odd) {
   background: #f7f7fc;
 }
+
+tr:nth-child(even) {
+  background: none;
+}
 </style>

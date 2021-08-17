@@ -13,6 +13,7 @@ export const SISWA = {
     PER_KELAS: `${siswa}.kelas.perkelas`,
     SISWA: {
       DETAIL: `${siswa}.detail`,
+      TABEL_KOMPETENSI: `${siswa}.kompetensi`,
     },
   },
 };
