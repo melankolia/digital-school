@@ -8,3 +8,10 @@ export const initialSiswaState = () => ({
   nomor: null,
   siswa_id: null,
 });
+
+export const initialGuruState = () => ({
+  NIP: null,
+  nama: null,
+  jabatan: null,
+  guru_id: null,
+});

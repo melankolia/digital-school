@@ -107,6 +107,7 @@
     <div class="table-border mb-6 rounded-lg pa-4">
       <p class="mb-6 kelompok-label">Kelompok A Wajib</p>
       <v-data-table
+        id="kompetensi"
         :items="listItem.kelompokA"
         :headers="headers"
         :loading="loading"
@@ -128,11 +129,21 @@
             </th>
           </tr>
         </template>
+        <template #item.nilai="{ item }">
+          {{ item.nilai || "Belum Tersedia" }}
+        </template>
+        <template #item.ket="{ item }">
+          {{ convertKet(item.nilai) }}
+        </template>
+        <template #item.sikap="{ item }">
+          {{ item.sikap || "Belum Tersedia" }}
+        </template>
       </v-data-table>
     </div>
     <div class="table-border mb-6 rounded-lg pa-4">
       <p class="mb-6 kelompok-label">Kelompok B Wajib</p>
       <v-data-table
+        id="kompetensi"
         :items="listItem.kelompokB"
         :headers="headers"
         :loading="loading"
@@ -154,11 +165,21 @@
             </th>
           </tr>
         </template>
+        <template #item.nilai="{ item }">
+          {{ item.nilai || "Belum Tersedia" }}
+        </template>
+        <template #item.ket="{ item }">
+          {{ convertKet(item.nilai) }}
+        </template>
+        <template #item.sikap="{ item }">
+          {{ item.sikap || "Belum Tersedia" }}
+        </template>
       </v-data-table>
     </div>
     <div class="table-border mb-6 rounded-lg pa-4">
       <p class="mb-6 kelompok-label">Kelompok C Peminatan</p>
       <v-data-table
+        id="kompetensi"
         :items="listItem.kelompokC"
         :headers="headers"
         :loading="loading"
@@ -180,11 +201,21 @@
             </th>
           </tr>
         </template>
+        <template #item.nilai="{ item }">
+          {{ item.nilai || "Belum Tersedia" }}
+        </template>
+        <template #item.ket="{ item }">
+          {{ convertKet(item.nilai) }}
+        </template>
+        <template #item.sikap="{ item }">
+          {{ item.sikap || "Belum Tersedia" }}
+        </template>
       </v-data-table>
     </div>
     <div class="table-border mb-6 rounded-lg pa-4">
       <p class="mb-6 kelompok-label">Kelompok C Lintas Peminatan</p>
       <v-data-table
+        id="kompetensi"
         :items="listItem.kelompokCLintas"
         :headers="headers"
         :loading="loading"
@@ -206,11 +237,21 @@
             </th>
           </tr>
         </template>
+        <template #item.nilai="{ item }">
+          {{ item.nilai || "Belum Tersedia" }}
+        </template>
+        <template #item.ket="{ item }">
+          {{ convertKet(item.nilai) }}
+        </template>
+        <template #item.sikap="{ item }">
+          {{ item.sikap || "Belum Tersedia" }}
+        </template>
       </v-data-table>
     </div>
     <div class="table-border mb-6 rounded-lg pa-4">
       <p class="mb-6 kelompok-label">Ketidak Hadiran</p>
       <v-data-table
+        id="kompetensi"
         :items="listItem.absen"
         :headers="absenHeaders"
         :loading="loading"
@@ -247,12 +288,8 @@ export default {
       items: {
         NIS: null,
         NISN: null,
-        jenis_kelamin: null,
-        kelas_id: null,
         nama_kelas: null,
         nama_siswa: null,
-        nomor: null,
-        siswa_id: null,
       },
       sortBySemester: null,
       itemSemester: [],
@@ -272,50 +309,50 @@ export default {
       listItem: {
         kelompokA: [
           {
-            mapel: "mtk",
-            nilai: 10,
-            sikap: 10,
+            mapel: "Matematika",
+            nilai: null,
+            sikap: null,
           },
           {
             mapel: "mtk",
             nilai: 10,
-            sikap: 10,
+            sikap: "Sangat Baik",
           },
         ],
         kelompokB: [
           {
             mapel: "mtk",
             nilai: 10,
-            sikap: 10,
+            sikap: "Sangat Baik",
           },
           {
             mapel: "mtk",
             nilai: 10,
-            sikap: 10,
+            sikap: "Sangat Baik",
           },
         ],
         kelompokC: [
           {
             mapel: "mtk",
             nilai: 10,
-            sikap: 10,
+            sikap: "Sangat Baik",
           },
           {
             mapel: "mtk",
             nilai: 10,
-            sikap: 10,
+            sikap: "Sangat Baik",
           },
         ],
         kelompokCLintas: [
           {
             mapel: "mtk",
             nilai: 10,
-            sikap: 10,
+            sikap: "Sangat Baik",
           },
           {
             mapel: "mtk",
             nilai: 10,
-            sikap: 10,
+            sikap: "Sangat Baik",
           },
         ],
         absen: [
@@ -335,6 +372,14 @@ export default {
   methods: {
     bindingData() {
       this.items = { ...this.items, ...this.getSiswa };
+    },
+    convertKet(arg) {
+      if (!arg) return "Belum Tersedia";
+      else if (arg <= 20) return "Sangat Buruk";
+      else if (arg >= 21 && arg <= 40) return "Buruk";
+      else if (arg >= 41 && arg <= 60) return "Sedang";
+      else if (arg >= 61 && arg <= 80) return "Baik";
+      else if (arg >= 81) return "Sangat Baik";
     },
   },
   mounted() {

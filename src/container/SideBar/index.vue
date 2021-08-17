@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import { SISWA, ABOUT } from "@/router/name.types";
+import { SISWA, ABOUT, GURU } from "@/router/name.types";
 
 export default {
   data() {
@@ -146,7 +146,7 @@ export default {
           subItems: [
             {
               title: "Seluruh Guru",
-              to: { name: ABOUT },
+              to: { name: GURU.BROWSE },
             },
           ],
           active: false,
