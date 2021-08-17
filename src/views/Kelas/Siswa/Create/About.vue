@@ -221,7 +221,6 @@
 
 <script>
 import KelasService from "@/services/resources/kelas.service";
-import { SISWA } from "@/router/name.types";
 
 export default {
   data() {
@@ -261,15 +260,7 @@ export default {
   },
   methods: {
     handleBack() {
-      this.$router.push({
-        name: SISWA.KELAS.PER_KELAS,
-        params: {
-          secureId: this.id,
-        },
-        query: {
-          kelas: this.kelas,
-        },
-      });
+      this.$router.back();
     },
     handleSubmit() {
       this.$emit("handleLoading", true);

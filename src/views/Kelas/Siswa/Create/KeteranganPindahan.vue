@@ -140,8 +140,6 @@
 </template>
 
 <script>
-import { SISWA } from "@/router/name.types";
-
 export default {
   data() {
     return {
@@ -162,13 +160,7 @@ export default {
   },
   methods: {
     handleBack() {
-      this.$router.push({
-        name: SISWA.KELAS.PER_KELAS,
-        query: {
-          id: this.id,
-          kelas: this.kelas,
-        },
-      });
+      this.$router.back();
     },
     handleSubmit() {
       console.log(this.payload);
