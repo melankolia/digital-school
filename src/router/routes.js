@@ -6,6 +6,8 @@ const Kelas = () => import("@/views/Kelas");
 const Siswa = () => import("@/views/Siswa");
 const KelasSiswaDetail = () => import("@/views/Kelas/Siswa/Detail");
 const KelasPerSiswa = () => import("@/views/Kelas/Siswa");
+const TabelKompetensiSiswa = () =>
+  import("@/views/Kelas/Siswa/TabelKompetensi");
 
 import { HOME, ABOUT, LOGIN, SISWA } from "./name.types";
 
@@ -53,6 +55,14 @@ export const configRoutes = [
                 path: "detail/:secureId",
                 name: SISWA.KELAS.SISWA.DETAIL,
                 component: KelasSiswaDetail,
+                meta: {
+                  requiresAuth: true,
+                },
+              },
+              {
+                path: ":siswaId/:kelasId",
+                name: SISWA.KELAS.SISWA.TABEL_KOMPETENSI,
+                component: TabelKompetensiSiswa,
                 meta: {
                   requiresAuth: true,
                 },

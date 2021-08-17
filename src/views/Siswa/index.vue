@@ -157,6 +157,8 @@
 <script>
 import siswaService from "@/services/resources/siswa.service";
 import { SISWA } from "@/router/name.types";
+import { SET_SISWA_INFO } from "@/store/constants/mutations.type";
+import { mapMutations } from "vuex";
 const CustomFooter = () => import("@/components/Table/Footer");
 
 export default {
@@ -210,6 +212,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations([SET_SISWA_INFO]),
     customWidth(head) {
       if (head == "NIS") return "10%";
       else if (head == "NISN") return "10%";
@@ -221,6 +224,7 @@ export default {
       this.$router.replace({ name: SISWA.KELAS.BROWSE });
     },
     handleDetail(item) {
+      this.setSiswaInfo(item);
       this.$router.push({
         name: SISWA.KELAS.SISWA.DETAIL,
         params: { secureId: item.siswa_id },
