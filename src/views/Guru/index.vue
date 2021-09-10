@@ -12,20 +12,19 @@
           <span> Kembali </span>
         </p>
       </v-btn>
+      <v-btn depressed color="primary" class="rounded-lg">
+        <p class="header-button-title ma-0">
+          <v-icon class="mr-1" small>mdi-plus</v-icon>
+          <span> Tambah Guru </span>
+        </p>
+      </v-btn>
     </div>
     <div class="d-flex flex-row justify-space-between mb-9 mt-1">
       <div>
-        <p class="header-title mb-1">Tabel Siswa</p>
-        <p class="header-subtitle mb-1">
-          Daftar Seluruh Siswa SMAN 1 Kota Jambi
-        </p>
+        <p class="header-title mb-1">Tabel Guru (Seluruh Guru)</p>
+        <p class="header-subtitle mb-1">Daftar Guru SMAN 1 Kota Jambi</p>
       </div>
     </div>
-    <v-tabs v-model="tab" color="tabMenu">
-      <v-tab v-for="item in tabs" :key="item.val">
-        <p class="ma-0 tabs-title">{{ item.text }}</p>
-      </v-tab>
-    </v-tabs>
     <div
       class="d-flex flex-row justify-space-between header my-6 pa-3 rounded-lg"
     >
@@ -33,7 +32,7 @@
         <v-text-field
           v-model="search"
           prepend-inner-icon="mdi-magnify"
-          placeholder="Cari Nama"
+          placeholder="Cari NIP atau nama atau jabatan"
           hide-details
           solo
           dense
@@ -96,9 +95,6 @@
             </th>
           </tr>
         </template>
-        <template #item.jenis_kelamin="{ item }">
-          {{ item.jenis_kelamin | toTitle }}
-        </template>
         <template #item.action="{ item }">
           <v-menu rounded left min-width="188px">
             <template v-slot:activator="{ attrs, on }">
@@ -132,7 +128,7 @@
                 <img class="mr-4" src="@/assets/icons/detail.svg" />
                 <p class="selection-item ma-0">Buka Detail</p>
               </v-list-item>
-              <v-list-item @click="() => handleEdit(item)" link>
+              <v-list-item link>
                 <img class="mr-4" src="@/assets/icons/edit-outlined.svg" />
                 <p class="selection-item ma-0">Edit Data</p>
               </v-list-item>
@@ -156,9 +152,9 @@
 </template>
 
 <script>
-import siswaService from "@/services/resources/siswa.service";
-import { SISWA } from "@/router/name.types";
-import { SET_SISWA_INFO } from "@/store/constants/mutations.type";
+import GuruService from "@/services/resources/guru.service";
+import { GURU } from "@/router/name.types";
+import { SET_GURU_INFO } from "@/store/constants/mutations.type";
 import { mapMutations } from "vuex";
 const CustomFooter = () => import("@/components/Table/Footer");
 
@@ -169,30 +165,38 @@ export default {
   data() {
     return {
       search: "",
-      sortBy: "ASC",
+      sortBy: "nama ASC",
       itemSortBy: [
         {
           text: "a-z Nama",
-          value: "ASC",
+          value: "nama ASC",
           icon: "mdi-sort-ascending",
         },
         {
           text: "z-a Nama",
-          value: "DESC",
+          value: "nama DESC",
+          icon: "mdi-sort-descending",
+        },
+        {
+          text: "a-z Jabatan",
+          value: "jabatan ASC",
+          icon: "mdi-sort-ascending",
+        },
+        {
+          text: "z-a Jabatan",
+          value: "jabatan DESC",
           icon: "mdi-sort-descending",
         },
       ],
       headers: [
-        { text: "NIS", value: "NIS", sortable: false },
-        { text: "NISN", value: "NISN", sortable: false },
+        { text: "NIP", value: "NIP", sortable: false },
         {
           text: "Nama Lengkap",
-          value: "nama_siswa",
+          value: "nama",
           sortable: false,
           width: "321px",
         },
-        { text: "Kelas", value: "nama_kelas", sortable: false },
-        { text: "Jenis Kelamin", value: "jenis_kelamin", sortable: false },
+        { text: "Jabatan", value: "jabatan", sortable: false },
         { text: "Aksi", value: "action", sortable: false },
       ],
       items: [],
@@ -200,12 +204,6 @@ export default {
       options: {
         page: 1,
       },
-      tab: "all",
-      tabs: [
-        { text: "Lihat Semua Siswa", val: "all" },
-        { text: "Laki-Laki", val: "laki" },
-        { text: "Perempuan", val: "perempuan" },
-      ],
       totalItem: 10,
       totalPage: 1,
       rowsPerPageItems: [10, 20, 50, 100],
@@ -213,48 +211,36 @@ export default {
     };
   },
   methods: {
-    ...mapMutations([SET_SISWA_INFO]),
+    ...mapMutations([SET_GURU_INFO]),
     customWidth(head) {
-      if (head == "NIS") return "10%";
-      else if (head == "NISN") return "10%";
-      else if (head == "nama_siswa") return "30%";
-      else if (head == "nama_kelas") return "20%";
-      else if (head == "jenis_kelamin") return "20%";
+      if (head == "NIP") return "23%";
+      else if (head == "nama") return "30%";
+      else if (head == "jabatan") return "30%";
+      else if (head == "action") return "17%";
     },
     handleBack() {
-      this.$router.push({ name: SISWA.KELAS.PER_KELAS });
+      this.$router.replace({ name: GURU.BROWSE });
     },
     handleDetail(item) {
-      this.setSiswaInfo(item);
+      this.setGuruInfo(item);
       this.$router.push({
-        name: SISWA.KELAS.SISWA.DETAIL,
-        params: { secureId: item.siswa_id },
-      });
-    },
-    handleEdit(item) {
-      this.$router.push({
-        name: SISWA.KELAS.SISWA.UPDATE,
-        params: { secureId: item.siswa_id, kelasId: item.kelas_id },
-        query: {
-          kelas: item.kelas,
-        },
+        name: GURU.DETAIL,
+        params: { guruId: item.guru_id },
       });
     },
     getList() {
       const { page, itemsPerPage } = this.options;
-      this.createToken(siswaService.cancelReq().source());
       this.loading = true;
-      siswaService
-        .getAllSiswa(
-          {
-            search: this.search || null,
-            tab: this.tabs[this.tab].val,
-            page,
-            limit: itemsPerPage,
-            sort: this.sortBy,
-          },
-          { cancelToken: this.cancelRequest.token }
-        )
+      this.createToken(GuruService.cancelReq().source());
+      GuruService.getList(
+        {
+          search: this.search,
+          page,
+          limit: itemsPerPage,
+          sort: this.sortBy,
+        },
+        { cancelToken: this.cancelRequest.token }
+      )
         .then(({ data: { code, message, data, meta } }) => {
           if (code == 200) {
             data.map((d, index) => {
@@ -266,26 +252,20 @@ export default {
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: message || "Gagal Memuat Data Semua Kelas",
+              message: message || "Gagal Memuat Data Semua Guru",
               color: "error",
             });
           }
         })
         .catch((err) => {
           console.error(err);
-          // this.$store.commit("snackbar/setSnack", {
-          //   show: true,
-          //   message:
-          //     err.response?.data?.message || "Gagal Memuat Data Semua Kelas",
-          //   color: "error",
-          // });
         })
         .finally(() => (this.loading = false));
     },
   },
   computed: {
     paginationProperties() {
-      return [this.tab, this.search, this.sortBy].join();
+      return [this.search, this.sortBy].join();
     },
   },
   watch: {
@@ -304,5 +284,3 @@ export default {
   },
 };
 </script>
-
-<style></style>

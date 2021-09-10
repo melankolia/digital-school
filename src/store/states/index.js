@@ -1,4 +1,13 @@
 import { initialAuthState } from "./auth.state";
-import { initialSiswaState } from "./siswa.state";
+import {
+  initialSiswaState,
+  initialGuruState,
+  initialTenagaAhliState,
+} from "./detail.state";
 
-export { initialAuthState, initialSiswaState };
+export {
+  initialAuthState,
+  initialSiswaState,
+  initialGuruState,
+  initialTenagaAhliState,
+};

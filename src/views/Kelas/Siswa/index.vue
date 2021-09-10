@@ -13,10 +13,15 @@
         </p>
       </v-btn>
       <div>
-        <v-btn depressed color="primary" class="rounded-lg mr-4">
+        <v-btn
+          @click="handleCreate"
+          depressed
+          color="primary"
+          class="rounded-lg mr-4"
+        >
           <p class="header-button-title ma-0">
             <v-icon class="mr-1" small>mdi-plus</v-icon>
-            <span> Tambah Kelas </span>
+            <span> Tambah Siswa </span>
           </p>
         </v-btn>
         <v-btn depressed class="rounded-lg outlined-custom">
@@ -143,7 +148,7 @@
                 <img class="mr-4" src="@/assets/icons/detail.svg" />
                 <p class="selection-item ma-0">Buka Detail</p>
               </v-list-item>
-              <v-list-item link>
+              <v-list-item @click="() => handleEdit(item)" link>
                 <img class="mr-4" src="@/assets/icons/edit-outlined.svg" />
                 <p class="selection-item ma-0">Edit Data</p>
               </v-list-item>
@@ -179,7 +184,7 @@ export default {
   },
   data() {
     return {
-      id: this.$route.params?.secureId,
+      id: this.$route.params?.kelasId,
       kelas: this.$route.query?.kelas,
       search: "",
       sortBy: "ASC",
@@ -234,14 +239,38 @@ export default {
       else if (head == "nama_kelas") return "10%";
       else if (head == "jenis_kelamin") return "20%";
     },
+    handleCreate() {
+      this.$router.push({
+        name: SISWA.KELAS.SISWA.CREATE,
+        query: {
+          kelas: this.kelas,
+        },
+        params: {
+          kelasId: this.id,
+        },
+      });
+    },
     handleBack() {
-      this.$router.replace({ name: SISWA.KELAS.BROWSE });
+      this.$router.push({ name: SISWA.KELAS.PER_KELAS });
     },
     handleDetail(item) {
       this.setSiswaInfo(item);
       this.$router.push({
         name: SISWA.KELAS.SISWA.DETAIL,
         params: { secureId: item.siswa_id },
+        query: {
+          kelas: this.kelas,
+          kelasId: this.id,
+        },
+      });
+    },
+    handleEdit(item) {
+      this.$router.push({
+        name: SISWA.KELAS.SISWA.UPDATE,
+        params: { secureId: item.siswa_id, kelasId: item.kelas_id },
+        query: {
+          kelas: this.kelas,
+        },
       });
     },
     getList() {

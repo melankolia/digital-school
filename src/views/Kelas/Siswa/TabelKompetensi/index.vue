@@ -112,6 +112,7 @@
     <div class="table-border mb-6 rounded-lg pa-4">
       <p class="mb-6 kelompok-label">Kelompok A Wajib</p>
       <v-data-table
+        id="kompetensi"
         :items="listItem.kelompokA"
         :headers="headers"
         :loading="loading"
@@ -147,6 +148,7 @@
     <div class="table-border mb-6 rounded-lg pa-4">
       <p class="mb-6 kelompok-label">Kelompok B Wajib</p>
       <v-data-table
+        id="kompetensi"
         :items="listItem.kelompokB"
         :headers="headers"
         :loading="loading"
@@ -182,6 +184,7 @@
     <div class="table-border mb-6 rounded-lg pa-4">
       <p class="mb-6 kelompok-label">Kelompok C Peminatan</p>
       <v-data-table
+        id="kompetensi"
         :items="listItem.kelompokC"
         :headers="headers"
         :loading="loading"
@@ -217,6 +220,7 @@
     <div class="table-border mb-6 rounded-lg pa-4">
       <p class="mb-6 kelompok-label">Kelompok C Lintas Peminatan</p>
       <v-data-table
+        id="kompetensi"
         :items="listItem.kelompokCLintas"
         :headers="headers"
         :loading="loading"
@@ -252,6 +256,7 @@
     <div class="table-border mb-6 rounded-lg pa-4">
       <p class="mb-6 kelompok-label">Ketidak Hadiran</p>
       <v-data-table
+        id="kompetensi"
         :items="listItem.absen"
         :headers="absenHeaders"
         :loading="loading"

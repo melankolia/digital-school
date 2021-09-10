@@ -4,7 +4,7 @@ import createLogger from "vuex/dist/logger";
 import VuexPersistence from "vuex-persist";
 
 import auth from "./modules/auth.store";
-import siswa from "./modules/siswa.store";
+import detail from "./modules/detail.store";
 import snackbar from "./modules/snackbar.store";
 
 const debug = process.env.VUE_APP_DEBUG;
@@ -26,7 +26,7 @@ export default new Vuex.Store({
   modules: {
     auth,
     snackbar,
-    siswa,
+    detail,
   },
   strict: debug,
   plugins: [vuexLocal.plugin, ...debugPlugin],

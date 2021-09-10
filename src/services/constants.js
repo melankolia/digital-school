@@ -6,11 +6,12 @@ export const USER = {
 const kelas = "kelas/v1";
 export const KELAS = {
   ALL: `${kelas}/all`,
+  LOV: `${kelas}/list-kelas`,
 };
 
 const siswa = "siswa/v1";
 export const SISWA = {
-  ALL: `${siswa}/all-siswa`,
+  ALL: `${siswa}/all`,
   DETAIL: {
     TENTANG_DIRI: `${siswa}/tentang-diri`,
     TEMPAT_TINGGAL: `${siswa}/tempat-tinggal`,
@@ -21,4 +22,16 @@ export const SISWA = {
     PINDAHAN: `${siswa}/pindah`,
   },
   PER_KELAS: `${siswa}/all`,
+};
+
+const guru = "guru/v1";
+export const GURU = {
+  ALL: `${guru}/all`,
+  DETAIL: `${guru}/detail`,
+};
+
+const tenaga_ahli = "tenaga-ahli/v1";
+export const TENAGA_AHLI = {
+  ALL: `${tenaga_ahli}/all`,
+  DETAIL: `${tenaga_ahli}/detail`,
 };
