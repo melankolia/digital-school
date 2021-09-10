@@ -9,6 +9,8 @@ const KelasSiswaDetail = () => import("@/views/Kelas/Siswa/Detail");
 const KelasPerSiswa = () => import("@/views/Kelas/Siswa");
 const TabelKompetensiSiswa = () =>
   import("@/views/Kelas/Siswa/TabelKompetensi");
+const UpdateKompetensiSiswa = () =>
+  import("@/views/Kelas/Siswa/TabelKompetensi/Update");
 const Guru = () => import("@/views/Guru");
 const GuruDetail = () => import("@/views/Guru/Detail");
 const TenagaAhli = () => import("@/views/TenagaAhli");
@@ -68,6 +70,14 @@ export const configRoutes = [
                 path: "detail/:secureId",
                 name: SISWA.KELAS.SISWA.DETAIL,
                 component: KelasSiswaDetail,
+                meta: {
+                  requiresAuth: true,
+                },
+              },
+              {
+                path: "update-kompetensi/:siswaId/:kelasId",
+                name: SISWA.KELAS.SISWA.UPDATE_KOMPETENSI,
+                component: UpdateKompetensiSiswa,
                 meta: {
                   requiresAuth: true,
                 },
