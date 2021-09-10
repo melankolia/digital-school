@@ -13,8 +13,10 @@ const UpdateKompetensiSiswa = () =>
   import("@/views/Kelas/Siswa/TabelKompetensi/Update");
 const Guru = () => import("@/views/Guru");
 const GuruDetail = () => import("@/views/Guru/Detail");
+const UpdateGuru = () => import("@/views/Guru/Create");
 const TenagaAhli = () => import("@/views/TenagaAhli");
 const TenagaAhliDetail = () => import("@/views/TenagaAhli/Detail");
+const UpdateTenagaAhli = () => import("@/views/TenagaAhli/Create");
 
 import { HOME, ABOUT, LOGIN, SISWA, GURU, TENAGA_AHLI } from "./name.types";
 
@@ -145,6 +147,22 @@ export const configRoutes = [
             },
           },
           {
+            path: "update/:guruId",
+            name: GURU.UPDATE,
+            component: UpdateGuru,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "create",
+            name: GURU.CREATE,
+            component: UpdateGuru,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
             path: ":guruId",
             name: GURU.DETAIL,
             component: GuruDetail,
@@ -166,6 +184,22 @@ export const configRoutes = [
             path: "/",
             name: TENAGA_AHLI.BROWSE,
             component: TenagaAhli,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "update/:tenagaAhliId",
+            name: TENAGA_AHLI.UPDATE,
+            component: UpdateTenagaAhli,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "create",
+            name: TENAGA_AHLI.CREATE,
+            component: UpdateTenagaAhli,
             meta: {
               requiresAuth: true,
             },
