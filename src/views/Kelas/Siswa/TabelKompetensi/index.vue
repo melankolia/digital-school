@@ -13,7 +13,12 @@
         </p>
       </v-btn>
       <div>
-        <v-btn depressed color="primary" class="rounded-lg mr-4">
+        <v-btn
+          @click="handleEdit"
+          depressed
+          color="primary"
+          class="rounded-lg mr-4"
+        >
           <p class="header-button-title ma-0">
             <v-icon class="mr-1" small>mdi-square-edit-outline</v-icon>
             <span> Edit Data </span>
@@ -275,6 +280,7 @@
 </template>
 
 <script>
+import { SISWA } from "@/router/name.types";
 import { mapGetters } from "vuex";
 
 export default {
@@ -376,6 +382,15 @@ export default {
       else if (arg >= 61 && arg <= 80) return "Baik";
       else if (arg >= 81) return "Sangat Baik";
     },
+    handleEdit() {
+      this.$router.push({
+        name: SISWA.KELAS.SISWA.UPDATE_KOMPETENSI,
+        params: {
+          siswaId: this.$route.params?.siswaId,
+          kelasId: this.$route.params?.kelasId,
+        },
+      });
+    },
   },
   mounted() {
     this.bindingData();
@@ -386,7 +401,7 @@ export default {
 <style scoped>
 .kelompok-label {
   font-family: "Poppins";
-  font-size: 18px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 500 !important;
   line-height: 30px;
