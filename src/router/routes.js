@@ -4,6 +4,7 @@ const About = () => import("@/views/About");
 const Login = () => import("@/views/Login");
 const Kelas = () => import("@/views/Kelas");
 const Siswa = () => import("@/views/Siswa");
+const RekapitulasiSiswa = () => import("@/views/Siswa/Rekapitulasi");
 const CreateSiswa = () => import("@/views/Kelas/Siswa/Create");
 const KelasSiswaDetail = () => import("@/views/Kelas/Siswa/Detail");
 const KelasPerSiswa = () => import("@/views/Kelas/Siswa");
@@ -124,6 +125,14 @@ export const configRoutes = [
             path: "/",
             name: SISWA.ALL.BROWSE,
             component: Siswa,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "/rekapitulasi",
+            name: SISWA.REKAPITULASI.BROWSE,
+            component: RekapitulasiSiswa,
             meta: {
               requiresAuth: true,
             },

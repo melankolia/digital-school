@@ -8,6 +8,9 @@ export const SISWA = {
   ALL: {
     BROWSE: `${siswa}.browse`,
   },
+  REKAPITULASI: {
+    BROWSE: `${siswa}.rekapitulasi.browse`,
+  },
   KELAS: {
     BROWSE: `${siswa}.kelas`,
     PER_KELAS: `${siswa}.kelas.perkelas`,
