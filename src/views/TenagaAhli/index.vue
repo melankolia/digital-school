@@ -122,7 +122,7 @@
                 <img class="mr-4" src="@/assets/icons/detail.svg" />
                 <p class="selection-item ma-0">Buka Detail</p>
               </v-list-item>
-              <v-list-item link>
+              <v-list-item @click="() => handleEdit(item)" link>
                 <img class="mr-4" src="@/assets/icons/edit-outlined.svg" />
                 <p class="selection-item ma-0">Edit Data</p>
               </v-list-item>
@@ -219,6 +219,12 @@ export default {
       this.setTenagaAhliInfo(item);
       this.$router.push({
         name: TENAGA_AHLI.DETAIL,
+        params: { tenagaAhliId: item.tenaga_ahli_id },
+      });
+    },
+    handleEdit(item) {
+      this.$router.push({
+        name: TENAGA_AHLI.UPDATE,
         params: { tenagaAhliId: item.tenaga_ahli_id },
       });
     },

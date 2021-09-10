@@ -12,7 +12,7 @@
           <span> Kembali </span>
         </p>
       </v-btn>
-      <v-btn depressed color="primary" class="rounded-lg">
+      <v-btn @click="handleAdd" depressed color="primary" class="rounded-lg">
         <p class="header-button-title ma-0">
           <v-icon class="mr-1" small>mdi-plus</v-icon>
           <span> Tambah Guru </span>
@@ -128,7 +128,7 @@
                 <img class="mr-4" src="@/assets/icons/detail.svg" />
                 <p class="selection-item ma-0">Buka Detail</p>
               </v-list-item>
-              <v-list-item link>
+              <v-list-item @click="() => handleEdit(item)" link>
                 <img class="mr-4" src="@/assets/icons/edit-outlined.svg" />
                 <p class="selection-item ma-0">Edit Data</p>
               </v-list-item>
@@ -225,6 +225,15 @@ export default {
       this.setGuruInfo(item);
       this.$router.push({
         name: GURU.DETAIL,
+        params: { guruId: item.guru_id },
+      });
+    },
+    handleAdd() {
+      this.$router.push({ name: GURU.CREATE });
+    },
+    handleEdit(item) {
+      this.$router.push({
+        name: GURU.UPDATE,
         params: { guruId: item.guru_id },
       });
     },

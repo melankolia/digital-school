@@ -4,6 +4,7 @@ const About = () => import("@/views/About");
 const Login = () => import("@/views/Login");
 const Kelas = () => import("@/views/Kelas");
 const Siswa = () => import("@/views/Siswa");
+const RekapitulasiSiswa = () => import("@/views/Siswa/Rekapitulasi");
 const CreateSiswa = () => import("@/views/Kelas/Siswa/Create");
 const KelasSiswaDetail = () => import("@/views/Kelas/Siswa/Detail");
 const KelasPerSiswa = () => import("@/views/Kelas/Siswa");
@@ -13,8 +14,10 @@ const UpdateKompetensiSiswa = () =>
   import("@/views/Kelas/Siswa/TabelKompetensi/Update");
 const Guru = () => import("@/views/Guru");
 const GuruDetail = () => import("@/views/Guru/Detail");
+const UpdateGuru = () => import("@/views/Guru/Create");
 const TenagaAhli = () => import("@/views/TenagaAhli");
 const TenagaAhliDetail = () => import("@/views/TenagaAhli/Detail");
+const UpdateTenagaAhli = () => import("@/views/TenagaAhli/Create");
 
 import { HOME, ABOUT, LOGIN, SISWA, GURU, TENAGA_AHLI } from "./name.types";
 
@@ -126,6 +129,14 @@ export const configRoutes = [
               requiresAuth: true,
             },
           },
+          {
+            path: "/rekapitulasi",
+            name: SISWA.REKAPITULASI.BROWSE,
+            component: RekapitulasiSiswa,
+            meta: {
+              requiresAuth: true,
+            },
+          },
         ],
       },
       {
@@ -140,6 +151,22 @@ export const configRoutes = [
             path: "/",
             name: GURU.BROWSE,
             component: Guru,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "update/:guruId",
+            name: GURU.UPDATE,
+            component: UpdateGuru,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "create",
+            name: GURU.CREATE,
+            component: UpdateGuru,
             meta: {
               requiresAuth: true,
             },
@@ -166,6 +193,22 @@ export const configRoutes = [
             path: "/",
             name: TENAGA_AHLI.BROWSE,
             component: TenagaAhli,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "update/:tenagaAhliId",
+            name: TENAGA_AHLI.UPDATE,
+            component: UpdateTenagaAhli,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "create",
+            name: TENAGA_AHLI.CREATE,
+            component: UpdateTenagaAhli,
             meta: {
               requiresAuth: true,
             },
