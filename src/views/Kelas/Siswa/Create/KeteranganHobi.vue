@@ -69,7 +69,12 @@
 </template>
 
 <script>
+import SiswaService from "@/services/resources/siswa.service";
+
 export default {
+  props: {
+    siswaId: { type: String, required: true },
+  },
   data() {
     return {
       id: this.$route.query?.kelasId,
@@ -87,17 +92,47 @@ export default {
       this.$router.back();
     },
     handleSubmit() {
-      console.log(this.payload);
+      const payload = {
+        siswa_id: this.siswaId,
+        seni: this.payload.seni || "-",
+        olahraga: this.payload.olahraga || "-",
+        organisasi: this.payload.organisasi || "-",
+        lain: this.payload.lain || "-",
+      };
       this.$emit("handleLoading", true);
-      setTimeout(() => {
-        this.$emit("handleNext");
-        this.$emit("handleLoading", false);
-        this.$vuetify.goTo(1, {
-          duration: 300,
-          offset: 0,
-          easing: "easeInOutCubic",
-        });
-      }, 1000);
+      SiswaService.addHobi(payload)
+        .then(({ data: { data, success, message } }) => {
+          if (success == true) {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: "Berhasil Menyimpan Data Keterangan Hobi Siswa",
+              color: "success",
+            });
+            this.$emit("handleId", data.siswa_id);
+            this.$emit("handleNext");
+            this.$emit("handleLoading", false);
+            this.$vuetify.goTo(1, {
+              duration: 300,
+              offset: 0,
+              easing: "easeInOutCubic",
+            });
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Menyimpan Data Keterangan Hobi Siswa",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Menyimpan Data Tempat Tinggal Siswa",
+            color: "error",
+          });
+        })
+        .finally(() => this.$emit("handleLoading", false));
     },
   },
 };

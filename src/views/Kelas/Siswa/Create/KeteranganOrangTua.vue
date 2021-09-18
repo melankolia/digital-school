@@ -40,7 +40,7 @@
               hide-details
               filled
               solo
-              label="dd/mm/yyyy"
+              label="Contoh: Jambi, 18 April 2007"
             />
           </v-col>
         </v-row>
@@ -54,6 +54,7 @@
               filled
               solo
               label="Pilih Agama"
+              clearable
             />
           </v-col>
           <v-col cols="12" xs="12" sm="6">
@@ -65,6 +66,7 @@
               filled
               solo
               label="Pilih Kewarganegaraan"
+              clearable
             />
           </v-col>
         </v-row>
@@ -180,7 +182,7 @@
               hide-details
               filled
               solo
-              label="Contoh: Chris Budiman"
+              label="Contoh: Christy"
             />
           </v-col>
           <v-col cols="12" xs="12" sm="6">
@@ -190,7 +192,7 @@
               hide-details
               filled
               solo
-              label="dd/mm/yyyy"
+              label="Contoh: Jambi, 18 April 2007"
             />
           </v-col>
         </v-row>
@@ -204,6 +206,7 @@
               filled
               solo
               label="Pilih Agama"
+              clearable
             />
           </v-col>
           <v-col cols="12" xs="12" sm="6">
@@ -215,6 +218,7 @@
               filled
               solo
               label="Pilih Kewarganegaraan"
+              clearable
             />
           </v-col>
         </v-row>
@@ -296,7 +300,7 @@
             />
           </v-col>
           <v-col cols="12" xs="12" sm="6">
-            <p class="mb-3 title-input">l. Status nikah ayah</p>
+            <p class="mb-3 title-input">l. Status nikah ibu</p>
             <v-text-field
               v-model="payload[1].status_nikah"
               hide-details
@@ -340,7 +344,7 @@
               hide-details
               filled
               solo
-              label="dd/mm/yyyy"
+              label="Contoh: Jambi, 18 April 2007"
             />
           </v-col>
         </v-row>
@@ -354,6 +358,7 @@
               filled
               solo
               label="Pilih Agama"
+              clearable
             />
           </v-col>
           <v-col cols="12" xs="12" sm="6">
@@ -365,6 +370,7 @@
               filled
               solo
               label="Pilih Kewarganegaraan"
+              clearable
             />
           </v-col>
         </v-row>
@@ -436,9 +442,19 @@
         </v-row>
         <v-row>
           <v-col cols="12" xs="12" sm="6">
-            <p class="mb-3 title-input">k. Hubungan</p>
+            <p class="mb-3 title-input">k. Status</p>
             <v-text-field
-              v-model="payload[2].hubungan"
+              v-model="payload[2].status"
+              hide-details
+              filled
+              solo
+              label="Contoh: Menikah"
+            />
+          </v-col>
+          <v-col cols="12" xs="12" sm="6">
+            <p class="mb-3 title-input">l. Status Nikah Wali</p>
+            <v-text-field
+              v-model="payload[2].status_nikah"
               hide-details
               filled
               solo
@@ -446,13 +462,40 @@
             />
           </v-col>
         </v-row>
+        <v-row>
+          <v-col cols="12" xs="12" sm="6">
+            <p class="mb-3 title-input">m. Tahun Meninggal</p>
+            <v-text-field
+              v-model="payload[2].tahun_meninggal"
+              hide-details
+              filled
+              solo
+              label="Contoh: Paman"
+            />
+          </v-col>
+          <!-- <v-col cols="12" xs="12" sm="6">
+            <p class="mb-3 title-input">M. Hubungan</p>
+            <v-text-field
+              v-model="payload[2].hubungan"
+              hide-details
+              filled
+              solo
+              label="Contoh: Paman"
+            />
+          </v-col> -->
+        </v-row>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import SiswaService from "@/services/resources/siswa.service";
+
 export default {
+  props: {
+    siswaId: { type: String, required: true },
+  },
   data() {
     return {
       id: this.$route.query?.kelasId,
@@ -460,8 +503,8 @@ export default {
       // Agama Properties
       listAgama: [
         "Islam",
-        "Kristen Katolik",
-        "Kristen Protestan",
+        "Katolik",
+        "Kristen",
         "Hindu",
         "Buddha",
         "Kong Hu Chu",
@@ -508,7 +551,9 @@ export default {
           penghasilan: null,
           alamat: null,
           no_telpon: null,
-          hubungan: null,
+          status: null,
+          status_nikah: null,
+          tahun_meninggal: null,
         },
       ],
     };
@@ -518,17 +563,58 @@ export default {
       this.$router.back();
     },
     handleSubmit() {
-      console.log(this.payload);
       this.$emit("handleLoading", true);
-      setTimeout(() => {
-        this.$emit("handleNext");
-        this.$emit("handleLoading", false);
-        this.$vuetify.goTo(1, {
-          duration: 300,
-          offset: 0,
-          easing: "easeInOutCubic",
-        });
-      }, 1000);
+      const payload = {
+        siswa_id: this.siswaId,
+        data: this.payload.map((e) => {
+          e.nama = e.nama || "-";
+          e.TTL = e.TTL || "-";
+          e.agama = e.agama || "-";
+          e.kewarganegaraan = e.kewarganegaraan || "-";
+          e.gol_pekerjaan = e.gol_pekerjaan || "-";
+          e.penghasilan = e.penghasilan || "-";
+          e.alamat = e.alamat || "-";
+          e.no_telpon = e.no_telpon || "-";
+          e.status = e.status || "-";
+          e.status_nikah = e.status_nikah || "-";
+          e.tahun_meninggal = e.tahun_meninggal || "-";
+          return e;
+        }),
+      };
+      SiswaService.addOrangTua(payload)
+        .then(({ data: { data, success, message } }) => {
+          if (success == true) {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: "Berhasil Menyimpan Data Keterangan Orang Tua Siswa",
+              color: "success",
+            });
+            this.$emit("handleId", data.siswa_id);
+            this.$emit("handleNext");
+            this.$emit("handleLoading", false);
+            this.$vuetify.goTo(1, {
+              duration: 300,
+              offset: 0,
+              easing: "easeInOutCubic",
+            });
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message:
+                message || "Gagal Menyimpan Data Keterangan Orang Tua Siswa",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Menyimpan Data Keterangan Orang Tua Siswa",
+            color: "error",
+          });
+        })
+        .finally(() => this.$emit("handleLoading", false));
     },
   },
 };

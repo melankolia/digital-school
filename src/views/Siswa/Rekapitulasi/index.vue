@@ -36,7 +36,7 @@
           <tr class="table-header">
             <th class="table-header-text rounded-l-lg">Islam</th>
             <th class="table-header-text">Katolik</th>
-            <th class="table-header-text">Protestan</th>
+            <th class="table-header-text">Kristen</th>
             <th class="table-header-text">Hindu</th>
             <th class="table-header-text">Buddha</th>
             <th class="table-header-text rounded-r-lg">Jumlah</th>

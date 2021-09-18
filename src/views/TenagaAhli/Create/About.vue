@@ -41,6 +41,7 @@
             filled
             solo
             label="Pilih Jenis Kelamin"
+            clearable
           />
         </v-col>
       </v-row>
@@ -108,6 +109,7 @@
             filled
             solo
             label="Pangkat dan Golongan"
+            clearable
           />
         </v-col>
       </v-row>

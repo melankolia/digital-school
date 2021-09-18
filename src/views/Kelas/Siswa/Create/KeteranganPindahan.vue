@@ -140,7 +140,13 @@
 </template>
 
 <script>
+import SiswaService from "@/services/resources/siswa.service";
+import { SISWA } from "@/router/name.types";
+
 export default {
+  props: {
+    siswaId: { type: String, required: true },
+  },
   data() {
     return {
       id: this.$route.query?.kelasId,
@@ -163,16 +169,56 @@ export default {
       this.$router.back();
     },
     handleSubmit() {
-      console.log(this.payload);
       this.$emit("handleLoading", true);
-      setTimeout(() => {
-        this.$emit("handleLoading", false);
-        this.$vuetify.goTo(1, {
-          duration: 300,
-          offset: 0,
-          easing: "easeInOutCubic",
-        });
-      }, 1000);
+      const payload = {
+        siswa_id: this.siswaId,
+        pindah_sekolah: this.payload.pindah_sekolah || "-",
+        pindah_alasan: this.payload.pindah_alasan || "-",
+        diterima_di: this.payload.diterima_di || "-",
+        diterima_program: this.payload.diterima_program || "-",
+        meninggalkan_di: this.payload.meninggalkan_di || "-",
+        meninggalkan_program: this.payload.meninggalkan_program || "-",
+        meninggalkan_alasan: this.payload.meninggalkan_alasan || "-",
+        akhir_tamat_belajar: this.payload.akhir_tamat_belajar || "-",
+        akhir_sttb: this.payload.akhir_sttb || "-",
+      };
+      SiswaService.addPindahan(payload)
+        .then(({ data: { data, success, message } }) => {
+          if (success == true) {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: "Berhasil Menyimpan Data Keterangan Pindahan Siswa",
+              color: "success",
+            });
+            this.$emit("handleId", data.siswa_id);
+            this.$router.replace({
+              name: SISWA.KELAS.SISWA.DETAIL,
+              params: { secureId: data.siswa_id },
+            });
+            this.$emit("handleLoading", false);
+            this.$vuetify.goTo(1, {
+              duration: 300,
+              offset: 0,
+              easing: "easeInOutCubic",
+            });
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message:
+                message || "Gagal Menyimpan Data Keterangan Pindahan Siswa",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Menyimpan Data Tempat Tinggal Siswa",
+            color: "error",
+          });
+        })
+        .finally(() => this.$emit("handleLoading", false));
     },
   },
 };
