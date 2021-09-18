@@ -37,12 +37,12 @@ const guru = "guru/v1";
 export const GURU = {
   ALL: `${guru}/all`,
   DETAIL: `${guru}/detail`,
-  CREATE: `${guru}`,
+  CREATE: `${guru}/add`,
 };
 
 const tenaga_ahli = "tenaga-ahli/v1";
 export const TENAGA_AHLI = {
   ALL: `${tenaga_ahli}/all`,
   DETAIL: `${tenaga_ahli}/detail`,
-  CREATE: `${tenaga_ahli}`,
+  CREATE: `${tenaga_ahli}/add`,
 };
