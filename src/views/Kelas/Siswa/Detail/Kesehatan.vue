@@ -6,7 +6,12 @@
       v-if="!isAvailable"
     >
       <template v-slot:action>
-        <v-btn depressed color="header" class="rounded-lg outlined-custom">
+        <v-btn
+          @click="() => getDetail()"
+          depressed
+          color="header"
+          class="rounded-lg outlined-custom"
+        >
           <v-icon class="mr-1" small>mdi-reload</v-icon>
           <p class="header-button-back ma-0">Reload</p>
         </v-btn>
