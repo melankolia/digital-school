@@ -58,7 +58,7 @@
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">NIP / KARPEG</p>
           <v-text-field
-            v-model="payload.nip"
+            v-model="payload.nip_karpeg"
             hide-details
             filled
             solo
@@ -70,7 +70,7 @@
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Pendidikan Terakhir</p>
           <v-text-field
-            v-model="payload.pendidikan_terakhir"
+            v-model="payload.pendidikan"
             hide-details
             filled
             solo
@@ -84,7 +84,7 @@
             hide-details
             filled
             solo
-            label="Contoh : 1288812819"
+            label="Contoh : 01-02-1986"
           />
         </v-col>
       </v-row>
@@ -102,7 +102,7 @@
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Pangkat dan Golongan</p>
           <v-select
-            v-model="payload.golongan"
+            v-model="payload.gol_pangkat"
             :items="listGolongan"
             hide-details
             filled
@@ -115,11 +115,11 @@
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Pangkat TMT</p>
           <v-text-field
-            v-model="payload.tmt"
+            v-model="payload.tmt_pangkat"
             hide-details
             filled
             solo
-            label="Contoh : III A"
+            label="Contoh : 01-04-2018"
           />
         </v-col>
         <v-col cols="12" xs="12" sm="6">
@@ -129,7 +129,7 @@
             hide-details
             filled
             solo
-            label="Contoh : 18/09/2021"
+            label="Contoh : 18-09-2021"
           />
         </v-col>
       </v-row>
@@ -169,7 +169,7 @@
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">K / TK</p>
           <v-text-field
-            v-model="payload.tk"
+            v-model="payload.k_tk"
             hide-details
             filled
             solo
@@ -227,6 +227,7 @@
 
 <script>
 import { GURU } from "@/router/name.types";
+import GuruService from "@/services/resources/guru.service";
 
 export default {
   data() {
@@ -257,17 +258,17 @@ export default {
         nama: null,
         jenis_kelamin: null,
         ttl: null,
-        nip: null,
-        pendidikan_terakhir: null,
+        nip_karpeg: null,
+        pendidikan: null,
         mulai_bertugas: null,
         jabatan: null,
-        golongan: null,
-        tmt: null,
+        gol_pangkat: null,
+        tmt_pangkat: null,
         sk_pertama: null,
         gaji_pokok: null,
         mk_gol_tahun: null,
         mk_gol_bulan: null,
-        tk: null,
+        k_tk: null,
         yad_pangkat: null,
         yad_gaji: null,
         sertifikasi: null,
@@ -281,6 +282,58 @@ export default {
     },
     handleSubmit() {
       this.$emit("handleLoading", true);
+      const payload = {
+        nama: this.payload.nama || "-",
+        jenis_kelamin: this.payload.jenis_kelamin || "-",
+        ttl: this.payload.ttl || "-",
+        nip_karpeg: this.payload.nip_karpeg || "-",
+        pendidikan: this.payload.pendidikan || "-",
+        mulai_bertugas: this.payload.mulai_bertugas || "-",
+        jabatan: this.payload.jabatan || "-",
+        gol_pangkat: this.payload.gol_pangkat || "-",
+        tmt_pangkat: this.payload.tmt_pangkat || "-",
+        sk_pertama: this.payload.sk_pertama || "-",
+        gaji_pokok: this.payload.gaji_pokok || "-",
+        mk_gol_tahun: this.payload.mk_gol_tahun || "-",
+        mk_gol_bulan: this.payload.mk_gol_bulan || "-",
+        k_tk: this.payload.k_tk || "-",
+        yad_pangkat: this.payload.yad_pangkat || "-",
+        yad_gaji: this.payload.yad_gaji || "-",
+        sertifikasi: this.payload.sertifikasi || "-",
+        nuptk: this.payload.nuptk || "-",
+      };
+      GuruService.addGuru(payload)
+        .then(({ data: { success, message } }) => {
+          if (success == true) {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: "Berhasil Menyimpan Data Guru",
+              color: "success",
+            });
+            this.$router.replace({ name: GURU.ALL });
+            this.$emit("handleLoading", false);
+            this.$vuetify.goTo(1, {
+              duration: 300,
+              offset: 0,
+              easing: "easeInOutCubic",
+            });
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Menyimpan Data Guru",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Menyimpan Data Guru",
+            color: "error",
+          });
+        })
+        .finally(() => this.$emit("handleLoading", false));
       setTimeout(() => {
         this.$emit("handleLoading", false);
         this.$vuetify.goTo(1, {
