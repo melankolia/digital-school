@@ -229,6 +229,7 @@
 
 <script>
 import { TENAGA_AHLI } from "@/router/name.types";
+import TenagaAhliService from "@/services/resources/tenaga-ahli.service";
 
 export default {
   data() {
@@ -283,20 +284,57 @@ export default {
     },
     handleSubmit() {
       this.$emit("handleLoading", true);
-      setTimeout(() => {
-        this.$emit("handleLoading", false);
-        this.$vuetify.goTo(1, {
-          duration: 300,
-          offset: 0,
-          easing: "easeInOutCubic",
-        });
-        this.$store.commit("snackbar/setSnack", {
-          show: true,
-          message: "Data TENAGA_AHLI Berhasil Diinput",
-          color: "success",
-        });
-        this.$router.replace({ name: TENAGA_AHLI.BROWSE });
-      }, 1000);
+      const payload = {
+        nama: this.payload.nama,
+        jenis_kelamin: this.payload.jenis_kelamin || "-",
+        ttl: this.payload.ttl || "-",
+        nip: this.payload.nip || "-",
+        pendidikan_terakhir: this.payload.pendidikan_terakhir || "-",
+        mulai_bertugas: this.payload.mulai_bertugas || "-",
+        jabatan: this.payload.jabatan || "-",
+        golongan: this.payload.golongan || "-",
+        tmt: this.payload.tmt || "-",
+        sk_pertama: this.payload.sk_pertama || "-",
+        gaji_pokok: this.payload.gaji_pokok || "-",
+        mk_gol_tahun: this.payload.mk_gol_tahun || "-",
+        mk_gol_bulan: this.payload.mk_gol_bulan || "-",
+        tk: this.payload.tk || "-",
+        yad_pangkat: this.payload.yad_pangkat || "-",
+        yad_gaji: this.payload.yad_gaji || "-",
+        sertifikasi: this.payload.sertifikasi || "-",
+        nuptk: this.payload.nuptk || "-",
+      };
+      TenagaAhliService.addTenagaAhli(payload)
+        .then(({ data: { success, message } }) => {
+          if (success == true) {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: "Berhasil Menyimpan Data Tenaga Ahli",
+              color: "success",
+            });
+            this.$router.replace({ name: TENAGA_AHLI.BROWSE });
+            this.$vuetify.goTo(1, {
+              duration: 300,
+              offset: 0,
+              easing: "easeInOutCubic",
+            });
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Menyimpan Data Tenaga Ahli",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Menyimpan Data Tenaga Ahli",
+            color: "error",
+          });
+        })
+        .finally(() => this.$emit("handleLoading", false));
     },
   },
 };

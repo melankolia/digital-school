@@ -8,6 +8,9 @@ const TenagaAhliService = {
   getDetail(id) {
     return MainInstance.fetch(TENAGA_AHLI.DETAIL, id);
   },
+  addTenagaAhli(data) {
+    return MainInstance.post(TENAGA_AHLI.CREATE, data);
+  },
   cancelReq() {
     return MainInstance.cancelRequest();
   },

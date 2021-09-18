@@ -44,4 +44,5 @@ const tenaga_ahli = "tenaga-ahli/v1";
 export const TENAGA_AHLI = {
   ALL: `${tenaga_ahli}/all`,
   DETAIL: `${tenaga_ahli}/detail`,
+  CREATE: `${tenaga_ahli}`,
 };

@@ -195,7 +195,6 @@ export default {
               name: SISWA.KELAS.SISWA.DETAIL,
               params: { secureId: data.siswa_id },
             });
-            this.$emit("handleLoading", false);
             this.$vuetify.goTo(1, {
               duration: 300,
               offset: 0,
