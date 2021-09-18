@@ -333,20 +333,6 @@ export default {
           });
         })
         .finally(() => this.$emit("handleLoading", false));
-      setTimeout(() => {
-        this.$emit("handleLoading", false);
-        this.$vuetify.goTo(1, {
-          duration: 300,
-          offset: 0,
-          easing: "easeInOutCubic",
-        });
-        this.$store.commit("snackbar/setSnack", {
-          show: true,
-          message: "Data Guru Berhasil Diinput",
-          color: "success",
-        });
-        this.$router.replace({ name: GURU.BROWSE });
-      }, 1000);
     },
   },
 };
