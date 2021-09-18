@@ -12,6 +12,12 @@
           <span> Kembali </span>
         </p>
       </v-btn>
+      <v-btn @click="handleAdd" depressed color="primary" class="rounded-lg">
+        <p class="header-button-title ma-0">
+          <v-icon class="mr-1" small>mdi-plus</v-icon>
+          <span> Tambah Tenaga Ahli</span>
+        </p>
+      </v-btn>
     </div>
     <div class="d-flex flex-row justify-space-between mb-9 mt-1">
       <div>
@@ -221,6 +227,9 @@ export default {
         name: TENAGA_AHLI.DETAIL,
         params: { tenagaAhliId: item.tenaga_ahli_id },
       });
+    },
+    handleAdd() {
+      this.$router.push({ name: TENAGA_AHLI.CREATE });
     },
     handleEdit(item) {
       this.$router.push({

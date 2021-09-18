@@ -304,7 +304,7 @@ export default {
         sertifikasi: this.payload.sertifikasi || "-",
         nuptk: this.payload.nuptk || "-",
       };
-      TenagaAhliService.addGuru(payload)
+      TenagaAhliService.addTenagaAhli(payload)
         .then(({ data: { success, message } }) => {
           if (success == true) {
             this.$store.commit("snackbar/setSnack", {
