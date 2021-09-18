@@ -112,7 +112,6 @@ export default {
             });
             this.$emit("handleId", data.siswa_id);
             this.$emit("handleNext");
-            this.$emit("handleLoading", false);
             this.$vuetify.goTo(1, {
               duration: 300,
               offset: 0,

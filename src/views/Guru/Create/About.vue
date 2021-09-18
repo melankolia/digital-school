@@ -311,7 +311,6 @@ export default {
               color: "success",
             });
             this.$router.replace({ name: GURU.ALL });
-            this.$emit("handleLoading", false);
             this.$vuetify.goTo(1, {
               duration: 300,
               offset: 0,
