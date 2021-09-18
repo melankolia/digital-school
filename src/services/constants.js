@@ -21,6 +21,15 @@ export const SISWA = {
     ORANG_TUA: `${siswa}/orang-tua`,
     PINDAHAN: `${siswa}/pindah`,
   },
+  CREATE: {
+    TENTANG_DIRI: `${siswa}/tentang-diri`,
+    TEMPAT_TINGGAL: `${siswa}/tempat-tinggal`,
+    PENDIDIKAN: `${siswa}/pendidikan`,
+    KESEHATAN: `${siswa}/kesehatan`,
+    HOBI: `${siswa}/hobi`,
+    ORANG_TUA: `${siswa}/orang-tua`,
+    PINDAHAN: `${siswa}/pindah`,
+  },
   PER_KELAS: `${siswa}/all`,
 };
 

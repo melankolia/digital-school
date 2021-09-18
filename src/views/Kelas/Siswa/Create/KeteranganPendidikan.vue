@@ -48,7 +48,7 @@
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">b. Tanggal dan nomor ijazah</p>
           <v-text-field
-            v-model="payload.tgl_no_ijazah"
+            v-model="payload.tanggal_no_ijazah"
             hide-details
             filled
             solo
@@ -60,7 +60,7 @@
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">c. Tanggal dan nomor STL</p>
           <v-text-field
-            v-model="payload.tgl_no_stl"
+            v-model="payload.tanggal_no_stl"
             hide-details
             filled
             solo
@@ -82,7 +82,7 @@
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">e. Nilai SKHUN</p>
           <v-text-field
-            v-model="payload.nilai_SKHUN"
+            v-model="payload.nilai_skhun"
             hide-details
             filled
             solo
@@ -95,7 +95,12 @@
 </template>
 
 <script>
+import SiswaService from "@/services/resources/siswa.service";
+
 export default {
+  props: {
+    siswaId: { type: String, required: true },
+  },
   data() {
     return {
       id: this.$route.query?.kelasId,
@@ -103,10 +108,10 @@ export default {
       payload: {
         tanggal_diterima: null,
         lulus_dari: null,
-        tgl_no_ijazah: null,
-        tgl_no_stl: null,
+        tanggal_no_ijazah: null,
+        tanggal_no_stl: null,
         lama_belajar: null,
-        nilai_SKHUN: null,
+        nilai_skhun: null,
       },
     };
   },
@@ -115,17 +120,50 @@ export default {
       this.$router.back();
     },
     handleSubmit() {
-      console.log(this.payload);
       this.$emit("handleLoading", true);
-      setTimeout(() => {
-        this.$emit("handleNext");
-        this.$emit("handleLoading", false);
-        this.$vuetify.goTo(1, {
-          duration: 300,
-          offset: 0,
-          easing: "easeInOutCubic",
-        });
-      }, 1000);
+      const payload = {
+        siswa_id: this.siswaId,
+        tanggal_diterima: this.payload.tanggal_diterima || "-",
+        lulus_dari: this.payload.lulus_dari || "-",
+        tanggal_no_ijazah: this.payload.tanggal_no_ijazah || "-",
+        tanggal_no_stl: this.payload.tanggal_no_stl || "-",
+        lama_belajar: this.payload.lama_belajar || "-",
+        nilai_skhun: this.payload.nilai_skhun || "-",
+      };
+      SiswaService.addPendidikan(payload)
+        .then(({ data: { data, success, message } }) => {
+          if (success == true) {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: "Berhasil Menyimpan Data Keterangan Pendidikan Siswa",
+              color: "success",
+            });
+            this.$emit("handleId", data.siswa_id);
+            this.$emit("handleNext");
+            this.$emit("handleLoading", false);
+            this.$vuetify.goTo(1, {
+              duration: 300,
+              offset: 0,
+              easing: "easeInOutCubic",
+            });
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message:
+                message || "Gagal Menyimpan Data Keterangan Pendidikan Siswa",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Menyimpan Data Keterangan Pendidikan Siswa",
+            color: "error",
+          });
+        })
+        .finally(() => this.$emit("handleLoading", false));
     },
   },
 };

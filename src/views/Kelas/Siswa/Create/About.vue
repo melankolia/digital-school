@@ -25,7 +25,7 @@
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Kelas</p>
           <v-select
-            v-model="payload.kelas"
+            v-model="payload.kelas_id"
             :loading="loadingListKelas"
             :items="listKelas"
             hide-details
@@ -91,7 +91,7 @@
             hide-details
             filled
             solo
-            label="Contoh: 18/07/2020"
+            label="Contoh: Jambi, 18 April 2007"
           />
         </v-col>
         <v-col cols="12" xs="12" sm="6">
@@ -103,6 +103,7 @@
             filled
             solo
             label="Pilih Jenis Kelamin"
+            clearable
           />
         </v-col>
       </v-row>
@@ -111,10 +112,12 @@
           <p class="mb-3 title-input">Agama</p>
           <v-select
             v-model="payload.agama"
+            :items="listAgama"
             hide-details
             filled
             solo
             label="Pilih Agama"
+            clearable
           />
         </v-col>
         <v-col cols="12" xs="12" sm="6">
@@ -126,6 +129,7 @@
             filled
             solo
             label="Pilih Kewarganegaraan"
+            clearable
           />
         </v-col>
       </v-row>
@@ -148,8 +152,7 @@
             hide-details
             filled
             solo
-            type="number"
-            label="Contoh: 3"
+            label="Contoh: Anak Kandung"
           />
         </v-col>
       </v-row>
@@ -181,6 +184,7 @@
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Jumlah saudara angkat</p>
           <v-text-field
+            v-model="payload.jml_sdr_angkat"
             hide-details
             filled
             solo
@@ -196,23 +200,42 @@
             filled
             solo
             label="Silahkan Pilih"
+            clearable
           />
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Pihak yang bisa dihubungi</p>
-          <v-text-field hide-details filled solo label="Contoh: Orang Tua" />
+          <v-text-field
+            v-model="payload.pihak_dihubungi"
+            hide-details
+            filled
+            solo
+            label="Contoh: Orang Tua"
+          />
         </v-col>
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Penanggung Biaya</p>
-          <v-text-field hide-details filled solo label="Contoh: Orang Tua" />
+          <v-text-field
+            v-model="payload.penanggung_biaya"
+            hide-details
+            filled
+            solo
+            label="Contoh: Orang Tua"
+          />
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Bahasa sehari-hari di rumah</p>
-          <v-text-field hide-details filled solo label="Contoh: Indonesia" />
+          <v-text-field
+            v-model="payload.bahasa"
+            hide-details
+            filled
+            solo
+            label="Contoh: Indonesia"
+          />
         </v-col>
       </v-row>
     </div>
@@ -221,11 +244,11 @@
 
 <script>
 import KelasService from "@/services/resources/kelas.service";
+import SiswaService from "@/services/resources/siswa.service";
 
 export default {
   data() {
     return {
-      id: this.$route.query?.kelasId,
       kelasId: this.$route.params?.kelasId,
       kelas: this.$route.query?.kelas,
       // Kelas Properties
@@ -235,6 +258,16 @@ export default {
       // Jenis Kelamin Properties
       listJenisKelamin: ["Laki-laki", "Perempuan"],
 
+      // Agama Properties
+      listAgama: [
+        "Islam",
+        "Kristen",
+        "Katolik",
+        "Hindu",
+        "Buddha",
+        "Khonghucu",
+      ],
+
       // Yatim properties
       listStatusYatim: ["Yatim", "Piatu", "Yatim Piatu"],
 
@@ -242,7 +275,7 @@ export default {
       listKewarganegaraan: ["Indonesia", "WNA"],
 
       payload: {
-        kelas: null,
+        kelas_id: null,
         NIS: null,
         NISN: null,
         nama_lengkap: null,
@@ -254,7 +287,11 @@ export default {
         anak_ke: null,
         jml_sdr_kandung: null,
         jml_sdr_tiri: null,
+        jml_sdr_angkat: null,
         status_anak: null,
+        bahasa: null,
+        penanggung_biaya: null,
+        pihak_dihubungi: null,
       },
     };
   },
@@ -264,15 +301,59 @@ export default {
     },
     handleSubmit() {
       this.$emit("handleLoading", true);
-      setTimeout(() => {
-        this.$emit("handleNext");
-        this.$emit("handleLoading", false);
-        this.$vuetify.goTo(1, {
-          duration: 300,
-          offset: 0,
-          easing: "easeInOutCubic",
-        });
-      }, 1000);
+      const payload = {
+        image: "test",
+        kelas_id: this.payload.kelas_id || "-",
+        NIS: this.payload.NIS || "-",
+        NISN: this.payload.NISN || "-",
+        nama_lengkap: this.payload.nama_lengkap || "-",
+        nama_panggilan: this.payload.nama_panggilan || "-",
+        ttl: this.payload.ttl || "-",
+        jenis_kelamin: this.payload.jenis_kelamin || "-",
+        agama: this.payload.agama || "-",
+        kewarganegaraan: this.payload.kewarganegaraan || "-",
+        anak_ke: this.payload.anak_ke || "-",
+        jml_sdr_kandung: this.payload.jml_sdr_kandung || "-",
+        jml_sdr_tiri: this.payload.jml_sdr_tiri || "-",
+        jml_sdr_angkat: this.payload.jml_sdr_angkat || "-",
+        status_anak: this.payload.status_anak || "-",
+        bahasa: this.payload.bahasa || "-",
+        penanggung_biaya: this.payload.penanggung_biaya || "-",
+        pihak_dihubungi: this.payload.pihak_dihubungi || "-",
+      };
+      SiswaService.addAbout(payload)
+        .then(({ data: { data, success, message } }) => {
+          if (success == true) {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: "Berhasil Menyimpan Data Tentang Diri Siswa",
+              color: "success",
+            });
+            this.$emit("handleId", data.siswa_id);
+            this.$emit("handleNext");
+            this.$emit("handleLoading", false);
+            this.$vuetify.goTo(1, {
+              duration: 300,
+              offset: 0,
+              easing: "easeInOutCubic",
+            });
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Menyimpan Data Tentang Diri Siswa",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Menyimpan Data Tentang Diri Siswa",
+            color: "error",
+          });
+        })
+        .finally(() => this.$emit("handleLoading", false));
     },
     getLovKelas() {
       this.loadingListKelas = true;

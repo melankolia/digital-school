@@ -95,7 +95,12 @@
 </template>
 
 <script>
+import SiswaService from "@/services/resources/siswa.service";
+
 export default {
+  props: {
+    siswaId: { type: String, required: true },
+  },
   data() {
     return {
       id: this.$route.query?.kelasId,
@@ -115,17 +120,50 @@ export default {
       this.$router.back();
     },
     handleSubmit() {
-      console.log(this.payload);
       this.$emit("handleLoading", true);
-      setTimeout(() => {
-        this.$emit("handleNext");
-        this.$emit("handleLoading", false);
-        this.$vuetify.goTo(1, {
-          duration: 300,
-          offset: 0,
-          easing: "easeInOutCubic",
-        });
-      }, 1000);
+      const payload = {
+        siswa_id: this.siswaId,
+        gol_darah: this.payload.gol_darah || "-",
+        kelainan_jasmani: this.payload.kelainan_jasmani || "-",
+        tinggi_berat_badan: this.payload.tinggi_berat_badan || "-",
+        nama_penyakit: this.payload.nama_penyakit || "-",
+        tahun_sakit: this.payload.tahun_sakit || "-",
+        lama_sakit: this.payload.lama_sakit || "-",
+      };
+      SiswaService.addKesehatan(payload)
+        .then(({ data: { data, success, message } }) => {
+          if (success == true) {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: "Berhasil Menyimpan Data Keterangan Kesehatan Siswa",
+              color: "success",
+            });
+            this.$emit("handleId", data.siswa_id);
+            this.$emit("handleNext");
+            this.$emit("handleLoading", false);
+            this.$vuetify.goTo(1, {
+              duration: 300,
+              offset: 0,
+              easing: "easeInOutCubic",
+            });
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message:
+                message || "Gagal Menyimpan Data Keterangan Kesehatan Siswa",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Menyimpan Data Tempat Tinggal Siswa",
+            color: "error",
+          });
+        })
+        .finally(() => this.$emit("handleLoading", false));
     },
   },
 };

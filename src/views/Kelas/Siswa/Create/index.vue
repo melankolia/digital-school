@@ -5,6 +5,8 @@
         <component
           @handleLoading="loading = $event"
           @handleNext="handleNext"
+          @handleId="siswaId = $event"
+          :siswaId="siswaId"
           ref="childComponent"
           :is="selected.component"
         />
@@ -65,6 +67,7 @@ export default {
     return {
       id: this.$route.query?.secureId,
       kelas: this.$route.query?.kelas,
+      siswaId: null,
       loading: false,
       selected: {
         id: 0,
@@ -103,12 +106,15 @@ export default {
           component: KeteranganOrangTua,
         },
         {
-          id: 4,
+          id: 6,
           title: "Keterangan Pindahan",
           component: KeteranganPindahan,
         },
       ],
     };
+  },
+  mounted() {
+    console.log(this.$route.params);
   },
   computed: {
     disabledPrev() {

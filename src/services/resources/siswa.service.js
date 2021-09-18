@@ -26,6 +26,27 @@ const SiswaService = {
   getPindahan(id) {
     return MainInstance.fetch(SISWA.DETAIL.PINDAHAN, id);
   },
+  addAbout(data) {
+    return MainInstance.post(SISWA.CREATE.TENTANG_DIRI, data);
+  },
+  addTempatTinggal(data) {
+    return MainInstance.post(SISWA.CREATE.TEMPAT_TINGGAL, data);
+  },
+  addPendidikan(data) {
+    return MainInstance.post(SISWA.CREATE.PENDIDIKAN, data);
+  },
+  addKesehatan(data) {
+    return MainInstance.post(SISWA.CREATE.KESEHATAN, data);
+  },
+  addHobi(data) {
+    return MainInstance.post(SISWA.CREATE.HOBI, data);
+  },
+  addOrangTua(data) {
+    return MainInstance.post(SISWA.CREATE.ORANG_TUA, data);
+  },
+  addPindahan(data) {
+    return MainInstance.post(SISWA.CREATE.PINDAHAN, data);
+  },
   cancelReq() {
     return MainInstance.cancelRequest();
   },
