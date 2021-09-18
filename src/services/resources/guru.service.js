@@ -8,6 +8,9 @@ const GuruService = {
   getDetail(id) {
     return MainInstance.fetch(GURU.DETAIL, id);
   },
+  addGuru(data) {
+    return MainInstance.post(GURU.CREATE, data);
+  },
   cancelReq() {
     return MainInstance.cancelRequest();
   },

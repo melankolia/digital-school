@@ -28,7 +28,7 @@
             hide-details
             filled
             solo
-            label="01/20/2002"
+            label="01-20-2002"
           />
         </v-col>
       </v-row>
