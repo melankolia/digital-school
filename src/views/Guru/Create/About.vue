@@ -200,7 +200,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" xs="12" sm="6">
+        <!-- <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Sertifikasi</p>
           <v-text-field
             v-model="payload.sertifikasi"
@@ -209,7 +209,7 @@
             solo
             label="Contoh : 3234324"
           />
-        </v-col>
+        </v-col> -->
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">NUPTK</p>
           <v-text-field
@@ -271,7 +271,7 @@ export default {
         k_tk: null,
         yad_pangkat: null,
         yad_gaji: null,
-        sertifikasi: null,
+        // sertifikasi: null,
         nuptk: null,
       },
     };
@@ -299,7 +299,7 @@ export default {
         k_tk: this.payload.k_tk || "-",
         yad_pangkat: this.payload.yad_pangkat || "-",
         yad_gaji: this.payload.yad_gaji || "-",
-        sertifikasi: this.payload.sertifikasi || "-",
+        // sertifikasi: this.payload.sertifikasi || "-",
         nuptk: this.payload.nuptk || "-",
       };
       GuruService.addGuru(payload)
@@ -310,7 +310,7 @@ export default {
               message: "Berhasil Menyimpan Data Guru",
               color: "success",
             });
-            this.$router.replace({ name: GURU.ALL });
+            this.$router.replace({ name: GURU.BROWSE });
             this.$vuetify.goTo(1, {
               duration: 300,
               offset: 0,
