@@ -21,7 +21,7 @@
       <div class="picture-border rounded-lg"></div>
     </div>
     <ContentNotFound
-      message="Data Riwayat Jabatan Not Found"
+      message="Data Tentang Diri Guru Not Found"
       :loading="loading"
       v-if="!isAvailable && isUpdate"
     >
