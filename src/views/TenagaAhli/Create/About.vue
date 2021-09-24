@@ -20,7 +20,24 @@
       </div>
       <div class="picture-border rounded-lg"></div>
     </div>
-    <div class="d-flex flex-column">
+    <ContentNotFound
+      message="Data Tentang Diri Tenaga Ahli Not Found"
+      :loading="loading"
+      v-if="!isAvailable && isUpdate"
+    >
+      <template v-slot:action>
+        <v-btn
+          @click="() => getDetail()"
+          depressed
+          color="header"
+          class="rounded-lg outlined-custom"
+        >
+          <v-icon class="mr-1" small>mdi-reload</v-icon>
+          <p class="header-button-back ma-0">Reload</p>
+        </v-btn>
+      </template>
+    </ContentNotFound>
+    <div v-else class="d-flex flex-column">
       <v-row>
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Nama</p>
@@ -220,16 +237,16 @@
 <script>
 import { TENAGA_AHLI } from "@/router/name.types";
 import TenagaAhliService from "@/services/resources/tenaga-ahli.service";
+const ContentNotFound = () => import("../../../components/Content/NotFound");
 
 export default {
+  components: {
+    ContentNotFound,
+  },
   data() {
     return {
-      id: this.$route.query?.kelasId,
-      kelasId: this.$route.params?.kelasId,
-      kelas: this.$route.query?.kelas,
-      // Kelas Properties
-      loadingListKelas: false,
-      listKelas: [],
+      id: this.$route.params?.tenagaAhliId,
+      loading: false,
 
       // Jenis Kelamin Properties
       listJenisKelamin: ["Laki-laki", "Perempuan"],
@@ -247,6 +264,7 @@ export default {
       ],
 
       payload: {
+        tenaga_ahli_id: null,
         nama: null,
         jenis_kelamin: null,
         ttl: null,
@@ -270,6 +288,37 @@ export default {
   methods: {
     handleBack() {
       this.$router.back();
+    },
+    getDetail() {
+      this.$emit("handleLoading", true);
+      this.loading = true;
+      TenagaAhliService.getDetail(this.id)
+        .then(({ data: { code, data, message } }) => {
+          if (code == 200) {
+            this.payload = {
+              ...this.payload,
+              ...data,
+            };
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Memuat Data Tentang Diri Tenaga Ahli",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Memuat Data Tentang Diri Tenaga Ahli",
+            color: "error",
+          });
+          console.error(err);
+        })
+        .finally(() => {
+          this.loading = false;
+          this.$emit("handleLoading", false);
+        });
     },
     handleSubmit() {
       this.$emit("handleLoading", true);
@@ -324,6 +373,17 @@ export default {
         })
         .finally(() => this.$emit("handleLoading", false));
     },
+  },
+  computed: {
+    isUpdate() {
+      return this.id ? true : false;
+    },
+    isAvailable() {
+      return this.payload?.tenaga_ahli_id;
+    },
+  },
+  mounted() {
+    this.isUpdate && this.getDetail();
   },
 };
 </script>

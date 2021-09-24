@@ -315,8 +315,6 @@ export default {
             this.payload = {
               ...this.payload,
               ...data,
-              mulai_bertugas: data.mulai_tugas,
-              gaji_pokok: data.gaji,
             };
           } else {
             this.$store.commit("snackbar/setSnack", {
