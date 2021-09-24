@@ -20,7 +20,24 @@
       </div>
       <div class="picture-border rounded-lg"></div>
     </div>
-    <div class="d-flex flex-column">
+    <ContentNotFound
+      message="Data Riwayat Jabatan Not Found"
+      :loading="loading"
+      v-if="!isAvailable && isUpdate"
+    >
+      <template v-slot:action>
+        <v-btn
+          @click="() => getDetail()"
+          depressed
+          color="header"
+          class="rounded-lg outlined-custom"
+        >
+          <v-icon class="mr-1" small>mdi-reload</v-icon>
+          <p class="header-button-back ma-0">Reload</p>
+        </v-btn>
+      </template>
+    </ContentNotFound>
+    <div v-else class="d-flex flex-column">
       <v-row>
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Nama</p>
@@ -228,33 +245,34 @@
 <script>
 import { GURU } from "@/router/name.types";
 import GuruService from "@/services/resources/guru.service";
+const ContentNotFound = () => import("../../../components/Content/NotFound");
 
 export default {
+  components: {
+    ContentNotFound,
+  },
   data() {
     return {
-      id: this.$route.query?.kelasId,
-      kelasId: this.$route.params?.kelasId,
-      kelas: this.$route.query?.kelas,
-      // Kelas Properties
-      loadingListKelas: false,
-      listKelas: [],
+      id: this.$route.params?.guruId,
+      loading: false,
 
       // Jenis Kelamin Properties
       listJenisKelamin: ["Laki-laki", "Perempuan"],
 
       // List Golongan
       listGolongan: [
-        "III A",
-        "III B",
-        "III C",
-        "III D",
-        "IV A",
-        "IV B",
-        "IV C",
-        "IV D",
+        "III/a",
+        "III/b",
+        "III/c",
+        "III/d",
+        "IV/a",
+        "IV/b",
+        "IV/c",
+        "IV/d",
       ],
 
       payload: {
+        guru_id: null,
         nama: null,
         jenis_kelamin: null,
         ttl: null,
@@ -276,9 +294,50 @@ export default {
       },
     };
   },
+  computed: {
+    isUpdate() {
+      return this.id ? true : false;
+    },
+    isAvailable() {
+      return this.payload.guru_id ? true : false;
+    },
+  },
   methods: {
     handleBack() {
       this.$router.back();
+    },
+    getDetail() {
+      this.$emit("handleLoading", true);
+      this.loading = true;
+      GuruService.getDetail(this.id)
+        .then(({ data: { code, data, message } }) => {
+          if (code == 200) {
+            this.payload = {
+              ...this.payload,
+              ...data,
+              mulai_bertugas: data.mulai_tugas,
+              gaji_pokok: data.gaji,
+            };
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Memuat Data Tentang Diri Guru",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Memuat Data Tentang Diri Guru",
+            color: "error",
+          });
+          console.error(err);
+        })
+        .finally(() => {
+          this.loading = false;
+          this.$emit("handleLoading", false);
+        });
     },
     handleSubmit() {
       this.$emit("handleLoading", true);
@@ -334,6 +393,9 @@ export default {
         })
         .finally(() => this.$emit("handleLoading", false));
     },
+  },
+  mounted() {
+    this.isUpdate && this.getDetail();
   },
 };
 </script>
