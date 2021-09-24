@@ -13,7 +13,12 @@
         </p>
       </v-btn>
       <div>
-        <v-btn depressed color="primary" class="rounded-lg mr-4">
+        <v-btn
+          @click="handleEdit"
+          depressed
+          color="primary"
+          class="rounded-lg mr-4"
+        >
           <p class="header-button-title ma-0">
             <v-icon class="mr-1" small>mdi-square-edit-outline</v-icon>
             <span> Edit Data </span>
@@ -58,6 +63,7 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import { RESET_GURU_INFO } from "@/store/constants/mutations.type";
+import { GURU } from "@/router/name.types";
 const About = () => import("@/views/Guru/Detail/About.vue");
 const RiwayatJabatan = () => import("@/views/Guru/Detail/RiwayatJabatan.vue");
 
@@ -88,6 +94,12 @@ export default {
     ...mapMutations([RESET_GURU_INFO]),
     bindingData() {
       this.items = { ...this.items, ...this.getGuru };
+    },
+    handleEdit() {
+      this.$router.push({
+        name: GURU.UPDATE,
+        params: { guruId: this.items.guru_id },
+      });
     },
   },
   mounted() {

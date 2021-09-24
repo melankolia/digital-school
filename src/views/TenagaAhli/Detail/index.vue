@@ -13,7 +13,12 @@
         </p>
       </v-btn>
       <div>
-        <v-btn depressed color="primary" class="rounded-lg mr-4">
+        <v-btn
+          @click="handleEdit"
+          depressed
+          color="primary"
+          class="rounded-lg mr-4"
+        >
           <p class="header-button-title ma-0">
             <v-icon class="mr-1" small>mdi-square-edit-outline</v-icon>
             <span> Edit Data </span>
@@ -58,6 +63,7 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import { RESET_TENAGA_AHLI_INFO } from "@/store/constants/mutations.type";
+import { TENAGA_AHLI } from "@/router/name.types";
 const About = () => import("@/views/TenagaAhli/Detail/About.vue");
 const RiwayatJabatan = () =>
   import("@/views/TenagaAhli/Detail/RiwayatJabatan.vue");
@@ -89,6 +95,12 @@ export default {
     ...mapMutations([RESET_TENAGA_AHLI_INFO]),
     bindingData() {
       this.items = { ...this.items, ...this.getTenagaAhli };
+    },
+    handleEdit() {
+      this.$router.push({
+        name: TENAGA_AHLI.UPDATE,
+        params: { tenagaAhliId: this.items.tenaga_ahli_id },
+      });
     },
   },
   mounted() {
