@@ -26,6 +26,7 @@
           color="primary"
           class="rounded-lg pa-6"
           :loading="loading"
+          :disabled="loading"
         >
           <p class="header-button-back ma-0">
             <span> {{ disabledNext ? "Selesai" : "Selanjutnya" }} </span>
