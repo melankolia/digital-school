@@ -83,9 +83,10 @@
           </div>
           <div style="width: 150px">
             <v-select
-              v-model="sortByTahun"
-              :items="itemTahun"
-              placeholder="Pilih Tahun"
+              v-model="sortByKelas"
+              :items="itemKelas"
+              :loading="loadingKelas"
+              placeholder="Pilih Kelas"
               solo
               hide-details
               dense
@@ -287,7 +288,7 @@
 <script>
 import { SISWA } from "@/router/name.types";
 import { mapGetters } from "vuex";
-import SiswaService from "../../../../services/resources/siswa.service";
+import SiswaService from "@/services/resources/siswa.service";
 
 export default {
   data() {
@@ -311,8 +312,9 @@ export default {
           value: 2,
         },
       ],
-      sortByTahun: null,
-      itemTahun: [],
+      sortByKelas: null,
+      itemKelas: [],
+      loadingKelas: false,
       headers: [
         { text: "Mata Pelajaran", value: "mapel", sortable: false },
         { text: "Pengetahuan", value: "nilai", sortable: false },
@@ -408,6 +410,7 @@ export default {
         },
       });
     },
+    getListKelas() {},
     getDetail() {
       this.loading = true;
       SiswaService.getKompetensi({
