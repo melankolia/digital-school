@@ -330,6 +330,7 @@ export default {
       this.$emit("handleLoading", true);
       const payload = {
         image: "test",
+        siswa_id: this.id,
         kelas_id: this.payload.kelas_id || "-",
         NIS: this.payload.NIS || "-",
         NISN: this.payload.NISN || "-",
