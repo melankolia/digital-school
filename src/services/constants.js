@@ -20,6 +20,7 @@ export const SISWA = {
     HOBI: `${siswa}/hobi`,
     ORANG_TUA: `${siswa}/orang-tua`,
     PINDAHAN: `${siswa}/pindah`,
+    KOMPETENSI: `${siswa}/kompetensi`,
   },
   CREATE: {
     TENTANG_DIRI: `${siswa}/tentang-diri`,

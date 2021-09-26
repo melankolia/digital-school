@@ -20,7 +20,24 @@
       </div>
       <div class="picture-border rounded-lg"></div>
     </div>
-    <div class="d-flex flex-column">
+    <ContentNotFound
+      message="Data Riwayat Jabatan Not Found"
+      :loading="loading"
+      v-if="!isAvailable && isUpdate"
+    >
+      <template v-slot:action>
+        <v-btn
+          @click="() => getDetail()"
+          depressed
+          color="header"
+          class="rounded-lg outlined-custom"
+        >
+          <v-icon class="mr-1" small>mdi-reload</v-icon>
+          <p class="header-button-back ma-0">Reload</p>
+        </v-btn>
+      </template>
+    </ContentNotFound>
+    <div v-else class="d-flex flex-column">
       <v-row>
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Kelas</p>
@@ -243,14 +260,23 @@
 </template>
 
 <script>
+const ContentNotFound = () => import("@/components/Content/NotFound");
 import KelasService from "@/services/resources/kelas.service";
 import SiswaService from "@/services/resources/siswa.service";
 
 export default {
+  components: {
+    ContentNotFound,
+  },
   data() {
     return {
+      id: this.$route.params?.secureId,
       kelasId: this.$route.params?.kelasId,
       kelas: this.$route.query?.kelas,
+
+      // Detail Properties
+      loading: false,
+
       // Kelas Properties
       loadingListKelas: false,
       listKelas: [],
@@ -275,6 +301,7 @@ export default {
       listKewarganegaraan: ["Indonesia", "WNA"],
 
       payload: {
+        siswa_id: null,
         kelas_id: null,
         NIS: null,
         NISN: null,
@@ -303,6 +330,7 @@ export default {
       this.$emit("handleLoading", true);
       const payload = {
         image: "test",
+        siswa_id: this.id,
         kelas_id: this.payload.kelas_id || "-",
         NIS: this.payload.NIS || "-",
         NISN: this.payload.NISN || "-",
@@ -373,9 +401,45 @@ export default {
         })
         .finally(() => (this.loadingListKelas = false));
     },
+    getDetail() {
+      this.loading = true;
+      SiswaService.getTentangDiri(this.id)
+        .then(({ data: { data, code, message } }) => {
+          if (code == 200) {
+            this.payload = {
+              ...this.payload,
+              ...data,
+            };
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Memuat Data Tentang Diri Siswa",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Memuat Data Tentang Diri Siswa",
+            color: "error",
+          });
+          console.error(err);
+        })
+        .finally(() => (this.loading = false));
+    },
+  },
+  computed: {
+    isUpdate() {
+      return this.id;
+    },
+    isAvailable() {
+      return true;
+    },
   },
   mounted() {
     this.getLovKelas();
+    this.isUpdate && this.getDetail();
   },
 };
 </script>

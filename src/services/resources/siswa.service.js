@@ -26,6 +26,9 @@ const SiswaService = {
   getPindahan(id) {
     return MainInstance.fetch(SISWA.DETAIL.PINDAHAN, id);
   },
+  getKompetensi(params) {
+    return MainInstance.query(SISWA.DETAIL.KOMPETENSI, { params });
+  },
   addAbout(data) {
     return MainInstance.post(SISWA.CREATE.TENTANG_DIRI, data);
   },
