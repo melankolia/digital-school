@@ -287,6 +287,7 @@
 <script>
 import { SISWA } from "@/router/name.types";
 import { mapGetters } from "vuex";
+import SiswaService from "../../../../services/resources/siswa.service";
 
 export default {
   data() {
@@ -297,8 +298,19 @@ export default {
         nama_kelas: null,
         nama_siswa: null,
       },
+      siswaId: this.$route.params?.siswaId,
+      kelasId: this.$route.params?.kelasId,
       sortBySemester: null,
-      itemSemester: [],
+      itemSemester: [
+        {
+          text: "Semester 1",
+          value: 1,
+        },
+        {
+          text: "Semester 2",
+          value: 2,
+        },
+      ],
       sortByTahun: null,
       itemTahun: [],
       headers: [
@@ -391,14 +403,41 @@ export default {
       this.$router.push({
         name: SISWA.KELAS.SISWA.UPDATE_KOMPETENSI,
         params: {
-          siswaId: this.$route.params?.siswaId,
-          kelasId: this.$route.params?.kelasId,
+          siswaId: this.siswaId,
+          kelasId: this.kelasId,
         },
       });
+    },
+    getDetail() {
+      this.loading = true;
+      SiswaService.getKompetensi({
+        siswaId: this.siswaId,
+        kelasId: this.kelasId,
+      })
+        .then(({ data: { code, data, message } }) => {
+          if (code == 200) {
+            console.log(data);
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Memuat Data Kompetensi Siswa",
+              color: "error",
+            });
+          }
+        })
+        .catch(() => {
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Memuat Data Kompetensi Siswa",
+            color: "error",
+          });
+        })
+        .finally(() => (this.loading = false));
     },
   },
   mounted() {
     this.bindingData();
+    this.getDetail();
   },
 };
 </script>
