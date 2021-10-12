@@ -5,6 +5,8 @@ const Login = () => import("@/views/Login");
 const Kelas = () => import("@/views/Kelas");
 const Siswa = () => import("@/views/Siswa");
 const RekapitulasiSiswa = () => import("@/views/Siswa/Rekapitulasi");
+const PrestasiSiswa = () => import("@/views/Kelas/Siswa/Prestasi");
+const CreatePrestasiSiswa = () => import("@/views/Kelas/Siswa/Prestasi/create");
 const CreateSiswa = () => import("@/views/Kelas/Siswa/Create");
 const KelasSiswaDetail = () => import("@/views/Kelas/Siswa/Detail");
 const KelasPerSiswa = () => import("@/views/Kelas/Siswa");
@@ -15,9 +17,14 @@ const UpdateKompetensiSiswa = () =>
 const Guru = () => import("@/views/Guru");
 const GuruDetail = () => import("@/views/Guru/Detail");
 const UpdateGuru = () => import("@/views/Guru/Create");
+const JabatanGuru = () => import("@/views/Guru/RiwayatJabatan");
+const CreateJabatanGuru = () => import("@/views/Guru/RiwayatJabatan/create");
 const TenagaAhli = () => import("@/views/TenagaAhli");
 const TenagaAhliDetail = () => import("@/views/TenagaAhli/Detail");
 const UpdateTenagaAhli = () => import("@/views/TenagaAhli/Create");
+const JabatanTenagaAhli = () => import("@/views/TenagaAhli/RiwayatJabatan");
+const CreateJabatanTenagaAhli = () =>
+  import("@/views/TenagaAhli/RiwayatJabatan/create");
 
 import { HOME, ABOUT, LOGIN, SISWA, GURU, TENAGA_AHLI } from "./name.types";
 
@@ -89,6 +96,22 @@ export const configRoutes = [
                 path: "update/:secureId/:kelasId",
                 name: SISWA.KELAS.SISWA.UPDATE,
                 component: CreateSiswa,
+                meta: {
+                  requiresAuth: true,
+                },
+              },
+              {
+                path: "prestasi/create/:siswaId",
+                name: SISWA.KELAS.SISWA.CREATE_PRESTASI,
+                component: CreatePrestasiSiswa,
+                meta: {
+                  requiresAuth: true,
+                },
+              },
+              {
+                path: "prestasi/:siswaId",
+                name: SISWA.KELAS.SISWA.PRESTASI,
+                component: PrestasiSiswa,
                 meta: {
                   requiresAuth: true,
                 },
@@ -172,6 +195,22 @@ export const configRoutes = [
             },
           },
           {
+            path: "jabatan/:guruId",
+            name: GURU.JABATAN.DETAIL,
+            component: JabatanGuru,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "jabatan/create/:guruId",
+            name: GURU.JABATAN.CREATE,
+            component: CreateJabatanGuru,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
             path: ":guruId",
             name: GURU.DETAIL,
             component: GuruDetail,
@@ -209,6 +248,22 @@ export const configRoutes = [
             path: "create",
             name: TENAGA_AHLI.CREATE,
             component: UpdateTenagaAhli,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "jabatan/create/:tenagaAhliId",
+            name: TENAGA_AHLI.JABATAN.CREATE,
+            component: CreateJabatanTenagaAhli,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "jabatan/:tenagaAhliId",
+            name: TENAGA_AHLI.JABATAN.DETAIL,
+            component: JabatanTenagaAhli,
             meta: {
               requiresAuth: true,
             },

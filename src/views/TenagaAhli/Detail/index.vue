@@ -36,6 +36,18 @@
       <div class="d-flex flex-column" style="width: 100vw">
         <div class="d-flex flex-row justify-space-between">
           <p class="header-title mb-4">Tentang Diri Tenaga Ahli</p>
+          <div>
+            <v-btn
+              @click="handleRiwayatJabatan"
+              outlined
+              class="rounded-lg outlined-custom"
+              color="primary"
+            >
+              <p class="header-button-export ma-0">
+                <span> Lihat Riwayat Jabatan </span>
+              </p>
+            </v-btn>
+          </div>
         </div>
         <div class="d-flex flex-column pr-12 mr-12">
           <p class="header-subtitle">
@@ -65,13 +77,13 @@ import { mapGetters, mapMutations } from "vuex";
 import { RESET_TENAGA_AHLI_INFO } from "@/store/constants/mutations.type";
 import { TENAGA_AHLI } from "@/router/name.types";
 const About = () => import("@/views/TenagaAhli/Detail/About.vue");
-const RiwayatJabatan = () =>
-  import("@/views/TenagaAhli/Detail/RiwayatJabatan.vue");
+// const RiwayatJabatan = () =>
+//   import("@/views/TenagaAhli/Detail/RiwayatJabatan.vue");
 
 export default {
   components: {
     About,
-    RiwayatJabatan,
+    // RiwayatJabatan,
   },
   data() {
     return {
@@ -84,7 +96,7 @@ export default {
       tab: 0,
       tabs: [
         { text: "Tentang Diri Tenaga Ahli", component: "About" },
-        { text: "Riwayat Jabatan", component: "RiwayatJabatan" },
+        // { text: "Riwayat Jabatan", component: "RiwayatJabatan" },
       ],
     };
   },
@@ -99,6 +111,12 @@ export default {
     handleEdit() {
       this.$router.push({
         name: TENAGA_AHLI.UPDATE,
+        params: { tenagaAhliId: this.items.tenaga_ahli_id },
+      });
+    },
+    handleRiwayatJabatan() {
+      this.$router.push({
+        name: TENAGA_AHLI.JABATAN.DETAIL,
         params: { tenagaAhliId: this.items.tenaga_ahli_id },
       });
     },
