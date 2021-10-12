@@ -38,16 +38,28 @@
           <p class="header-title mb-4">
             Tabel Siswa - {{ items.nama_siswa || "-" | toTitle }}
           </p>
-          <v-btn
-            @click="handleKompetensi"
-            outlined
-            class="rounded-lg outlined-custom"
-            color="primary"
-          >
-            <p class="header-button-export ma-0">
-              <span> Lihat Kompetensi </span>
-            </p>
-          </v-btn>
+          <div>
+            <v-btn
+              @click="handleKompetensi"
+              outlined
+              class="rounded-lg outlined-custom mr-4"
+              color="primary"
+            >
+              <p class="header-button-export ma-0">
+                <span> Lihat Kompetensi </span>
+              </p>
+            </v-btn>
+            <v-btn
+              @click="handlePrestasi"
+              outlined
+              class="rounded-lg outlined-custom"
+              color="primary"
+            >
+              <p class="header-button-export ma-0">
+                <span> Lihat Prestasi </span>
+              </p>
+            </v-btn>
+          </div>
         </div>
         <div class="d-flex flex-column pr-12 mr-12">
           <p class="header-subtitle">
@@ -158,6 +170,14 @@ export default {
         params: {
           siswaId: this.items?.siswa_id,
           kelasId: this.items?.kelas_id,
+        },
+      });
+    },
+    handlePrestasi() {
+      this.$router.push({
+        name: SISWA.KELAS.SISWA.PRESTASI,
+        params: {
+          siswaId: this.items?.siswa_id,
         },
       });
     },

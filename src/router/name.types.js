@@ -20,6 +20,7 @@ export const SISWA = {
       UPDATE_KOMPETENSI: `${siswa}.update.kompetensi`,
       CREATE: `${siswa}.create`,
       UPDATE: `${siswa}.update`,
+      PRESTASI: `${siswa}.prestasi`,
     },
   },
 };

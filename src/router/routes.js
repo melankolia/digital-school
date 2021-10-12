@@ -5,6 +5,7 @@ const Login = () => import("@/views/Login");
 const Kelas = () => import("@/views/Kelas");
 const Siswa = () => import("@/views/Siswa");
 const RekapitulasiSiswa = () => import("@/views/Siswa/Rekapitulasi");
+const PrestasiSiswa = () => import("@/views/Kelas/Siswa/Prestasi");
 const CreateSiswa = () => import("@/views/Kelas/Siswa/Create");
 const KelasSiswaDetail = () => import("@/views/Kelas/Siswa/Detail");
 const KelasPerSiswa = () => import("@/views/Kelas/Siswa");
@@ -89,6 +90,14 @@ export const configRoutes = [
                 path: "update/:secureId/:kelasId",
                 name: SISWA.KELAS.SISWA.UPDATE,
                 component: CreateSiswa,
+                meta: {
+                  requiresAuth: true,
+                },
+              },
+              {
+                path: "prestasi/:siswaId",
+                name: SISWA.KELAS.SISWA.PRESTASI,
+                component: PrestasiSiswa,
                 meta: {
                   requiresAuth: true,
                 },
