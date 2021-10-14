@@ -164,6 +164,33 @@ export default {
         })
         .finally(() => this.$emit("handleLoading", false));
     },
+    getDetail() {
+      this.loading = true;
+      SiswaService.getPendidikan(this.siswaId)
+        .then(({ data: { code, data, message } }) => {
+          if (code == 200) {
+            this.payload = { ...this.items, ...data };
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Memuat Data Pendidikan Siswa",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Memuat Data Pendidikan Siswa",
+            color: "error",
+          });
+          console.error(err);
+        })
+        .finally(() => (this.loading = false));
+    },
+  },
+  mounted() {
+    this.getDetail();
   },
 };
 </script>

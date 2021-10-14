@@ -21,7 +21,7 @@
       <div class="picture-border rounded-lg"></div>
     </div>
     <ContentNotFound
-      message="Data Riwayat Jabatan Not Found"
+      message="Data Tentang Diri Siswa Not Found"
       :loading="loading"
       v-if="!isAvailable && isUpdate"
     >
@@ -434,7 +434,7 @@ export default {
       return this.id;
     },
     isAvailable() {
-      return true;
+      return this.payload?.siswa_id;
     },
   },
   mounted() {

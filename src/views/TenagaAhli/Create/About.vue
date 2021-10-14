@@ -341,6 +341,8 @@ export default {
         yad_gaji: this.payload.yad_gaji || "-",
         nuptk: this.payload.nuptk || "-",
       };
+      if (this.payload?.tenaga_ahli_id)
+        payload.tenaga_ahli_id = this.payload.tenaga_ahli_id;
       TenagaAhliService.addTenagaAhli(payload)
         .then(({ data: { success, message } }) => {
           if (success == true) {

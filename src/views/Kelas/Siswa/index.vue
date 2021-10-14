@@ -254,7 +254,7 @@ export default {
       this.$router.push({ name: SISWA.KELAS.PER_KELAS });
     },
     handleDetail(item) {
-      this.setSiswaInfo(item);
+      // this.setSiswaInfo(item);
       this.$router.push({
         name: SISWA.KELAS.SISWA.DETAIL,
         params: { secureId: item.siswa_id },

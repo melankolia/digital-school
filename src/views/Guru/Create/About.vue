@@ -359,6 +359,7 @@ export default {
         // sertifikasi: this.payload.sertifikasi || "-",
         nuptk: this.payload.nuptk || "-",
       };
+      if (this.payload?.guru_id) payload.guru_id = this.payload.guru_id;
       GuruService.addGuru(payload)
         .then(({ data: { success, message } }) => {
           if (success == true) {

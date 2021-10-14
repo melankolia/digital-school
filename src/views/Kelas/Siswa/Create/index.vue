@@ -67,7 +67,7 @@ export default {
     return {
       id: this.$route.query?.secureId,
       kelas: this.$route.query?.kelas,
-      siswaId: null,
+      siswaId: this.$route.params?.secureId,
       loading: false,
       selected: {
         id: 0,
