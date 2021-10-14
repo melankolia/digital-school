@@ -470,7 +470,7 @@
               hide-details
               filled
               solo
-              label="Contoh: Paman"
+              label="Contoh: 2010"
             />
           </v-col>
           <!-- <v-col cols="12" xs="12" sm="6">
@@ -554,6 +554,7 @@ export default {
           status: null,
           status_nikah: null,
           tahun_meninggal: null,
+          pendidikan: null,
         },
       ],
     };
@@ -578,9 +579,11 @@ export default {
           e.status = e.status || "-";
           e.status_nikah = e.status_nikah || "-";
           e.tahun_meninggal = e.tahun_meninggal || "-";
+          e.pendidikan = e.pendidikan || "-";
           return e;
         }),
       };
+      console.log(payload);
       SiswaService.addOrangTua(payload)
         .then(({ data: { data, success, message } }) => {
           if (success == true) {
@@ -615,6 +618,33 @@ export default {
         })
         .finally(() => this.$emit("handleLoading", false));
     },
+    getDetail() {
+      this.loading = true;
+      SiswaService.getOrangTua(this.siswaId)
+        .then(({ data: { code, data, message } }) => {
+          if (code == 200) {
+            this.payload = [...data];
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Memuat Data Orang Tua Siswa",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Memuat Data Orang Tua Siswa",
+            color: "error",
+          });
+          console.error(err);
+        })
+        .finally(() => (this.loading = false));
+    },
+  },
+  mounted() {
+    this.getDetail();
   },
 };
 </script>

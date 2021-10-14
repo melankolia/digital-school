@@ -21,7 +21,7 @@
       <tbody>
         <template v-for="(item, i) in items">
           <tr :key="'type' + i">
-            <td>{{ item.type_ortu | toTitle }}</td>
+            <td>{{ item.type | toTitle }}</td>
             <td></td>
           </tr>
           <tr :key="'a' + i">
@@ -123,7 +123,7 @@ export default {
       items: [
         {
           siswa_id: null,
-          type_ortu: "Ayah",
+          type: "Ayah",
           nama: null,
           TTL: null,
           agama: null,
@@ -140,7 +140,7 @@ export default {
         },
         {
           siswa_id: null,
-          type_ortu: "Ibu",
+          type: "Ibu",
           nama: null,
           TTL: null,
           agama: null,

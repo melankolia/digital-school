@@ -36,7 +36,7 @@
       <div class="d-flex flex-column" style="width: 100vw">
         <div class="d-flex flex-row justify-space-between">
           <p class="header-title mb-4">
-            Tabel Siswa - {{ items.nama_siswa || "-" | toTitle }}
+            Tabel Siswa - {{ getSiswa.nama_siswa || "-" | toTitle }}
           </p>
           <div>
             <v-btn
@@ -63,18 +63,18 @@
         </div>
         <div class="d-flex flex-column pr-12 mr-12">
           <p class="header-subtitle">
-            {{ items.nama_siswa || "-" | toTitle }} -
-            {{ items.nama_kelas || "-" | upperCase }}
+            {{ getSiswa.nama_siswa || "-" | toTitle }} -
+            {{ getSiswa.nama_kelas || "-" | upperCase }}
           </p>
           <div class="d-flex flex-row">
             <div class="backgroundLabel mr-4">
               <p class="header-subtitle py-2 px-3 ma-0">
-                NIS : {{ items.NIS || "-" | toTitle }}
+                NIS : {{ getSiswa.NIS || "-" | toTitle }}
               </p>
             </div>
             <div class="backgroundLabel">
               <p class="header-subtitle py-2 px-3 ma-0">
-                NISN : {{ items.NISN || "-" | toTitle }}
+                NISN : {{ getSiswa.NISN || "-" | toTitle }}
               </p>
             </div>
           </div>
@@ -161,9 +161,6 @@ export default {
         },
       });
     },
-    bindingData() {
-      this.items = { ...this.items, ...this.getSiswa };
-    },
     handleKompetensi() {
       this.$router.push({
         name: SISWA.KELAS.SISWA.TABEL_KOMPETENSI,
@@ -181,9 +178,6 @@ export default {
         },
       });
     },
-  },
-  mounted() {
-    this.bindingData();
   },
 };
 </script>

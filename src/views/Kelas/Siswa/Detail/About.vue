@@ -115,6 +115,8 @@
 <script>
 const ContentNotFound = () => import("@/components/Content/NotFound");
 import SiswaService from "@/services/resources/siswa.service";
+import { SET_SISWA_INFO } from "@/store/constants/mutations.type";
+import { mapMutations } from "vuex";
 
 export default {
   components: {
@@ -151,11 +153,17 @@ export default {
     },
   },
   methods: {
+    ...mapMutations([SET_SISWA_INFO]),
     getDetail() {
       this.loading = true;
       SiswaService.getTentangDiri(this.id)
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
+            this.setSiswaInfo({
+              NIS: data.NIS,
+              NISN: data.NISN,
+              nama_siswa: data.nama_lengkap,
+            });
             this.items = { ...this.items, ...data };
           } else {
             this.$store.commit("snackbar/setSnack", {
