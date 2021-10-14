@@ -163,6 +163,7 @@ export default {
               NIS: data.NIS,
               NISN: data.NISN,
               nama_siswa: data.nama_lengkap,
+              nama_kelas: data.nama_kelas,
             });
             this.items = { ...this.items, ...data };
           } else {
