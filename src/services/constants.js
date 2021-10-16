@@ -30,6 +30,7 @@ export const SISWA = {
     HOBI: `${siswa}/hobi`,
     ORANG_TUA: `${siswa}/orang-tua`,
     PINDAHAN: `${siswa}/pindah`,
+    KOMPETENSI: `${siswa}/kompetensi`,
   },
   PER_KELAS: `${siswa}/all`,
 };

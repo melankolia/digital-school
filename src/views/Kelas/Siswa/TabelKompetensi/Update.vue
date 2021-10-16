@@ -36,7 +36,7 @@
             </div>
             <div class="backgroundLabel mr-4">
               <p class="header-subtitle py-2 px-3 ma-0">
-                Semester : {{ items.semester || "-" | toTitle }}
+                Semester : {{ items.semester || "-" }}
               </p>
             </div>
             <div class="backgroundLabel mr-4">
@@ -55,7 +55,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokA[0].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -74,7 +79,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokA[1].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -93,7 +103,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokA[2].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -112,7 +127,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokA[3].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -133,7 +153,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokB[0].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -152,7 +177,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokB[1].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -171,7 +201,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokB[2].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -192,7 +227,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokC[0].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -211,7 +251,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokC[1].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -230,7 +275,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokC[2].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -245,14 +295,19 @@
       </div>
       <v-divider class="my-4" />
       <div class="kelompok-item rounded pa-4" style="width: 100%">
-        <p class="kelompok-sublabel mb-4">Fisika</p>
+        <p class="kelompok-sublabel mb-4">Kimia</p>
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokC[3].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
-            <p class="mb-1 input-custom-label">Kimia</p>
+            <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
               :items="listSikap"
               label="Pilihan Sikap"
@@ -268,7 +323,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokC[4].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -287,7 +347,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokC[5].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -306,7 +371,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokC[6].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -325,7 +395,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokC[7].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -344,7 +419,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokC[8].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -363,7 +443,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokC[9].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -382,7 +467,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokC[10].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -401,7 +491,12 @@
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.kelompokC[11].nilai"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
@@ -418,25 +513,45 @@
     <div class="table-border mb-6 rounded-lg pa-4">
       <p class="mb-6 kelompok-label">Ketidak Hadiran</p>
       <div class="kelompok-item rounded pa-4" style="width: 100%">
-        <p class="kelompok-sublabel mb-4">Antropologi</p>
         <div class="d-flex flex-row justify-space-between">
           <div style="width: 33%" class="mr-4">
             <p class="mb-1 input-custom-label">Sakit</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.absen.sakit"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 33%" class="mr-4">
             <p class="mb-1 input-custom-label">Izin</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.absen.izin"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
           <div style="width: 33%">
             <p class="mb-1 input-custom-label">Tanpa Keterangan</p>
-            <v-text-field label="0" solo hide-details />
+            <v-text-field
+              v-model="items.absen.alpha"
+              label="0"
+              solo
+              hide-details
+            />
           </div>
         </div>
       </div>
     </div>
     <div class="align-self-end">
-      <v-btn depressed color="primary" class="rounded-lg">
+      <v-btn
+        @click="handleSubmit"
+        :loading="loading"
+        depressed
+        color="primary"
+        class="rounded-lg"
+      >
         <p class="header-button-title ma-0">
           <span> Submit Data Nilai </span>
         </p>
@@ -446,19 +561,162 @@
 </template>
 
 <script>
+import SiswaService from "@/services/resources/siswa.service";
+import { SISWA } from "@/router/name.types";
+
 export default {
   data() {
     return {
+      loading: false,
       items: {
-        NIS: null,
-        NISN: null,
-        nama_kelas: null,
-        nama_siswa: null,
-        semester: null,
-        angkatan: null,
+        NIS: "0",
+        NISN: "0",
+        nama_kelas: "0",
+        nama_siswa: "0",
+        semester: "1",
+        angkatan: "0",
+        kelompokA: [
+          {
+            mapel: "Pendidikan Agama Islam",
+            nilai: "0",
+          },
+          {
+            mapel: "PPKN",
+            nilai: "0",
+          },
+          {
+            mapel: "Bahasa Indonesia",
+            nilai: "0",
+          },
+          {
+            mapel: "Bahasa Inggris",
+            nilai: "0",
+          },
+        ],
+        kelompokB: [
+          {
+            mapel: "Seni Budaya",
+            nilai: "0",
+          },
+          {
+            mapel: "Penjaskes",
+            nilai: "0",
+          },
+          {
+            mapel: "Prakarya",
+            nilai: "0",
+          },
+        ],
+        kelompokC: [
+          {
+            mapel: "Matematika",
+            nilai: "0",
+          },
+          {
+            mapel: "Biologi",
+            nilai: "0",
+          },
+          {
+            mapel: "Fisika",
+            nilai: "0",
+          },
+          {
+            mapel: "Kimia",
+            nilai: "0",
+          },
+          {
+            mapel: "Geografi",
+            nilai: "0",
+          },
+          {
+            mapel: "Sejarah",
+            nilai: "0",
+          },
+          {
+            mapel: "Sosiologi",
+            nilai: "0",
+          },
+          {
+            mapel: "Ekonomi",
+            nilai: "0",
+          },
+          {
+            mapel: "Bahasa Indonesia",
+            nilai: "0",
+          },
+          {
+            mapel: "Bahasa Inggris",
+            nilai: "0",
+          },
+          {
+            mapel: "Bahasa Asing Lain",
+            nilai: "0",
+          },
+          {
+            mapel: "Antropologi",
+            nilai: "0",
+          },
+        ],
+        absen: {
+          alpha: "0",
+          izin: "0",
+          sakit: "0",
+        },
       },
+      siswa_id: this.$route.params.siswaId,
+      kelas_id: this.$route.params.kelasId,
       listSikap: ["Sangat Buruk", "Buruk", "Sedang", "Baik", "Sangat Baik"],
     };
+  },
+  methods: {
+    handleSubmit() {
+      const payload = {
+        siswa_id: this.siswa_id,
+        kelas_id: this.kelas_id,
+        kompetensi_id: "",
+        semester: this.items.semester,
+        kelompokA: [...this.items.kelompokA],
+        kelompokB: [...this.items.kelompokB],
+        kelompokC: [...this.items.kelompokC],
+        kelompokCLintas: [],
+        absen: { ...this.items.absen },
+      };
+
+      this.loading = true;
+      SiswaService.addKompetensi(payload)
+        .then(({ data: { data, message } }) => {
+          if (data?.toLowerCase() == "success") {
+            console.log(this.$route.params);
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: "Berhasil Menyimpan Data Kompetensi Siswa",
+              color: "success",
+            });
+            this.$router.push({
+              name: SISWA.KELAS.SISWA.TABEL_KOMPETENSI,
+              params: {
+                siswaId: this.$route.params?.siswaId,
+                kelasId: this.$route.params?.kelasId,
+              },
+            });
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Menyimpan Data Kompetensi Siswa",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Menyimpan Data Kompetensi Siswau",
+            color: "error",
+          });
+          console.error(err);
+        })
+        .finally(() => (this.loading = false));
+    },
   },
 };
 </script>
