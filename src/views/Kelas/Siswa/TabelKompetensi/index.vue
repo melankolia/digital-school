@@ -301,15 +301,15 @@ export default {
       },
       siswaId: this.$route.params?.siswaId,
       kelasId: this.$route.params?.kelasId,
-      sortBySemester: null,
+      sortBySemester: "1",
       itemSemester: [
         {
           text: "Semester 1",
-          value: 1,
+          value: "1",
         },
         {
           text: "Semester 2",
-          value: 2,
+          value: "2",
         },
       ],
       sortByKelas: null,
@@ -389,6 +389,11 @@ export default {
   computed: {
     ...mapGetters(["getSiswa"]),
   },
+  watch: {
+    sortBySemester(val) {
+      val && this.getDetail();
+    },
+  },
   methods: {
     bindingData() {
       this.items = { ...this.items, ...this.getSiswa };
@@ -414,12 +419,17 @@ export default {
     getDetail() {
       this.loading = true;
       SiswaService.getKompetensi({
-        siswaId: this.siswaId,
-        kelasId: this.kelasId,
+        siswa_id: this.siswaId,
+        kelas_id: this.kelasId,
+        semester: this.sortBySemester,
       })
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
-            console.log(data);
+            this.listItem = {
+              ...this.listItem,
+              ...data,
+              absen: [{ ...data.absen }],
+            };
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,

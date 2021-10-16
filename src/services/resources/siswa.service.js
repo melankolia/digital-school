@@ -50,6 +50,9 @@ const SiswaService = {
   addPindahan(data) {
     return MainInstance.post(SISWA.CREATE.PINDAHAN, data);
   },
+  addKompetensi(data) {
+    return MainInstance.post(SISWA.CREATE.KOMPETENSI, data);
+  },
   cancelReq() {
     return MainInstance.cancelRequest();
   },

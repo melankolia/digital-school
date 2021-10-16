@@ -165,8 +165,8 @@ export default {
       this.$router.push({
         name: SISWA.KELAS.SISWA.TABEL_KOMPETENSI,
         params: {
-          siswaId: this.items?.siswa_id,
-          kelasId: this.items?.kelas_id,
+          siswaId: this.$route.params?.secureId,
+          kelasId: this.$route.query?.kelasId,
         },
       });
     },
