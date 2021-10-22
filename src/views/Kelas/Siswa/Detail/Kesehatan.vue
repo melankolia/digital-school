@@ -92,6 +92,7 @@ export default {
   methods: {
     getDetail() {
       this.loading = true;
+      this.$emit("on-loading", true);
       SiswaService.getKesehatan(this.id)
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
@@ -112,7 +113,10 @@ export default {
           });
           console.error(err);
         })
-        .finally(() => (this.loading = false));
+        .finally(() => {
+          this.loading = false;
+          this.$emit("on-loading", false);
+        });
     },
   },
   mounted() {

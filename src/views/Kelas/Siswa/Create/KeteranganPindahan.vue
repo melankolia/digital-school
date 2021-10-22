@@ -19,7 +19,24 @@
         <p class="header-subtitle-input mb-1">G. Keterangan Pindahan</p>
       </div>
     </div>
-    <div class="d-flex flex-column">
+    <ContentNotFound
+      message="Data Keterangan Tempat Tinggal Not Found"
+      :loading="loading"
+      v-if="!isAvailable && isUpdate"
+    >
+      <template v-slot:action>
+        <v-btn
+          @click="() => getDetail()"
+          depressed
+          color="header"
+          class="rounded-lg outlined-custom"
+        >
+          <v-icon class="mr-1" small>mdi-reload</v-icon>
+          <p class="header-button-back ma-0">Reload</p>
+        </v-btn>
+      </template>
+    </ContentNotFound>
+    <div v-else class="d-flex flex-column">
       <div>
         <p class="mb-6 prev-school">Pindahan</p>
         <v-row>
@@ -140,18 +157,23 @@
 </template>
 
 <script>
+const ContentNotFound = () => import("@/components/Content/NotFound");
 import SiswaService from "@/services/resources/siswa.service";
 import { SISWA } from "@/router/name.types";
 
 export default {
+  components: {
+    ContentNotFound,
+  },
   props: {
     siswaId: { type: String, required: true },
   },
   data() {
     return {
-      id: this.$route.query?.kelasId,
+      id: this.$route.params?.kelasId,
       kelas: this.$route.query?.kelas,
       payload: {
+        siswa_id: null,
         pindah_sekolah: null,
         pindah_alasan: null,
         diterima_di: null,
@@ -246,6 +268,14 @@ export default {
   },
   mounted() {
     this.getDetail();
+  },
+  computed: {
+    isUpdate() {
+      return this.id;
+    },
+    isAvailable() {
+      return this.payload?.siswa_id;
+    },
   },
 };
 </script>

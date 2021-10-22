@@ -15,6 +15,7 @@
       <div>
         <v-btn
           @click="handleEdit"
+          :disabled="loading"
           depressed
           color="primary"
           class="rounded-lg mr-4"
@@ -41,6 +42,7 @@
           <div>
             <v-btn
               @click="handleKompetensi"
+              :disabled="loading"
               outlined
               class="rounded-lg outlined-custom mr-4"
               color="primary"
@@ -51,6 +53,7 @@
             </v-btn>
             <v-btn
               @click="handlePrestasi"
+              :disabled="loading"
               outlined
               class="rounded-lg outlined-custom"
               color="primary"
@@ -88,7 +91,11 @@
       <v-tab-item v-model="tab">
         <transition name="slide-fade" mode="out-in">
           <keep-alive>
-            <component :is="tabs[tab].component" class="mt-6" />
+            <component
+              :is="tabs[tab].component"
+              class="mt-6"
+              @on-loading="loading = $event"
+            />
           </keep-alive>
         </transition>
       </v-tab-item>
@@ -122,6 +129,7 @@ export default {
   data() {
     return {
       kelas: this.$route.query?.kelas,
+      loading: false,
       items: {
         NIS: null,
         NISN: null,
@@ -155,7 +163,7 @@ export default {
     handleEdit() {
       this.$router.push({
         name: SISWA.KELAS.SISWA.UPDATE,
-        params: { kelasId: this.items.kelas_id },
+        params: { kelasId: this.getSiswa.kelas_id },
         query: {
           kelas: this.kelas,
         },
@@ -174,10 +182,13 @@ export default {
       this.$router.push({
         name: SISWA.KELAS.SISWA.PRESTASI,
         params: {
-          siswaId: this.items?.siswa_id,
+          siswaId: this.getSiswa?.siswa_id,
         },
       });
     },
+  },
+  mounted() {
+    this[RESET_SISWA_INFO]();
   },
 };
 </script>

@@ -19,7 +19,24 @@
         <p class="header-subtitle-input mb-1">F. Keterangan Orang Tua Siswa</p>
       </div>
     </div>
-    <div class="d-flex flex-column">
+    <ContentNotFound
+      message="Data Keterangan Tempat Tinggal Not Found"
+      :loading="loading"
+      v-if="!isAvailable && isUpdate"
+    >
+      <template v-slot:action>
+        <v-btn
+          @click="() => getDetail()"
+          depressed
+          color="header"
+          class="rounded-lg outlined-custom"
+        >
+          <v-icon class="mr-1" small>mdi-reload</v-icon>
+          <p class="header-button-back ma-0">Reload</p>
+        </v-btn>
+      </template>
+    </ContentNotFound>
+    <div v-else class="d-flex flex-column">
       <div>
         <p class="mb-8 sick-history">Ayah</p>
         <v-row>
@@ -490,16 +507,21 @@
 </template>
 
 <script>
+const ContentNotFound = () => import("@/components/Content/NotFound");
 import SiswaService from "@/services/resources/siswa.service";
 
 export default {
+  components: {
+    ContentNotFound,
+  },
   props: {
     siswaId: { type: String, required: true },
   },
   data() {
     return {
-      id: this.$route.query?.kelasId,
+      id: this.$route.params?.kelasId,
       kelas: this.$route.query?.kelas,
+      loading: false,
       // Agama Properties
       listAgama: [
         "Islam",
@@ -583,7 +605,9 @@ export default {
           return e;
         }),
       };
-      console.log(payload);
+      payload.data.map((e) => {
+        delete e.siswa_id;
+      });
       SiswaService.addOrangTua(payload)
         .then(({ data: { data, success, message } }) => {
           if (success == true) {
@@ -645,6 +669,14 @@ export default {
   },
   mounted() {
     this.getDetail();
+  },
+  computed: {
+    isUpdate() {
+      return this.id;
+    },
+    isAvailable() {
+      return this.payload.some((e) => e.siswa_id !== null);
+    },
   },
 };
 </script>

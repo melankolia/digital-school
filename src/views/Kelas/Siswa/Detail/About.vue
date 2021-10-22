@@ -156,6 +156,7 @@ export default {
     ...mapMutations([SET_SISWA_INFO]),
     getDetail() {
       this.loading = true;
+      this.$emit("on-loading", true);
       SiswaService.getTentangDiri(this.id)
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
@@ -164,6 +165,7 @@ export default {
               NISN: data.NISN,
               nama_siswa: data.nama_lengkap,
               nama_kelas: data.nama_kelas,
+              kelas_id: data.kelas_id,
             });
             this.items = { ...this.items, ...data };
           } else {
@@ -182,7 +184,10 @@ export default {
           });
           console.error(err);
         })
-        .finally(() => (this.loading = false));
+        .finally(() => {
+          this.loading = false;
+          this.$emit("on-loading", false);
+        });
     },
   },
   mounted() {
