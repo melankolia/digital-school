@@ -3,6 +3,7 @@ import {
   initialSiswaState,
   initialGuruState,
   initialTenagaAhliState,
+  initialKompetensiState,
 } from "./detail.state";
 
 export {
@@ -10,4 +11,5 @@ export {
   initialSiswaState,
   initialGuruState,
   initialTenagaAhliState,
+  initialKompetensiState,
 };

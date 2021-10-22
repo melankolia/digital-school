@@ -22,3 +22,12 @@ export const initialTenagaAhliState = () => ({
   jabatan: null,
   tenaga_ahli_id: null,
 });
+
+export const initialKompetensiState = () => ({
+  NIS: null,
+  NISN: null,
+  nama_kelas: null,
+  nama_siswa: null,
+  semester: null,
+  angkatan: null,
+});

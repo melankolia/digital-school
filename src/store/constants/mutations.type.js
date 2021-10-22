@@ -14,3 +14,6 @@ export const RESET_GURU_INFO = "resetGuruInfo";
 
 export const SET_TENAGA_AHLI_INFO = "setTenagaAhliInfo";
 export const RESET_TENAGA_AHLI_INFO = "resetTenagaAhliInfo";
+
+export const SET_KOMPENTENSI_SISWA = "setKompetensiSiswa";
+export const RESET_KOMPENTENSI_SISWA = "resetKompetensiSiswa";
