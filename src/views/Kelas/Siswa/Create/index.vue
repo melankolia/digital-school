@@ -113,9 +113,6 @@ export default {
       ],
     };
   },
-  mounted() {
-    console.log(this.$route.params);
-  },
   computed: {
     disabledPrev() {
       return this.selected.id === 0;
