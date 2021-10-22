@@ -20,28 +20,28 @@
         </div>
         <div class="d-flex flex-column pr-12 mr-12">
           <p class="header-subtitle">
-            {{ items.nama_siswa || "-" | toTitle }} -
-            {{ items.nama_kelas || "-" | upperCase }}
+            {{ getKompetensi.nama_siswa || "-" | toTitle }} -
+            {{ getKompetensi.nama_kelas || "-" | upperCase }}
           </p>
           <div class="d-flex flex-row">
             <div class="backgroundLabel mr-4">
               <p class="header-subtitle py-2 px-3 ma-0">
-                NIS : {{ items.NIS || "-" | toTitle }}
+                NIS : {{ getKompetensi.NIS || "-" | toTitle }}
               </p>
             </div>
             <div class="backgroundLabel mr-4">
               <p class="header-subtitle py-2 px-3 ma-0">
-                NISN : {{ items.NISN || "-" | toTitle }}
+                NISN : {{ getKompetensi.NISN || "-" | toTitle }}
               </p>
             </div>
             <div class="backgroundLabel mr-4">
               <p class="header-subtitle py-2 px-3 ma-0">
-                Semester : {{ items.semester || "-" }}
+                Semester : {{ getKompetensi.semester || "-" }}
               </p>
             </div>
             <div class="backgroundLabel mr-4">
               <p class="header-subtitle py-2 px-3 ma-0">
-                Angkatan : {{ items.angkatan || "-" | toTitle }}
+                Angkatan : {{ getKompetensi.angkatan || "-" | toTitle }}
               </p>
             </div>
           </div>
@@ -66,6 +66,7 @@
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
               :items="listSikap"
+              v-model="items.kelompokA[0].sikap"
               label="Pilihan Sikap"
               solo
               hide-details
@@ -89,6 +90,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokA[1].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -113,6 +115,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokA[2].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -137,6 +140,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokA[3].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -163,6 +167,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokB[0].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -187,6 +192,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokB[1].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -211,6 +217,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokB[2].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -237,6 +244,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokC[0].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -261,6 +269,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokC[1].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -285,6 +294,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokC[2].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -309,6 +319,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokC[3].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -333,6 +344,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokC[4].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -357,6 +369,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokC[5].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -381,6 +394,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokC[6].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -405,6 +419,210 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokC[7].sikap"
+              :items="listSikap"
+              label="Pilihan Sikap"
+              solo
+              hide-details
+            />
+          </div>
+        </div>
+      </div>
+      <v-divider class="my-4" />
+    </div>
+    <div class="table-border mb-6 rounded-lg pa-4">
+      <p class="mb-6 kelompok-label">Kelompok C Lintas Peminatan</p>
+      <div class="kelompok-item rounded pa-4" style="width: 100%">
+        <p class="kelompok-sublabel mb-4">Matematika</p>
+        <div class="d-flex flex-row justify-space-between">
+          <div style="width: 50%" class="mr-4">
+            <p class="mb-1 input-custom-label">Nilai</p>
+            <v-text-field
+              v-model="items.kelompokCLintas[0].nilai"
+              label="0"
+              solo
+              hide-details
+            />
+          </div>
+          <div style="width: 50%">
+            <p class="mb-1 input-custom-label">Sikap</p>
+            <v-select
+              v-model="items.kelompokCLintas[0].sikap"
+              :items="listSikap"
+              label="Pilihan Sikap"
+              solo
+              hide-details
+            />
+          </div>
+        </div>
+      </div>
+      <v-divider class="my-4" />
+      <div class="kelompok-item rounded pa-4" style="width: 100%">
+        <p class="kelompok-sublabel mb-4">Biologi</p>
+        <div class="d-flex flex-row justify-space-between">
+          <div style="width: 50%" class="mr-4">
+            <p class="mb-1 input-custom-label">Nilai</p>
+            <v-text-field
+              v-model="items.kelompokCLintas[1].nilai"
+              label="0"
+              solo
+              hide-details
+            />
+          </div>
+          <div style="width: 50%">
+            <p class="mb-1 input-custom-label">Sikap</p>
+            <v-select
+              v-model="items.kelompokCLintas[1].sikap"
+              :items="listSikap"
+              label="Pilihan Sikap"
+              solo
+              hide-details
+            />
+          </div>
+        </div>
+      </div>
+      <v-divider class="my-4" />
+      <div class="kelompok-item rounded pa-4" style="width: 100%">
+        <p class="kelompok-sublabel mb-4">Fisika</p>
+        <div class="d-flex flex-row justify-space-between">
+          <div style="width: 50%" class="mr-4">
+            <p class="mb-1 input-custom-label">Nilai</p>
+            <v-text-field
+              v-model="items.kelompokCLintas[2].nilai"
+              label="0"
+              solo
+              hide-details
+            />
+          </div>
+          <div style="width: 50%">
+            <p class="mb-1 input-custom-label">Sikap</p>
+            <v-select
+              v-model="items.kelompokCLintas[2].sikap"
+              :items="listSikap"
+              label="Pilihan Sikap"
+              solo
+              hide-details
+            />
+          </div>
+        </div>
+      </div>
+      <v-divider class="my-4" />
+      <div class="kelompok-item rounded pa-4" style="width: 100%">
+        <p class="kelompok-sublabel mb-4">Kimia</p>
+        <div class="d-flex flex-row justify-space-between">
+          <div style="width: 50%" class="mr-4">
+            <p class="mb-1 input-custom-label">Nilai</p>
+            <v-text-field
+              v-model="items.kelompokCLintas[3].nilai"
+              label="0"
+              solo
+              hide-details
+            />
+          </div>
+          <div style="width: 50%">
+            <p class="mb-1 input-custom-label">Sikap</p>
+            <v-select
+              v-model="items.kelompokCLintas[3].sikap"
+              :items="listSikap"
+              label="Pilihan Sikap"
+              solo
+              hide-details
+            />
+          </div>
+        </div>
+      </div>
+      <v-divider class="my-4" />
+      <div class="kelompok-item rounded pa-4" style="width: 100%">
+        <p class="kelompok-sublabel mb-4">Geografi</p>
+        <div class="d-flex flex-row justify-space-between">
+          <div style="width: 50%" class="mr-4">
+            <p class="mb-1 input-custom-label">Nilai</p>
+            <v-text-field
+              v-model="items.kelompokCLintas[4].nilai"
+              label="0"
+              solo
+              hide-details
+            />
+          </div>
+          <div style="width: 50%">
+            <p class="mb-1 input-custom-label">Sikap</p>
+            <v-select
+              v-model="items.kelompokCLintas[4].sikap"
+              :items="listSikap"
+              label="Pilihan Sikap"
+              solo
+              hide-details
+            />
+          </div>
+        </div>
+      </div>
+      <v-divider class="my-4" />
+      <div class="kelompok-item rounded pa-4" style="width: 100%">
+        <p class="kelompok-sublabel mb-4">Sejarah</p>
+        <div class="d-flex flex-row justify-space-between">
+          <div style="width: 50%" class="mr-4">
+            <p class="mb-1 input-custom-label">Nilai</p>
+            <v-text-field
+              v-model="items.kelompokCLintas[5].nilai"
+              label="0"
+              solo
+              hide-details
+            />
+          </div>
+          <div style="width: 50%">
+            <p class="mb-1 input-custom-label">Sikap</p>
+            <v-select
+              v-model="items.kelompokCLintas[5].sikap"
+              :items="listSikap"
+              label="Pilihan Sikap"
+              solo
+              hide-details
+            />
+          </div>
+        </div>
+      </div>
+      <v-divider class="my-4" />
+      <div class="kelompok-item rounded pa-4" style="width: 100%">
+        <p class="kelompok-sublabel mb-4">Sosiologi</p>
+        <div class="d-flex flex-row justify-space-between">
+          <div style="width: 50%" class="mr-4">
+            <p class="mb-1 input-custom-label">Nilai</p>
+            <v-text-field
+              v-model="items.kelompokCLintas[6].nilai"
+              label="0"
+              solo
+              hide-details
+            />
+          </div>
+          <div style="width: 50%">
+            <p class="mb-1 input-custom-label">Sikap</p>
+            <v-select
+              v-model="items.kelompokCLintas[6].sikap"
+              :items="listSikap"
+              label="Pilihan Sikap"
+              solo
+              hide-details
+            />
+          </div>
+        </div>
+      </div>
+      <v-divider class="my-4" />
+      <div class="kelompok-item rounded pa-4" style="width: 100%">
+        <p class="kelompok-sublabel mb-4">Ekonomi</p>
+        <div class="d-flex flex-row justify-space-between">
+          <div style="width: 50%" class="mr-4">
+            <p class="mb-1 input-custom-label">Nilai</p>
+            <v-text-field
+              v-model="items.kelompokCLintas[7].nilai"
+              label="0"
+              solo
+              hide-details
+            />
+          </div>
+          <div style="width: 50%">
+            <p class="mb-1 input-custom-label">Sikap</p>
+            <v-select
+              v-model="items.kelompokCLintas[7].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -420,7 +638,7 @@
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
             <v-text-field
-              v-model="items.kelompokC[8].nilai"
+              v-model="items.kelompokCLintas[8].nilai"
               label="0"
               solo
               hide-details
@@ -429,6 +647,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokCLintas[8].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -444,7 +663,7 @@
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
             <v-text-field
-              v-model="items.kelompokC[9].nilai"
+              v-model="items.kelompokCLintas[9].nilai"
               label="0"
               solo
               hide-details
@@ -453,6 +672,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokCLintas[9].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -468,7 +688,7 @@
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
             <v-text-field
-              v-model="items.kelompokC[10].nilai"
+              v-model="items.kelompokCLintas[10].nilai"
               label="0"
               solo
               hide-details
@@ -477,6 +697,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokCLintas[10].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -492,7 +713,7 @@
           <div style="width: 50%" class="mr-4">
             <p class="mb-1 input-custom-label">Nilai</p>
             <v-text-field
-              v-model="items.kelompokC[11].nilai"
+              v-model="items.kelompokCLintas[11].nilai"
               label="0"
               solo
               hide-details
@@ -501,6 +722,7 @@
           <div style="width: 50%">
             <p class="mb-1 input-custom-label">Sikap</p>
             <v-select
+              v-model="items.kelompokCLintas[11].sikap"
               :items="listSikap"
               label="Pilihan Sikap"
               solo
@@ -563,6 +785,7 @@
 <script>
 import SiswaService from "@/services/resources/siswa.service";
 import { SISWA } from "@/router/name.types";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -579,82 +802,143 @@ export default {
           {
             mapel: "Pendidikan Agama Islam",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "PPKN",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Bahasa Indonesia",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Bahasa Inggris",
             nilai: "0",
+            sikap: "Baik",
           },
         ],
         kelompokB: [
           {
             mapel: "Seni Budaya",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Penjaskes",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Prakarya",
             nilai: "0",
+            sikap: "Baik",
           },
         ],
         kelompokC: [
           {
             mapel: "Matematika",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Biologi",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Fisika",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Kimia",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Geografi",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Sejarah",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Sosiologi",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Ekonomi",
             nilai: "0",
+            sikap: "Baik",
+          },
+        ],
+        kelompokCLintas: [
+          {
+            mapel: "Matematika",
+            nilai: "0",
+            sikap: "Baik",
+          },
+          {
+            mapel: "Biologi",
+            nilai: "0",
+            sikap: "Baik",
+          },
+          {
+            mapel: "Fisika",
+            nilai: "0",
+            sikap: "Baik",
+          },
+          {
+            mapel: "Kimia",
+            nilai: "0",
+            sikap: "Baik",
+          },
+          {
+            mapel: "Geografi",
+            nilai: "0",
+            sikap: "Baik",
+          },
+          {
+            mapel: "Sejarah",
+            nilai: "0",
+            sikap: "Baik",
+          },
+          {
+            mapel: "Sosiologi",
+            nilai: "0",
+            sikap: "Baik",
+          },
+          {
+            mapel: "Ekonomi",
+            nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Bahasa Indonesia",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Bahasa Inggris",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Bahasa Asing Lain",
             nilai: "0",
+            sikap: "Baik",
           },
           {
             mapel: "Antropologi",
             nilai: "0",
+            sikap: "Baik",
           },
         ],
         absen: {
@@ -668,6 +952,9 @@ export default {
       listSikap: ["Sangat Buruk", "Buruk", "Sedang", "Baik", "Sangat Baik"],
     };
   },
+  computed: {
+    ...mapGetters(["getKompetensi"]),
+  },
   methods: {
     handleSubmit() {
       const payload = {
@@ -678,7 +965,7 @@ export default {
         kelompokA: [...this.items.kelompokA],
         kelompokB: [...this.items.kelompokB],
         kelompokC: [...this.items.kelompokC],
-        kelompokCLintas: [],
+        kelompokCLintas: [...this.items.kelompokCLintas],
         absen: { ...this.items.absen },
       };
 
@@ -717,6 +1004,9 @@ export default {
         })
         .finally(() => (this.loading = false));
     },
+  },
+  mounted() {
+    console.log(this.getKompetensi);
   },
 };
 </script>

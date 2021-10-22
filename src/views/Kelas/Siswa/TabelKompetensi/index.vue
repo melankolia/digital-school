@@ -287,8 +287,9 @@
 
 <script>
 import { SISWA } from "@/router/name.types";
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import SiswaService from "@/services/resources/siswa.service";
+import { SET_KOMPENTENSI_SISWA } from "@/store/constants/mutations.type";
 
 export default {
   data() {
@@ -395,8 +396,16 @@ export default {
     },
   },
   methods: {
+    ...mapMutations([SET_KOMPENTENSI_SISWA]),
     bindingData() {
       this.items = { ...this.items, ...this.getSiswa };
+      this.setKompetensiSiswa({
+        NIS: this.items.NIS,
+        NISN: this.items.NISN,
+        nama_kelas: this.items.nama_kelas,
+        nama_siswa: this.items.nama_siswa,
+        semester: this.sortBySemester,
+      });
     },
     convertKet(arg) {
       if (!arg) return "Belum Tersedia";
