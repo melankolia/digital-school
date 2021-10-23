@@ -172,6 +172,7 @@
     <div class="d-flex justify-end mt-12">
       <v-btn
         @click="handleRekapitulasi"
+        :disabled="!isAvailable"
         depressed
         color="primary"
         class="rounded-lg"
@@ -240,7 +241,7 @@ export default {
         { text: "Laki-Laki", val: "laki" },
         { text: "Perempuan", val: "perempuan" },
       ],
-      totalItem: 10,
+      totalItem: 0,
       totalPage: 1,
       rowsPerPageItems: [10, 20, 50, 100],
       doubleClickPrevent: false,
@@ -313,6 +314,7 @@ export default {
               d.nomor = itemsPerPage * (page - 1) + (index + 1);
             });
             this.items = [...data];
+            this.$route.query.tahun_ajaran = data[0]?.tahun_ajaran;
             this.totalItem = meta.totalData;
             this.totalPage = meta.totalPage;
           } else {
@@ -338,6 +340,9 @@ export default {
   computed: {
     paginationProperties() {
       return [this.tab, this.search, this.sortBy].join();
+    },
+    isAvailable() {
+      return !!this.totalItem;
     },
   },
   watch: {

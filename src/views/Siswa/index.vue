@@ -229,6 +229,10 @@ export default {
       this.$router.push({
         name: SISWA.KELAS.SISWA.DETAIL,
         params: { secureId: item.siswa_id },
+        query: {
+          kelas: item.nama_kelas,
+          kelasId: item.kelas_id,
+        },
       });
     },
     handleEdit(item) {

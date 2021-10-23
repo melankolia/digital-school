@@ -7,6 +7,11 @@ const kelas = "kelas/v1";
 export const KELAS = {
   ALL: `${kelas}/all`,
   LOV: `${kelas}/list-kelas`,
+  LOV_KOMPETENSI: `${kelas}/kompetensi`,
+  REKAPITULASI: {
+    ALL: `${kelas}/rekapitulasi/all`,
+    PER_KELAS: `${kelas}/rekapitulasi`,
+  },
 };
 
 const siswa = "siswa/v1";
