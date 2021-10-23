@@ -11,6 +11,9 @@ const KelasService = {
   lovKelas() {
     return MainInstance.query(KELAS.LOV);
   },
+  lovKelasKompetensi(id) {
+    return MainInstance.fetch(KELAS.LOV_KOMPETENSI, id);
+  },
   cancelReq() {
     return MainInstance.cancelRequest();
   },

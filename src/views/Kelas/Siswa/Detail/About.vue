@@ -38,13 +38,13 @@
         <tr>
           <td>Tempat tanggal lahir</td>
           <td class="text-right text-sub">
-            {{ items.tanggal_lahir || "-" | toTitle }}
+            {{ items.ttl || "-" | toTitle }}
           </td>
         </tr>
         <tr>
           <td>Jenis Kelamin</td>
           <td class="text-right text-sub">
-            {{ items.kelamin || "-" | toTitle }}
+            {{ items.jenis_kelamin || "-" | toTitle }}
           </td>
         </tr>
         <tr>
@@ -132,8 +132,8 @@ export default {
         nama_lengkap: null,
         nama_panggilan: null,
         tempat_lahir: null,
-        tanggal_lahir: null,
-        kelamin: null,
+        ttl: null,
+        jenis_kelamin: null,
         agama: null,
         kewarganegaraan: null,
         anak_ke: null,

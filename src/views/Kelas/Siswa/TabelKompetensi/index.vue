@@ -2,7 +2,7 @@
   <div class="d-flex flex-column ml-7 mt-4 mb-7 mr-12">
     <div class="d-flex flex-row justify-space-between mb-12">
       <v-btn
-        @click="$router.back()"
+        @click="handleBack"
         depressed
         color="header"
         class="rounded-lg mr-4 outlined-custom"
@@ -15,6 +15,7 @@
       <div>
         <v-btn
           @click="handleEdit"
+          :disabled="loadingKelas"
           depressed
           color="primary"
           class="rounded-lg mr-4"
@@ -92,19 +93,10 @@
               dense
               class="rounded-lg"
               color="primary"
-              item-text="text"
-              item-value="value"
+              item-text="kelas"
+              item-value="kelas_id"
+              return-object
             >
-              <template #item="{ item }">
-                <p class="selection-item ma-0">
-                  <v-icon small class="mr-3">
-                    {{ item.icon }}
-                  </v-icon>
-                  <span>
-                    {{ item.text }}
-                  </span>
-                </p>
-              </template>
             </v-select>
           </div>
         </div>
@@ -246,9 +238,6 @@
         <template #item.nilai="{ item }">
           {{ item.nilai || "Belum Tersedia" }}
         </template>
-        <template #item.ket="{ item }">
-          {{ convertKet(item.nilai) }}
-        </template>
         <template #item.sikap="{ item }">
           {{ item.sikap || "Belum Tersedia" }}
         </template>
@@ -289,6 +278,7 @@
 import { SISWA } from "@/router/name.types";
 import { mapGetters, mapMutations } from "vuex";
 import SiswaService from "@/services/resources/siswa.service";
+import KelasService from "@/services/resources/kelas.service";
 import { SET_KOMPENTENSI_SISWA } from "@/store/constants/mutations.type";
 
 export default {
@@ -313,13 +303,16 @@ export default {
           value: "2",
         },
       ],
-      sortByKelas: null,
+      sortByKelas: {
+        kelas: null,
+        kelas_id: null,
+      },
       itemKelas: [],
       loadingKelas: false,
       headers: [
         { text: "Mata Pelajaran", value: "mapel", sortable: false },
         { text: "Pengetahuan", value: "nilai", sortable: false },
-        { text: "Keterangan", value: "ket", sortable: false },
+        { text: "Keterangan", value: "keterangan", sortable: false },
         { text: "Sikap", value: "sikap", sortable: false },
       ],
       absenHeaders: [
@@ -328,59 +321,16 @@ export default {
         { text: "Tanpa Keterangan", value: "alpha", sortable: false },
       ],
       listItem: {
-        kelompokA: [
-          {
-            mapel: "Matematika",
-            nilai: null,
-            sikap: null,
-          },
-          {
-            mapel: "mtk",
-            nilai: 10,
-            sikap: "Sangat Baik",
-          },
-        ],
-        kelompokB: [
-          {
-            mapel: "mtk",
-            nilai: 10,
-            sikap: "Sangat Baik",
-          },
-          {
-            mapel: "mtk",
-            nilai: 10,
-            sikap: "Sangat Baik",
-          },
-        ],
-        kelompokC: [
-          {
-            mapel: "mtk",
-            nilai: 10,
-            sikap: "Sangat Baik",
-          },
-          {
-            mapel: "mtk",
-            nilai: 10,
-            sikap: "Sangat Baik",
-          },
-        ],
-        kelompokCLintas: [
-          {
-            mapel: "mtk",
-            nilai: 10,
-            sikap: "Sangat Baik",
-          },
-          {
-            mapel: "mtk",
-            nilai: 10,
-            sikap: "Sangat Baik",
-          },
-        ],
+        kompetensi_id: "",
+        kelompokA: [],
+        kelompokB: [],
+        kelompokC: [],
+        kelompokCLintas: [],
         absen: [
           {
-            sakit: 10,
-            izin: 10,
-            alpha: 10,
+            sakit: "-",
+            izin: "-",
+            alpha: "-",
           },
         ],
       },
@@ -394,42 +344,87 @@ export default {
     sortBySemester(val) {
       val && this.getDetail();
     },
+    sortByKelas: {
+      handler(val) {
+        val && this.getDetail();
+      },
+      deep: true,
+    },
   },
   methods: {
     ...mapMutations([SET_KOMPENTENSI_SISWA]),
     bindingData() {
       this.items = { ...this.items, ...this.getSiswa };
+      this.sortByKelas.kelas_id = this.kelasId;
       this.setKompetensiSiswa({
         NIS: this.items.NIS,
         NISN: this.items.NISN,
         nama_kelas: this.items.nama_kelas,
         nama_siswa: this.items.nama_siswa,
-        semester: this.sortBySemester,
       });
     },
-    convertKet(arg) {
-      if (!arg) return "Belum Tersedia";
-      else if (arg <= 20) return "Sangat Buruk";
-      else if (arg >= 21 && arg <= 40) return "Buruk";
-      else if (arg >= 41 && arg <= 60) return "Sedang";
-      else if (arg >= 61 && arg <= 80) return "Baik";
-      else if (arg >= 81) return "Sangat Baik";
+    handleBack() {
+      this.$router.replace({
+        name: SISWA.KELAS.SISWA.DETAIL,
+        params: {
+          secureId: this.siswaId,
+        },
+        query: {
+          kelasId: this.kelasId,
+          kelas: this.items.nama_kelas,
+        },
+      });
     },
     handleEdit() {
+      this.setKompetensiSiswa({
+        ...this.getSiswa,
+        nama_kelas: this.sortByKelas.kelas,
+      });
       this.$router.push({
         name: SISWA.KELAS.SISWA.UPDATE_KOMPETENSI,
         params: {
           siswaId: this.siswaId,
           kelasId: this.kelasId,
         },
+        query: {
+          semester: this.sortBySemester,
+          kompetensi_id: this.listItem.kompetensi_id,
+        },
       });
     },
-    getListKelas() {},
+    getListKelas() {
+      this.loadingKelas = true;
+      KelasService.lovKelasKompetensi(this.siswaId)
+        .then(({ data: { code, data, message } }) => {
+          if (code == 200) {
+            this.itemKelas = [...data];
+          } else {
+            throw new Error(message);
+          }
+        })
+        .catch((err) => console.log(err))
+        .finally(() => (this.loadingKelas = false));
+    },
     getDetail() {
+      /// Reset to Default
+      this.listItem = {
+        kelompokA: [],
+        kelompokB: [],
+        kelompokC: [],
+        kelompokCLintas: [],
+        absen: [
+          {
+            sakit: "-",
+            izin: "-",
+            alpha: "-",
+          },
+        ],
+      };
+
       this.loading = true;
       SiswaService.getKompetensi({
         siswa_id: this.siswaId,
-        kelas_id: this.kelasId,
+        kelas_id: this.sortByKelas.kelas_id,
         semester: this.sortBySemester,
       })
         .then(({ data: { code, data, message } }) => {
@@ -440,19 +435,21 @@ export default {
               absen: [{ ...data.absen }],
             };
           } else {
-            this.$store.commit("snackbar/setSnack", {
-              show: true,
-              message: message || "Gagal Memuat Data Kompetensi Siswa",
-              color: "error",
-            });
+            throw new Error(message);
+            // this.$store.commit("snackbar/setSnack", {
+            //   show: true,
+            //   message: message || "Gagal Memuat Data Kompetensi Siswa",
+            //   color: "error",
+            // });
           }
         })
-        .catch(() => {
-          this.$store.commit("snackbar/setSnack", {
-            show: true,
-            message: "Gagal Memuat Data Kompetensi Siswa",
-            color: "error",
-          });
+        .catch((err) => {
+          console.error(err);
+          // this.$store.commit("snackbar/setSnack", {
+          //   show: true,
+          //   message: "Gagal Memuat Data Kompetensi Siswa",
+          //   color: "error",
+          // });
         })
         .finally(() => (this.loading = false));
     },
@@ -460,6 +457,7 @@ export default {
   mounted() {
     this.bindingData();
     this.getDetail();
+    this.getListKelas();
   },
 };
 </script>

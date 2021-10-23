@@ -20,7 +20,7 @@
       </div>
     </div>
     <ContentNotFound
-      message="Data Keterangan Tempat Tinggal Not Found"
+      message="Data Keterangan Pindahan Not Found"
       :loading="loading"
       v-if="!isAvailable && isUpdate"
     >
