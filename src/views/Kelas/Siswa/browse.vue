@@ -290,6 +290,7 @@ export default {
         params: { secureId: item.siswa_id, kelasId: item.kelas_id },
         query: {
           kelas: this.kelas,
+          isUpdate: true,
         },
       });
     },

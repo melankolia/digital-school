@@ -51,7 +51,8 @@ const KeteranganOrangTua = () =>
   import("@/views/Kelas/Siswa/Create/KeteranganOrangTua");
 const KeteranganPindahan = () =>
   import("@/views/Kelas/Siswa/Create/KeteranganPindahan");
-import { SISWA } from "@/router/name.types";
+const StatusBantuan = () => import("@/views/Kelas/Siswa/Create/StatusBantuan");
+import { SISWA, ALUMNI } from "@/router/name.types";
 
 export default {
   components: {
@@ -62,6 +63,7 @@ export default {
     KeteranganHobi,
     KeteranganOrangTua,
     KeteranganPindahan,
+    StatusBantuan,
   },
   data() {
     return {
@@ -110,6 +112,11 @@ export default {
           title: "Keterangan Pindahan",
           component: KeteranganPindahan,
         },
+        {
+          id: 7,
+          title: "Status Bantuan",
+          component: StatusBantuan,
+        },
       ],
     };
   },
@@ -120,6 +127,9 @@ export default {
     disabledNext() {
       return this.selected.id == this.components.length - 1;
     },
+    isAlumni() {
+      return this.$router.currentRoute?.name == ALUMNI.UPDATE;
+    },
   },
   methods: {
     handleSubmit() {
@@ -128,7 +138,7 @@ export default {
     handlePrev() {
       if (this.disabledPrev) {
         this.$router.push({
-          name: SISWA.KELAS.PER_KELAS,
+          name: this.isAlumni ? ALUMNI.ALL.BROWSE : SISWA.KELAS.PER_KELAS,
           params: {
             secureId: this.id,
           },

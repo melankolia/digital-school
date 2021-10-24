@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import { SISWA, ABOUT, GURU, TENAGA_AHLI } from "@/router/name.types";
+import { SISWA, ALUMNI, GURU, TENAGA_AHLI } from "@/router/name.types";
 
 export default {
   data() {
@@ -165,7 +165,12 @@ export default {
         {
           icon: "mdi-library",
           title: "Alumni",
-          to: { name: ABOUT },
+          subItems: [
+            {
+              title: "Seluruh Alumni Siswa",
+              to: { name: ALUMNI.ALL.BROWSE },
+            },
+          ],
           active: false,
         },
       ],

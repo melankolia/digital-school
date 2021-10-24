@@ -28,7 +28,7 @@
         <v-btn depressed class="rounded-lg outlined-custom">
           <p class="header-button-export ma-0">
             <v-icon class="mr-1" small>mdi-download</v-icon>
-            <span> Download Detail Siswa </span>
+            <span> Download Detail {{ isAlumni ? "Alumni" : "Siswa" }} </span>
           </p>
         </v-btn>
       </div>
@@ -37,7 +37,8 @@
       <div class="d-flex flex-column" style="width: 100vw">
         <div class="d-flex flex-row justify-space-between">
           <p class="header-title mb-4">
-            Tabel Siswa - {{ getSiswa.nama_siswa || "-" | toTitle }}
+            Tabel {{ isAlumni ? "Alumni" : "Siswa" }} -
+            {{ getSiswa.nama_siswa || "-" | toTitle }}
           </p>
           <div>
             <v-btn
@@ -106,7 +107,7 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import { RESET_SISWA_INFO } from "@/store/constants/mutations.type";
-import { SISWA } from "@/router/name.types";
+import { SISWA, ALUMNI } from "@/router/name.types";
 const About = () => import("@/views/Kelas/Siswa/Detail/About.vue");
 const TempatTinggal = () =>
   import("@/views/Kelas/Siswa/Detail/TempatTinggal.vue");
@@ -115,6 +116,8 @@ const Kesehatan = () => import("@/views/Kelas/Siswa/Detail/Kesehatan.vue");
 const Hobi = () => import("@/views/Kelas/Siswa/Detail/Hobi.vue");
 const OrangTua = () => import("@/views/Kelas/Siswa/Detail/OrangTua.vue");
 const Pindahan = () => import("@/views/Kelas/Siswa/Detail/Pindahan.vue");
+const StatusBantuan = () =>
+  import("@/views/Kelas/Siswa/Detail/StatusBantuan.vue");
 
 export default {
   components: {
@@ -125,6 +128,7 @@ export default {
     Hobi,
     OrangTua,
     Pindahan,
+    StatusBantuan,
   },
   data() {
     return {
@@ -142,18 +146,28 @@ export default {
       },
       tab: 0,
       tabs: [
-        { text: "Tentang Diri Siswa", component: "About" },
+        {
+          text: "Tentang Diri Siswa",
+          component: "About",
+        },
         { text: "Tempat Tinggal", component: "TempatTinggal" },
         { text: "Pendidikan", component: "Pendidikan" },
         { text: "Kesehatan", component: "Kesehatan" },
         { text: "Hobi", component: "Hobi" },
-        { text: "Orang Tua Siswa", component: "OrangTua" },
+        {
+          text: "Orang Tua Siswa",
+          component: "OrangTua",
+        },
         { text: "Pindahan", component: "Pindahan" },
+        { text: "Status Bantuan", component: "StatusBantuan" },
       ],
     };
   },
   computed: {
     ...mapGetters(["getSiswa"]),
+    isAlumni() {
+      return this.$router.currentRoute?.name == ALUMNI.DETAIL;
+    },
   },
   methods: {
     ...mapMutations([RESET_SISWA_INFO]),
@@ -162,16 +176,19 @@ export default {
     },
     handleEdit() {
       this.$router.push({
-        name: SISWA.KELAS.SISWA.UPDATE,
+        name: this.isAlumni ? ALUMNI.UPDATE : SISWA.KELAS.SISWA.UPDATE,
         params: { kelasId: this.getSiswa.kelas_id },
         query: {
           kelas: this.kelas,
+          isUpdate: true,
         },
       });
     },
     handleKompetensi() {
       this.$router.push({
-        name: SISWA.KELAS.SISWA.TABEL_KOMPETENSI,
+        name: this.isAlumni
+          ? ALUMNI.TABEL_KOMPETENSI
+          : SISWA.KELAS.SISWA.TABEL_KOMPETENSI,
         params: {
           siswaId: this.$route.params?.secureId,
           kelasId: this.$route.query?.kelasId,
@@ -180,15 +197,19 @@ export default {
     },
     handlePrestasi() {
       this.$router.push({
-        name: SISWA.KELAS.SISWA.PRESTASI,
+        name: this.isAlumni ? ALUMNI.PRESTASI : SISWA.KELAS.SISWA.PRESTASI,
         params: {
-          siswaId: this.getSiswa?.siswa_id,
+          siswaId: this.$route.params?.secureId,
         },
       });
     },
   },
   mounted() {
     this[RESET_SISWA_INFO]();
+    if (this.isAlumni) {
+      this.tabs[0].text = "Tentang Diri Alumni";
+      this.tabs[5].text = "Orang Tua Alumni";
+    }
   },
 };
 </script>

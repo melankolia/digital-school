@@ -2,7 +2,7 @@
   <div class="d-flex flex-column ml-7 mt-4 mb-7 mr-12">
     <div class="d-flex flex-row justify-space-between mb-12">
       <v-btn
-        @click="$router.back()"
+        @click="handleBack"
         depressed
         color="header"
         class="rounded-lg mr-4 outlined-custom"
@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { SISWA } from "@/router/name.types";
+import { SISWA, ALUMNI } from "@/router/name.types";
 
 export default {
   data() {
@@ -99,13 +99,24 @@ export default {
       },
     };
   },
+  computed: {
+    isAlumni() {
+      return this.$router.currentRoute?.name == ALUMNI.CREATE_PRESTASI;
+    },
+  },
   methods: {
+    handleBack() {
+      this.$router.replace({
+        name: this.isAlumni ? ALUMNI.PRESTASI : SISWA.KELAS.SISWA.PRESTASI,
+        params: { siswaId: this.siswa_id },
+      });
+    },
     handleSubmit() {
       this.loading = true;
       setTimeout(() => {
         this.loading = false;
-        this.$router.push({
-          name: SISWA.KELAS.SISWA.PRESTASI,
+        this.$router.replace({
+          name: this.isAlumni ? ALUMNI.PRESTASI : SISWA.KELAS.SISWA.PRESTASI,
           params: { siswaId: this.siswa_id },
         });
       }, 2000);

@@ -16,12 +16,14 @@
           </v-btn>
         </div>
         <p class="header-title-input mb-1">Input Tabel</p>
-        <p class="header-subtitle-input mb-1">A. Tentang Diri Siswa</p>
+        <p class="header-subtitle-input mb-1">
+          A. Tentang Diri {{ isAlumni ? "Alumni" : "Siswa" }}
+        </p>
       </div>
       <div class="picture-border rounded-lg"></div>
     </div>
     <ContentNotFound
-      message="Data Tentang Diri Siswa Not Found"
+      :message="`Data Tentang Diri ${isAlumni ? 'Alumni' : 'Siswa'} Not Found`"
       :loading="loading"
       v-if="!isAvailable && isUpdate"
     >
@@ -80,7 +82,9 @@
       </v-row>
       <v-row>
         <v-col cols="12" xs="12" sm="6">
-          <p class="mb-3 title-input">Nama Lengkap Siswa</p>
+          <p class="mb-3 title-input">
+            Nama Lengkap {{ isAlumni ? "Alumni" : "Siswa" }}
+          </p>
           <v-text-field
             v-model="payload.nama_lengkap"
             hide-details
@@ -90,7 +94,9 @@
           />
         </v-col>
         <v-col cols="12" xs="12" sm="6">
-          <p class="mb-3 title-input">Nama Panggilan Siswa</p>
+          <p class="mb-3 title-input">
+            Nama Panggilan {{ isAlumni ? "Alumni" : "Siswa" }}
+          </p>
           <v-text-field
             v-model="payload.nama_panggilan"
             hide-details
@@ -263,6 +269,7 @@
 const ContentNotFound = () => import("@/components/Content/NotFound");
 import KelasService from "@/services/resources/kelas.service";
 import SiswaService from "@/services/resources/siswa.service";
+import { ALUMNI } from "@/router/name.types";
 
 export default {
   components: {
@@ -354,7 +361,9 @@ export default {
           if (success == true) {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: "Berhasil Menyimpan Data Tentang Diri Siswa",
+              message: `Berhasil Menyimpan Data Tentang Diri ${
+                this.isAlumni ? "Alumni" : "Siswa"
+              }`,
               color: "success",
             });
             this.$emit("handleId", data.siswa_id);
@@ -367,7 +376,11 @@ export default {
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: message || "Gagal Menyimpan Data Tentang Diri Siswa",
+              message:
+                message ||
+                `Gagal Menyimpan Data Tentang Diri ${
+                  this.isAlumni ? "Alumni" : "Siswa"
+                }`,
               color: "error",
             });
           }
@@ -376,7 +389,9 @@ export default {
           console.error(err);
           this.$store.commit("snackbar/setSnack", {
             show: true,
-            message: "Gagal Menyimpan Data Tentang Diri Siswa",
+            message: `Gagal Menyimpan Data Tentang Diri ${
+              this.isAlumni ? "Alumni" : "Siswa"
+            }`,
             color: "error",
           });
         })
@@ -413,7 +428,11 @@ export default {
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: message || "Gagal Memuat Data Tentang Diri Siswa",
+              message:
+                message ||
+                `Gagal Memuat Data Tentang Diri ${
+                  this.isAlumni ? "Alumni" : "Siswa"
+                }`,
               color: "error",
             });
           }
@@ -421,7 +440,9 @@ export default {
         .catch((err) => {
           this.$store.commit("snackbar/setSnack", {
             show: true,
-            message: "Gagal Memuat Data Tentang Diri Siswa",
+            message: `Gagal Memuat Data Tentang Diri ${
+              this.isAlumni ? "Alumni" : "Siswa"
+            }`,
             color: "error",
           });
           console.error(err);
@@ -435,6 +456,9 @@ export default {
     },
     isAvailable() {
       return this.payload?.siswa_id;
+    },
+    isAlumni() {
+      return this.$router.currentRoute?.name == ALUMNI.UPDATE;
     },
   },
   mounted() {

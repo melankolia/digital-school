@@ -15,7 +15,7 @@
       <div>
         <v-btn
           @click="handleEdit"
-          :disabled="loadingKelas"
+          :disabled="loadingKelas || loading"
           depressed
           color="primary"
           class="rounded-lg mr-4"
@@ -36,7 +36,9 @@
     <div class="d-flex flex-row justify-space-between mb-6 mt-1">
       <div class="d-flex flex-column" style="width: 100vw">
         <div class="d-flex flex-row justify-space-between">
-          <p class="header-title mb-4">Tabel Kompetensi Siswa</p>
+          <p class="header-title mb-4">
+            Tabel Kompetensi {{ isAlumni ? "Alumni" : "Siswa" }}
+          </p>
         </div>
         <div class="d-flex flex-column pr-12 mr-12">
           <p class="header-subtitle">
@@ -275,7 +277,7 @@
 </template>
 
 <script>
-import { SISWA } from "@/router/name.types";
+import { SISWA, ALUMNI } from "@/router/name.types";
 import { mapGetters, mapMutations } from "vuex";
 import SiswaService from "@/services/resources/siswa.service";
 import KelasService from "@/services/resources/kelas.service";
@@ -339,6 +341,9 @@ export default {
   },
   computed: {
     ...mapGetters(["getSiswa"]),
+    isAlumni() {
+      return this.$router.currentRoute?.name == ALUMNI.TABEL_KOMPETENSI;
+    },
   },
   watch: {
     sortBySemester(val) {
@@ -355,7 +360,6 @@ export default {
     ...mapMutations([SET_KOMPENTENSI_SISWA]),
     bindingData() {
       this.items = { ...this.items, ...this.getSiswa };
-      this.sortByKelas.kelas_id = this.kelasId;
       this.setKompetensiSiswa({
         NIS: this.items.NIS,
         NISN: this.items.NISN,
@@ -365,7 +369,7 @@ export default {
     },
     handleBack() {
       this.$router.replace({
-        name: SISWA.KELAS.SISWA.DETAIL,
+        name: this.isAlumni ? ALUMNI.DETAIL : SISWA.KELAS.SISWA.DETAIL,
         params: {
           secureId: this.siswaId,
         },
@@ -381,7 +385,9 @@ export default {
         nama_kelas: this.sortByKelas.kelas,
       });
       this.$router.push({
-        name: SISWA.KELAS.SISWA.UPDATE_KOMPETENSI,
+        name: this.isAlumni
+          ? ALUMNI.UPDATE_KOMPETENSI
+          : SISWA.KELAS.SISWA.UPDATE_KOMPETENSI,
         params: {
           siswaId: this.siswaId,
           kelasId: this.kelasId,
@@ -398,6 +404,10 @@ export default {
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
             this.itemKelas = [...data];
+            const selectedKelas = this.itemKelas.find(
+              (e) => e.kelas_id == this.kelasId
+            );
+            this.sortByKelas = selectedKelas;
           } else {
             throw new Error(message);
           }
@@ -456,7 +466,6 @@ export default {
   },
   mounted() {
     this.bindingData();
-    this.getDetail();
     this.getListKelas();
   },
 };
