@@ -2,7 +2,7 @@
   <div class="d-flex flex-column ml-7 mt-4 mb-7 mr-12">
     <div class="d-flex flex-row justify-space-between mb-12">
       <v-btn
-        @click="$router.back()"
+        @click="handleBack"
         depressed
         color="header"
         class="rounded-lg mr-4 outlined-custom"
@@ -16,7 +16,9 @@
     <div class="d-flex flex-row justify-space-between mb-6 mt-1">
       <div class="d-flex flex-column" style="width: 100vw">
         <div class="d-flex flex-row justify-space-between">
-          <p class="header-title mb-4">Input Tabel Kompetensi Siswa</p>
+          <p class="header-title mb-4">
+            Input Tabel Kompetensi {{ isAlumni ? "Alumni" : "Siswa" }}
+          </p>
         </div>
         <div class="d-flex flex-column pr-12 mr-12">
           <p class="header-subtitle">
@@ -799,7 +801,7 @@
 <script>
 const ContentNotFound = () => import("@/components/Content/NotFound");
 import SiswaService from "@/services/resources/siswa.service";
-import { SISWA } from "@/router/name.types";
+import { SISWA, ALUMNI } from "@/router/name.types";
 import { mapGetters } from "vuex";
 
 export default {
@@ -1006,6 +1008,9 @@ export default {
     isAvailable() {
       return this.items?.kompetensi_id;
     },
+    isAlumni() {
+      return this.$router.currentRoute?.name == ALUMNI.UPDATE_KOMPETENSI;
+    },
   },
   methods: {
     convertKet(arg) {
@@ -1015,6 +1020,17 @@ export default {
       else if (arg >= 41 && arg <= 60) return "Sedang";
       else if (arg >= 61 && arg <= 80) return "Baik";
       else if (arg >= 81) return "Sangat Baik";
+    },
+    handleBack() {
+      this.$router.replace({
+        name: this.isAlumni
+          ? ALUMNI.TABEL_KOMPETENSI
+          : SISWA.KELAS.SISWA.TABEL_KOMPETENSI,
+        params: {
+          siswaId: this.$route.params?.siswaId,
+          kelasId: this.$route.params?.kelasId,
+        },
+      });
     },
     handleSubmit() {
       this.items.kelompokA.map(
@@ -1048,11 +1064,15 @@ export default {
           if (data?.toLowerCase() == "success") {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: "Berhasil Menyimpan Data Kompetensi Siswa",
+              message: `Berhasil Menyimpan Data Kompetensi ${
+                this.isAlumni ? "Alumni" : "Siswa"
+              }`,
               color: "success",
             });
             this.$router.push({
-              name: SISWA.KELAS.SISWA.TABEL_KOMPETENSI,
+              name: this.isAlumni
+                ? ALUMNI.TABEL_KOMPETENSI
+                : SISWA.KELAS.SISWA.TABEL_KOMPETENSI,
               params: {
                 siswaId: this.$route.params?.siswaId,
                 kelasId: this.$route.params?.kelasId,
@@ -1061,7 +1081,11 @@ export default {
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: message || "Gagal Menyimpan Data Kompetensi Siswa",
+              message:
+                message ||
+                `Gagal Menyimpan Data Kompetensi ${
+                  this.isAlumni ? "Alumni" : "Siswa"
+                }`,
               color: "error",
             });
           }
@@ -1069,7 +1093,9 @@ export default {
         .catch((err) => {
           this.$store.commit("snackbar/setSnack", {
             show: true,
-            message: "Gagal Menyimpan Data Kompetensi Siswau",
+            message: `Gagal Menyimpan Data Kompetensi ${
+              this.isAlumni ? "Alumni" : "Siswa"
+            }`,
             color: "error",
           });
           console.error(err);
@@ -1097,7 +1123,11 @@ export default {
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: message || "Gagal Memuat Data Kompetensi Siswa",
+              message:
+                message ||
+                `Gagal Memuat Data Kompetensi ${
+                  this.isAlumni ? "Alumni" : "Siswa"
+                }`,
               color: "error",
             });
           }
@@ -1106,7 +1136,9 @@ export default {
           console.error(err);
           this.$store.commit("snackbar/setSnack", {
             show: true,
-            message: "Gagal Memuat Data Kompetensi Siswa",
+            message: `Gagal Memuat Data Kompetensi ${
+              this.isAlumni ? "Alumni" : "Siswa"
+            }`,
             color: "error",
           });
         })

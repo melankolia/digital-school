@@ -52,7 +52,7 @@ const KeteranganOrangTua = () =>
 const KeteranganPindahan = () =>
   import("@/views/Kelas/Siswa/Create/KeteranganPindahan");
 const StatusBantuan = () => import("@/views/Kelas/Siswa/Create/StatusBantuan");
-import { SISWA } from "@/router/name.types";
+import { SISWA, ALUMNI } from "@/router/name.types";
 
 export default {
   components: {
@@ -127,6 +127,9 @@ export default {
     disabledNext() {
       return this.selected.id == this.components.length - 1;
     },
+    isAlumni() {
+      return this.$router.currentRoute?.name == ALUMNI.UPDATE;
+    },
   },
   methods: {
     handleSubmit() {
@@ -135,7 +138,7 @@ export default {
     handlePrev() {
       if (this.disabledPrev) {
         this.$router.push({
-          name: SISWA.KELAS.PER_KELAS,
+          name: this.isAlumni ? ALUMNI.ALL.BROWSE : SISWA.KELAS.PER_KELAS,
           params: {
             secureId: this.id,
           },

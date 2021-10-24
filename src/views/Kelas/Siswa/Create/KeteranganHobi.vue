@@ -72,6 +72,7 @@
 <script>
 const DefaultLoader = () => import("@/components/Loader/Default");
 import SiswaService from "@/services/resources/siswa.service";
+import { ALUMNI } from "@/router/name.types";
 
 export default {
   components: {
@@ -113,7 +114,9 @@ export default {
           if (success == true) {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: "Berhasil Menyimpan Data Keterangan Hobi Siswa",
+              message: `Berhasil Menyimpan Data Keterangan Hobi ${
+                this.isAlumni ? "Alumni" : "Siswa"
+              }`,
               color: "success",
             });
             this.$emit("handleId", data.siswa_id);
@@ -126,7 +129,11 @@ export default {
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: message || "Gagal Menyimpan Data Keterangan Hobi Siswa",
+              message:
+                message ||
+                `Gagal Menyimpan Data Keterangan Hobi ${
+                  this.isAlumni ? "Alumni" : "Siswa"
+                }`,
               color: "error",
             });
           }
@@ -135,7 +142,9 @@ export default {
           console.error(err);
           this.$store.commit("snackbar/setSnack", {
             show: true,
-            message: "Gagal Menyimpan Data Tempat Tinggal Siswa",
+            message: `Gagal Menyimpan Data Keterangan Hobi ${
+              this.isAlumni ? "Alumni" : "Siswa"
+            }`,
             color: "error",
           });
         })
@@ -166,6 +175,9 @@ export default {
     },
     isAvailable() {
       return this.payload?.siswa_id;
+    },
+    isAlumni() {
+      return this.$router.currentRoute?.name == ALUMNI.UPDATE;
     },
   },
 };

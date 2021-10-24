@@ -62,7 +62,7 @@
 
 <script>
 const DefaultLoader = () => import("@/components/Loader/Default");
-import { SISWA } from "@/router/name.types";
+import { SISWA, ALUMNI } from "@/router/name.types";
 
 export default {
   components: {
@@ -94,7 +94,9 @@ export default {
       setTimeout(() => {
         this.$store.commit("snackbar/setSnack", {
           show: true,
-          message: "Berhasil Menyimpan Data Status Bantuan Siswa",
+          message: `Berhasil Menyimpan Data Status Bantuan ${
+            this.isAlumni ? "Alumni" : "Siswa"
+          }`,
           color: "success",
         });
         this.$router.replace({
@@ -118,6 +120,9 @@ export default {
   computed: {
     isUpdate() {
       return this.update;
+    },
+    isAlumni() {
+      return this.$router.currentRoute?.name == ALUMNI.UPDATE;
     },
   },
 };

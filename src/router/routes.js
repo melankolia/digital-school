@@ -26,7 +26,15 @@ const JabatanTenagaAhli = () => import("@/views/TenagaAhli/RiwayatJabatan");
 const CreateJabatanTenagaAhli = () =>
   import("@/views/TenagaAhli/RiwayatJabatan/create");
 
-import { HOME, ABOUT, LOGIN, SISWA, GURU, TENAGA_AHLI } from "./name.types";
+import {
+  HOME,
+  ABOUT,
+  LOGIN,
+  SISWA,
+  GURU,
+  TENAGA_AHLI,
+  ALUMNI,
+} from "./name.types";
 
 export const configRoutes = [
   {
@@ -272,6 +280,80 @@ export const configRoutes = [
             path: ":tenagaAhliId",
             name: TENAGA_AHLI.DETAIL,
             component: TenagaAhliDetail,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+        ],
+      },
+      {
+        path: "/alumni",
+        component: {
+          render(c) {
+            return c("router-view");
+          },
+        },
+        children: [
+          {
+            path: "/",
+            name: ALUMNI.ALL.BROWSE,
+            component: Siswa,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "create/:kelasId",
+            name: ALUMNI.CREATE,
+            component: CreateSiswa,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "detail/:secureId",
+            name: ALUMNI.DETAIL,
+            component: KelasSiswaDetail,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "update-kompetensi/:siswaId/:kelasId",
+            name: ALUMNI.UPDATE_KOMPETENSI,
+            component: UpdateKompetensiSiswa,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "update/:secureId/:kelasId",
+            name: ALUMNI.UPDATE,
+            component: CreateSiswa,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "prestasi/create/:siswaId",
+            name: ALUMNI.CREATE_PRESTASI,
+            component: CreatePrestasiSiswa,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "prestasi/:siswaId",
+            name: ALUMNI.PRESTASI,
+            component: PrestasiSiswa,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: ":siswaId/:kelasId",
+            name: ALUMNI.TABEL_KOMPETENSI,
+            component: TabelKompetensiSiswa,
             meta: {
               requiresAuth: true,
             },

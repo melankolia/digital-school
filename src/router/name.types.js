@@ -26,6 +26,20 @@ export const SISWA = {
   },
 };
 
+export const alumni = "alumni";
+export const ALUMNI = {
+  ALL: {
+    BROWSE: `${alumni}.browse`,
+  },
+  DETAIL: `${alumni}.detail`,
+  TABEL_KOMPETENSI: `${alumni}.kompetensi`,
+  UPDATE_KOMPETENSI: `${alumni}.update.kompetensi`,
+  CREATE: `${alumni}.create`,
+  UPDATE: `${alumni}.update`,
+  PRESTASI: `${alumni}.prestasi`,
+  CREATE_PRESTASI: `${alumni}.create.prestasi`,
+};
+
 export const guru = "guru";
 export const GURU = {
   BROWSE: `${guru}.browse`,

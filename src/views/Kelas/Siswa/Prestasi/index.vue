@@ -42,7 +42,7 @@
 
 <script>
 const Card = () => import("@/components/Card");
-import { SISWA } from "@/router/name.types";
+import { SISWA, ALUMNI } from "@/router/name.types";
 
 export default {
   components: {
@@ -68,10 +68,17 @@ export default {
       ],
     };
   },
+  computed: {
+    isAlumni() {
+      return this.$router.currentRoute?.name == ALUMNI.PRESTASI;
+    },
+  },
   methods: {
     handleAdd() {
       this.$router.push({
-        name: SISWA.KELAS.SISWA.CREATE_PRESTASI,
+        name: this.isAlumni
+          ? ALUMNI.CREATE_PRESTASI
+          : SISWA.KELAS.SISWA.CREATE_PRESTASI,
       });
     },
   },

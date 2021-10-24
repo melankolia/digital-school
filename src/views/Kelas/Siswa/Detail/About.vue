@@ -20,7 +20,7 @@
     <v-simple-table v-else>
       <tbody>
         <tr>
-          <td>Nama siswa</td>
+          <td>Nama {{ isAlumni ? "Alumni" : "Siswa" }}</td>
           <td class="text-right text-sub"></td>
         </tr>
         <tr>
@@ -116,6 +116,7 @@
 const ContentNotFound = () => import("@/components/Content/NotFound");
 import SiswaService from "@/services/resources/siswa.service";
 import { SET_SISWA_INFO } from "@/store/constants/mutations.type";
+import { ALUMNI } from "@/router/name.types";
 import { mapMutations } from "vuex";
 
 export default {
@@ -150,6 +151,9 @@ export default {
   computed: {
     isAvailable() {
       return this.items?.siswa_id;
+    },
+    isAlumni() {
+      return this.$router.currentRoute?.name == ALUMNI.DETAIL;
     },
   },
   methods: {

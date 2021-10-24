@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column ml-7 mt-4 mb-7 mr-12">
-    <div class="d-flex flex-row justify-space-between mb-12">
+    <div v-if="!isAlumni" class="d-flex flex-row justify-space-between mb-12">
       <v-btn
         @click="handleBack"
         depressed
@@ -15,9 +15,12 @@
     </div>
     <div class="d-flex flex-row justify-space-between mb-9 mt-1">
       <div>
-        <p class="header-title mb-1">Tabel Siswa</p>
+        <p class="header-title mb-1">
+          Tabel {{ isAlumni ? "Alumni" : "Siswa" }}
+        </p>
         <p class="header-subtitle mb-1">
-          Daftar Seluruh Siswa SMAN 1 Kota Jambi
+          Daftar Seluruh {{ isAlumni ? "Alumni Siswa" : "Siswa" }} SMAN 1 Kota
+          Jambi
         </p>
       </div>
     </div>
@@ -40,31 +43,49 @@
           class="rounded-lg"
         ></v-text-field>
       </div>
-      <div style="width: 150px">
-        <v-select
-          id="list"
-          v-model="sortBy"
-          :items="itemSortBy"
-          placeholder="Sort By"
-          solo
-          hide-details
-          dense
-          class="rounded-lg"
-          color="primary"
-          item-text="text"
-          item-value="value"
-        >
-          <template #item="{ item }">
-            <p class="selection-item ma-0">
-              <v-icon small class="mr-3">
-                {{ item.icon }}
-              </v-icon>
-              <span>
-                {{ item.text }}
-              </span>
-            </p>
-          </template>
-        </v-select>
+      <div class="d-flex">
+        <div style="width: 150px">
+          <v-select
+            id="list"
+            v-model="sortBy"
+            :items="itemSortBy"
+            placeholder="Sort By"
+            solo
+            hide-details
+            dense
+            class="rounded-lg"
+            color="primary"
+            item-text="text"
+            item-value="value"
+          >
+            <template #item="{ item }">
+              <p class="selection-item ma-0">
+                <v-icon small class="mr-3">
+                  {{ item.icon }}
+                </v-icon>
+                <span>
+                  {{ item.text }}
+                </span>
+              </p>
+            </template>
+          </v-select>
+        </div>
+        <div class="ml-4" v-if="isAlumni" style="width: 150px">
+          <v-select
+            id="list"
+            v-model="filteredByTahunLulus"
+            :items="itemsTahunLulus"
+            placeholder="Tahun Lulus"
+            solo
+            hide-details
+            dense
+            class="rounded-lg"
+            color="primary"
+            item-text="text"
+            item-value="value"
+          >
+          </v-select>
+        </div>
       </div>
     </div>
     <div class="table-border rounded-lg pa-4">
@@ -157,7 +178,7 @@
 
 <script>
 import siswaService from "@/services/resources/siswa.service";
-import { SISWA } from "@/router/name.types";
+import { SISWA, ALUMNI } from "@/router/name.types";
 import { SET_SISWA_INFO } from "@/store/constants/mutations.type";
 import { mapMutations } from "vuex";
 const CustomFooter = () => import("@/components/Table/Footer");
@@ -182,6 +203,25 @@ export default {
           icon: "mdi-sort-descending",
         },
       ],
+      itemsTahunLulus: [
+        {
+          text: "Tahun 2019",
+          value: 2019,
+        },
+        {
+          text: "Tahun 2020",
+          value: 2020,
+        },
+        {
+          text: "Tahun 2021",
+          value: 2021,
+        },
+        {
+          text: "Tahun 2022",
+          value: 2022,
+        },
+      ],
+      filteredByTahunLulus: 2021,
       headers: [
         { text: "NIS", value: "NIS", sortable: false },
         { text: "NISN", value: "NISN", sortable: false },
@@ -227,7 +267,7 @@ export default {
     handleDetail(item) {
       // this.setSiswaInfo(item);
       this.$router.push({
-        name: SISWA.KELAS.SISWA.DETAIL,
+        name: this.isAlumni ? ALUMNI.DETAIL : SISWA.KELAS.SISWA.DETAIL,
         params: { secureId: item.siswa_id },
         query: {
           kelas: item.nama_kelas,
@@ -237,7 +277,7 @@ export default {
     },
     handleEdit(item) {
       this.$router.push({
-        name: SISWA.KELAS.SISWA.UPDATE,
+        name: this.isAlumni ? ALUMNI.UPDATE : SISWA.KELAS.SISWA.UPDATE,
         params: { secureId: item.siswa_id, kelasId: item.kelas_id },
         query: {
           kelas: item.kelas,
@@ -277,12 +317,6 @@ export default {
         })
         .catch((err) => {
           console.error(err);
-          // this.$store.commit("snackbar/setSnack", {
-          //   show: true,
-          //   message:
-          //     err.response?.data?.message || "Gagal Memuat Data Semua Kelas",
-          //   color: "error",
-          // });
         })
         .finally(() => (this.loading = false));
     },
@@ -290,6 +324,9 @@ export default {
   computed: {
     paginationProperties() {
       return [this.tab, this.search, this.sortBy].join();
+    },
+    isAlumni() {
+      return this.$router.currentRoute?.name == ALUMNI.ALL.BROWSE;
     },
   },
   watch: {
