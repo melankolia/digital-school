@@ -115,6 +115,8 @@ const Kesehatan = () => import("@/views/Kelas/Siswa/Detail/Kesehatan.vue");
 const Hobi = () => import("@/views/Kelas/Siswa/Detail/Hobi.vue");
 const OrangTua = () => import("@/views/Kelas/Siswa/Detail/OrangTua.vue");
 const Pindahan = () => import("@/views/Kelas/Siswa/Detail/Pindahan.vue");
+const StatusBantuan = () =>
+  import("@/views/Kelas/Siswa/Detail/StatusBantuan.vue");
 
 export default {
   components: {
@@ -125,6 +127,7 @@ export default {
     Hobi,
     OrangTua,
     Pindahan,
+    StatusBantuan,
   },
   data() {
     return {
@@ -149,6 +152,7 @@ export default {
         { text: "Hobi", component: "Hobi" },
         { text: "Orang Tua Siswa", component: "OrangTua" },
         { text: "Pindahan", component: "Pindahan" },
+        { text: "Status Bantuan", component: "StatusBantuan" },
       ],
     };
   },
@@ -166,6 +170,7 @@ export default {
         params: { kelasId: this.getSiswa.kelas_id },
         query: {
           kelas: this.kelas,
+          isUpdate: true,
         },
       });
     },

@@ -51,6 +51,7 @@ const KeteranganOrangTua = () =>
   import("@/views/Kelas/Siswa/Create/KeteranganOrangTua");
 const KeteranganPindahan = () =>
   import("@/views/Kelas/Siswa/Create/KeteranganPindahan");
+const StatusBantuan = () => import("@/views/Kelas/Siswa/Create/StatusBantuan");
 import { SISWA } from "@/router/name.types";
 
 export default {
@@ -62,6 +63,7 @@ export default {
     KeteranganHobi,
     KeteranganOrangTua,
     KeteranganPindahan,
+    StatusBantuan,
   },
   data() {
     return {
@@ -109,6 +111,11 @@ export default {
           id: 6,
           title: "Keterangan Pindahan",
           component: KeteranganPindahan,
+        },
+        {
+          id: 7,
+          title: "Status Bantuan",
+          component: StatusBantuan,
         },
       ],
     };

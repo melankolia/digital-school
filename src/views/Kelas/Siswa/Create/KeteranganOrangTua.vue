@@ -19,23 +19,7 @@
         <p class="header-subtitle-input mb-1">F. Keterangan Orang Tua Siswa</p>
       </div>
     </div>
-    <ContentNotFound
-      message="Data Keterangan Orang Tua Not Found"
-      :loading="loading"
-      v-if="!isAvailable && isUpdate"
-    >
-      <template v-slot:action>
-        <v-btn
-          @click="() => getDetail()"
-          depressed
-          color="header"
-          class="rounded-lg outlined-custom"
-        >
-          <v-icon class="mr-1" small>mdi-reload</v-icon>
-          <p class="header-button-back ma-0">Reload</p>
-        </v-btn>
-      </template>
-    </ContentNotFound>
+    <DefaultLoader :loading="loading" v-if="loading" />
     <div v-else class="d-flex flex-column">
       <div>
         <p class="mb-8 sick-history">Ayah</p>
@@ -507,12 +491,12 @@
 </template>
 
 <script>
-const ContentNotFound = () => import("@/components/Content/NotFound");
+const DefaultLoader = () => import("@/components/Loader/Default");
 import SiswaService from "@/services/resources/siswa.service";
 
 export default {
   components: {
-    ContentNotFound,
+    DefaultLoader,
   },
   props: {
     siswaId: { type: String, required: true },
@@ -520,6 +504,7 @@ export default {
   data() {
     return {
       id: this.$route.params?.kelasId,
+      update: this.$route.query?.isUpdate,
       kelas: this.$route.query?.kelas,
       loading: false,
       // Agama Properties
@@ -594,6 +579,7 @@ export default {
           e.TTL = e.TTL || "-";
           e.agama = e.agama || "-";
           e.kewarganegaraan = e.kewarganegaraan || "-";
+          e.pekerjaan = e.pekerjaan || "-";
           e.gol_pekerjaan = e.gol_pekerjaan || "-";
           e.penghasilan = e.penghasilan || "-";
           e.alamat = e.alamat || "-";
@@ -649,30 +635,21 @@ export default {
           if (code == 200) {
             this.payload = [...data];
           } else {
-            this.$store.commit("snackbar/setSnack", {
-              show: true,
-              message: message || "Gagal Memuat Data Orang Tua Siswa",
-              color: "error",
-            });
+            throw new Error(message);
           }
         })
         .catch((err) => {
-          this.$store.commit("snackbar/setSnack", {
-            show: true,
-            message: "Gagal Memuat Data Orang Tua Siswa",
-            color: "error",
-          });
           console.error(err);
         })
         .finally(() => (this.loading = false));
     },
   },
   mounted() {
-    this.getDetail();
+    this.isUpdate && this.getDetail();
   },
   computed: {
     isUpdate() {
-      return this.id;
+      return this.update;
     },
     isAvailable() {
       return this.payload.some((e) => e.siswa_id !== null);
