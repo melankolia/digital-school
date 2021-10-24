@@ -1,6 +1,23 @@
 <template>
   <div class="dialog-container">
     <div class="d-flex flex-column ml-7 mt-4 mb-7 mr-12">
+      <div class="d-flex flex-row justify-space-between mb-12">
+        <v-btn
+          @click="closeRekapitulasi"
+          depressed
+          color="header"
+          class="rounded-lg mr-4 outlined-custom"
+        >
+          <p class="header-button-back ma-0">
+            <span> Close </span>
+          </p>
+        </v-btn>
+      </div>
+      <div class="d-flex flex-row justify-space-between mb-6 mt-1">
+        <div>
+          <p class="header-title mb-1">Rekapitulasi Siswa - {{ kelas }}</p>
+        </div>
+      </div>
       <ContentNotFound
         message="Data Rekapitulasi Siswa Kelas Not Found"
         :loading="loading"
@@ -19,23 +36,6 @@
         </template>
       </ContentNotFound>
       <template v-else>
-        <div class="d-flex flex-row justify-space-between mb-12">
-          <v-btn
-            @click="closeRekapitulasi"
-            depressed
-            color="header"
-            class="rounded-lg mr-4 outlined-custom"
-          >
-            <p class="header-button-back ma-0">
-              <span> Close </span>
-            </p>
-          </v-btn>
-        </div>
-        <div class="d-flex flex-row justify-space-between mb-6 mt-1">
-          <div>
-            <p class="header-title mb-1">Rekapitulasi Siswa - {{ kelas }}</p>
-          </div>
-        </div>
         <div class="table-border mb-6 rounded-lg pa-4">
           <p class="mb-6 kelompok-label">Jenis Kelamin</p>
           <v-simple-table>
@@ -137,7 +137,7 @@
                 </td>
                 <td class="table-header-text">{{ tidak_mampu.kps || "-" }}</td>
                 <td class="table-header-text">
-                  {{ tidak_mampu.non_kpa || "-" }}
+                  {{ tidak_mampu.non_kps || "-" }}
                 </td>
                 <td class="table-header-text">
                   {{ tidak_mampu.total || "-" }}
@@ -211,6 +211,7 @@ export default {
               islam: data[0].agama.islam,
               khatolik: data[0].agama.khatolik,
               protestan: data[0].agama.protestan,
+              total: data[0].agama.total,
             };
             this.tidak_mampu = {
               L: data[0].tidak_mampu.L,
