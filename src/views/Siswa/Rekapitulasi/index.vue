@@ -17,7 +17,23 @@
       </v-tab>
     </v-tabs>
     <div class="table-border mb-6 rounded-lg pa-4">
-      <DefaultLoader :loading="loading" v-if="loading" />
+      <ContentNotFound
+        :message="`Data Rekapitulasi Siswa ${tabs[tab].text} Not Found`"
+        :loading="loading"
+        v-if="!isAvailable"
+      >
+        <template v-slot:action>
+          <v-btn
+            @click="() => getRekapitulasi()"
+            depressed
+            color="header"
+            class="rounded-lg outlined-custom"
+          >
+            <v-icon class="mr-1" small>mdi-reload</v-icon>
+            <p class="header-button-back ma-0">Reload</p>
+          </v-btn>
+        </template>
+      </ContentNotFound>
       <v-simple-table v-else>
         <thead>
           <tr>
@@ -193,21 +209,20 @@
 </template>
 
 <script>
-const DefaultLoader = () => import("@/components/Loader/Default");
+const ContentNotFound = () => import("@/components/Content/NotFound");
 import RekapitulasiService from "@/services/resources/rekapitulasi.service";
 
 export default {
   components: {
-    DefaultLoader,
+    ContentNotFound,
   },
   data() {
     return {
-      tab: "all",
+      tab: "X",
       tabs: [
-        { text: "All", val: "all" },
-        { text: "Kelas 10", val: "kelas10" },
-        { text: "Kelas 11", val: "kelas11" },
-        { text: "Kelas 12", val: "kelas12" },
+        { text: "Kelas 10", val: "X" },
+        { text: "Kelas 11", val: "XI" },
+        { text: "Kelas 12", val: "XII" },
       ],
       tahun_kelahiran: [],
       items: [],
@@ -220,8 +235,7 @@ export default {
     getRekapitulasi() {
       this.loading = true;
       RekapitulasiService.getPerkelas({
-        type: "04248256-9373-4081-bf14-9b6d21ad991f",
-        tahun_ajaran: "2019-2020",
+        type: this.tab,
       })
         .then(({ data: { code, message, data } }) => {
           if (code == 200) {
@@ -247,6 +261,17 @@ export default {
           });
         })
         .finally(() => (this.loading = false));
+    },
+  },
+  computed: {
+    isAvailable() {
+      return this.items.length > 0;
+    },
+  },
+  watch: {
+    tab(val) {
+      console.log(val);
+      val && this.getRekapitulasi();
     },
   },
   mounted() {

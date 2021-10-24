@@ -197,7 +197,6 @@ export default {
       this.loading = true;
       RekapitulasiService.getPerkelas({
         type: this.id,
-        tahun_ajaran: this.tahun_ajaran,
       })
         .then(({ data: { code, message, data } }) => {
           if (code == 200) {
