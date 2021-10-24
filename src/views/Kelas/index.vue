@@ -5,7 +5,7 @@
         <p class="header-title mb-1">Tabel Siswa - Seluruh Kelas</p>
         <p class="header-subtitle mb-1">Daftar kelas seluruh angkatan</p>
       </div>
-      <v-btn depressed color="primary" class="rounded-lg">
+      <v-btn @click="handleAdd" depressed color="primary" class="rounded-lg">
         <p class="header-button-title ma-0">
           <v-icon class="mr-1" small>mdi-plus</v-icon>
           <span> Tambah Kelas </span>
@@ -88,25 +88,48 @@
           </tr>
         </template>
         <template #item.action="{ item }">
-          <v-hover v-slot="{ hover }" open-delay="100">
-            <v-btn
-              small
-              depressed
-              @click="() => handleClick(item)"
-              color="primary"
-              class="rounded-lg"
-              style="width: 83px; height: 29px"
-              :style="{
-                'background-color': hover
-                  ? 'white !important'
-                  : '#0096C7 !important',
-              }"
-            >
-              <p class="ma-0" :style="{ color: hover ? '#0096C7' : '#FFFFFF' }">
-                Buka
-              </p>
-            </v-btn>
-          </v-hover>
+          <v-menu rounded left min-width="188px">
+            <template v-slot:activator="{ attrs, on }">
+              <v-hover v-slot="{ hover }" open-delay="100">
+                <v-btn
+                  v-bind="attrs"
+                  v-on="on"
+                  small
+                  depressed
+                  color="primary"
+                  class="rounded-lg"
+                  style="width: 83px; height: 29px"
+                  :style="{
+                    'background-color': hover
+                      ? 'white !important'
+                      : '#0096C7 !important',
+                  }"
+                >
+                  <p
+                    class="ma-0"
+                    :style="{ color: hover ? '#0096C7' : '#FFFFFF' }"
+                  >
+                    Buka
+                  </p>
+                  <v-icon>mdi-menu-down</v-icon>
+                </v-btn>
+              </v-hover>
+            </template>
+            <v-list>
+              <v-list-item @click="() => handleDetail(item)" link>
+                <img class="mr-4" src="@/assets/icons/detail.svg" />
+                <p class="selection-item ma-0">Buka Detail</p>
+              </v-list-item>
+              <v-list-item @click="() => handleEdit(item)" link>
+                <img class="mr-4" src="@/assets/icons/edit-outlined.svg" />
+                <p class="selection-item ma-0">Edit Data</p>
+              </v-list-item>
+              <v-list-item link>
+                <img class="mr-4" src="@/assets/icons/delete-outlined.svg" />
+                <p class="selection-item ma-0">Hapus Data</p>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </template>
         <template #footer="{ props }">
           <CustomFooter
@@ -181,11 +204,24 @@ export default {
       else if (head == "kelas") return "22%";
       else if (head == "tahunAjaran") return "20%";
     },
-    handleClick(item) {
+    handleAdd() {
+      this.$router.replace({
+        name: SISWA.KELAS.CREATE,
+      });
+    },
+    handleDetail(item) {
       this.$router.push({
         name: SISWA.KELAS.PER_KELAS,
         params: { kelasId: item.kelas_id },
         query: { kelas: item.kelas },
+      });
+    },
+    handleEdit(item) {
+      this.$router.replace({
+        name: SISWA.KELAS.UPDATE,
+        params: {
+          kelasId: item.kelas_id,
+        },
       });
     },
     getList() {
