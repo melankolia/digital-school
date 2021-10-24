@@ -18,7 +18,7 @@
     </v-tabs>
     <div class="table-border mb-6 rounded-lg pa-4">
       <ContentNotFound
-        :message="`Data Rekapitulasi Siswa ${tabs[tab].text} Not Found`"
+        :message="`Data Rekapitulasi Siswa Not Found`"
         :loading="loading"
         v-if="!isAvailable"
       >
@@ -66,10 +66,7 @@
             >
               Tahun Kelahiran
             </th>
-            <th
-              colspan="6"
-              class="text-center table-header-text border-left border-right"
-            >
+            <th colspan="6" class="text-center table-header-text border-left">
               Tidak Mampu
             </th>
           </tr>
@@ -136,11 +133,7 @@
             >
               NON KPS
             </th>
-            <th
-              class="text-center table-header-text border-bottom border-right"
-            >
-              Jumlah
-            </th>
+            <th class="text-center table-header-text border-bottom">Jumlah</th>
           </tr>
         </thead>
         <tbody>
@@ -202,6 +195,68 @@
               {{ (item.tidak_mampu && item.tidak_mampu.total) || "-" }}
             </td>
           </tr>
+          <tr>
+            <td colspan="2" class="table-header text-center border-top">
+              Jumlah Kelas
+            </td>
+            <td class="table-header text-center border-top border-left">
+              {{ 10 }}
+            </td>
+            <td class="table-header text-center border-top">
+              {{ 10 }}
+            </td>
+            <td class="table-header text-center border-top border-right">
+              {{ 10 }}
+            </td>
+            <td class="table-header text-center border-top">
+              {{ 10 }}
+            </td>
+            <td class="table-header text-center border-top">
+              {{ 10 }}
+            </td>
+            <td class="table-header text-center border-top">
+              {{ 10 }}
+            </td>
+            <td class="table-header text-center border-top">
+              {{ 10 }}
+            </td>
+            <td class="table-header text-center border-top">
+              {{ 10 }}
+            </td>
+            <td class="table-header text-center border-top border-right">
+              {{ 10 }}
+            </td>
+            <td
+              class="table-header text-center border-top"
+              v-for="(items, tahunIndex) in tahun_kelahiran"
+              :key="`tahun-row-${tahunIndex}`"
+            >
+              <span
+                v-for="(item, index) in items"
+                :key="`tahun-footer-span-${index}`"
+              >
+                {{ item || "-" }}
+              </span>
+            </td>
+            <td class="table-header text-center border-top border-left">
+              {{ 10 }}
+            </td>
+            <td class="table-header text-center border-top">
+              {{ 10 }}
+            </td>
+            <td class="table-header text-center border-top">
+              {{ 10 }}
+            </td>
+            <td class="table-header text-center border-top">
+              {{ 10 }}
+            </td>
+            <td class="table-header text-center border-top">
+              {{ 10 }}
+            </td>
+            <td class="table-header text-center border-top">
+              {{ 10 }}
+            </td>
+          </tr>
         </tbody>
       </v-simple-table>
     </div>
@@ -218,11 +273,11 @@ export default {
   },
   data() {
     return {
-      tab: "X",
+      tab: 0,
       tabs: [
-        { text: "Kelas 10", val: "X" },
-        { text: "Kelas 11", val: "XI" },
-        { text: "Kelas 12", val: "XII" },
+        { text: "Kelas X", val: "X" },
+        { text: "Kelas XI", val: "XI" },
+        { text: "Kelas XII", val: "XII" },
       ],
       tahun_kelahiran: [],
       items: [],
@@ -233,9 +288,10 @@ export default {
   },
   methods: {
     getRekapitulasi() {
+      this.items = [];
       this.loading = true;
       RekapitulasiService.getPerkelas({
-        type: this.tab,
+        type: this.tabs[this.tab].val,
       })
         .then(({ data: { code, message, data } }) => {
           if (code == 200) {
@@ -267,11 +323,13 @@ export default {
     isAvailable() {
       return this.items.length > 0;
     },
+    kelas() {
+      return this.tab;
+    },
   },
   watch: {
     tab(val) {
-      console.log(val);
-      val && this.getRekapitulasi();
+      val !== null && this.getRekapitulasi();
     },
   },
   mounted() {
@@ -289,6 +347,10 @@ export default {
   line-height: 30px;
   letter-spacing: 0em;
   text-align: left;
+}
+
+.border-top {
+  border-top: 1px solid #000000 !important;
 }
 
 .border-bottom {

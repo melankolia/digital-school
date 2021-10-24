@@ -36,10 +36,25 @@
     <div class="d-flex flex-row justify-space-between mb-9 mt-1">
       <div class="d-flex flex-column" style="width: 100vw">
         <div class="d-flex flex-row justify-space-between">
-          <p class="header-title mb-4">
-            Tabel {{ isAlumni ? "Alumni" : "Siswa" }} -
-            {{ getSiswa.nama_siswa || "-" | toTitle }}
-          </p>
+          <div class="d-flex flex-row">
+            <p class="header-title mb-4">
+              Tabel {{ isAlumni ? "Alumni" : "Siswa" }} -
+              {{ getSiswa.nama_siswa || "-" | toTitle }}
+            </p>
+            <v-btn
+              v-if="!isAlumni"
+              @click="handleAlumni"
+              :disabled="loading || loadingAlumni"
+              :loading="loadingAlumni"
+              outlined
+              class="rounded-lg outlined-custom mx-4"
+              color="primary"
+            >
+              <p class="header-button-export ma-0">
+                <span> Jadikan Alumni </span>
+              </p>
+            </v-btn>
+          </div>
           <div>
             <v-btn
               @click="handleKompetensi"
@@ -134,6 +149,7 @@ export default {
     return {
       kelas: this.$route.query?.kelas,
       loading: false,
+      loadingAlumni: false,
       items: {
         NIS: null,
         NISN: null,
@@ -172,7 +188,28 @@ export default {
   methods: {
     ...mapMutations([RESET_SISWA_INFO]),
     handleBack() {
-      this.$router.back();
+      this.$router.push({
+        name: this.isAlumni ? ALUMNI.ALL.BROWSE : SISWA.ALL.BROWSE,
+      });
+    },
+    handleAlumni() {
+      this.loadingAlumni = true;
+      setTimeout(() => {
+        this.$router.replace({
+          name: ALUMNI.DETAIL,
+          params: { secureId: this.$route.params?.secureId },
+          query: {
+            kelas: this.kelas,
+            kelasId: this.getSiswa.kelas_id,
+          },
+        });
+        this.$store.commit("snackbar/setSnack", {
+          show: true,
+          message: `Berhasil Mengubah Status Siswa Menjadi Alumni`,
+          color: "success",
+        });
+        this.loadingAlumni = false;
+      }, 3000);
     },
     handleEdit() {
       this.$router.push({

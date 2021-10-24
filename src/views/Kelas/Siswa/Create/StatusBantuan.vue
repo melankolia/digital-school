@@ -23,7 +23,7 @@
     <div v-else class="d-flex flex-column">
       <v-row>
         <v-col cols="12" xs="12" sm="6">
-          <p class="mb-3 title-input">Kartu Pelindungan Sosial (KPS)</p>
+          <p class="mb-3 title-input">Kartu Perlindungan Sosial (KPS)</p>
           <v-select
             v-model="payload.kps"
             :items="listKPS"
@@ -79,7 +79,7 @@ export default {
       loading: false,
       listKPS: ["Ada", "Tidak Ada"],
       payload: {
-        kps: null,
+        kps: "Tidak Ada",
         pkh: null,
         kks: null,
       },

@@ -26,6 +26,11 @@ export default {
   },
   methods: {
     handleRekapitulasi() {
+      this.$vuetify.goTo(1, {
+        duration: 300,
+        offset: 0,
+        easing: "easeInOutCubic",
+      });
       this.isRekapitulasi = !this.isRekapitulasi;
     },
   },
