@@ -298,6 +298,7 @@ export default {
       const { page, itemsPerPage } = this.options;
       this.createToken(KelasService.cancelReq().source());
       this.loading = true;
+      this.items = [];
       KelasService.getAllPerKelas(
         {
           kelas_id: this.id,

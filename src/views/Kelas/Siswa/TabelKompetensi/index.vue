@@ -25,10 +25,15 @@
             <span> Edit Data </span>
           </p>
         </v-btn>
-        <v-btn depressed class="rounded-lg outlined-custom">
+        <v-btn
+          :loading="downloadPDFLoading"
+          @click="handleDownload"
+          depressed
+          class="rounded-lg outlined-custom"
+        >
           <p class="header-button-export ma-0">
             <v-icon class="mr-1" small>mdi-download</v-icon>
-            <span> Download PDF Nilai </span>
+            <span> Download Nilai Rapor</span>
           </p>
         </v-btn>
       </div>
@@ -286,6 +291,7 @@ import { SET_KOMPENTENSI_SISWA } from "@/store/constants/mutations.type";
 export default {
   data() {
     return {
+      downloadPDFLoading: false,
       items: {
         NIS: null,
         NISN: null,
@@ -358,6 +364,38 @@ export default {
   },
   methods: {
     ...mapMutations([SET_KOMPENTENSI_SISWA]),
+    async handleDownload() {
+      this.downloadPDFLoading = true;
+      try {
+        await SiswaService.downloadFile({
+          siswa_id: this.siswaId,
+          kelas_id: "",
+          type: "siswa",
+        })
+          .then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute(
+              "download",
+              `${this.items.NISN} - ${this.items.nama_siswa}.xlsx`
+            );
+            document.body.appendChild(link);
+            link.click();
+          })
+          .catch((err) => {
+            throw new Error(err);
+          })
+          .finally(() => (this.downloadPDFLoading = false));
+      } catch (err) {
+        console.error(err);
+        this.$store.commit("snackbar/setSnack", {
+          show: true,
+          message: "Gagal Download Data Rapor Siswa",
+          color: "error",
+        });
+      }
+    },
     bindingData() {
       this.items = { ...this.items, ...this.getSiswa };
       this.setKompetensiSiswa({

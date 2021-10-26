@@ -52,7 +52,7 @@
         <tr>
           <td>Mulai Bertugas Disini</td>
           <td class="text-right text-sub">
-            {{ items.mulai_tugas || "-" | toTitle }}
+            {{ items.mulai_bertugas || "-" | toTitle }}
           </td>
         </tr>
         <tr>
@@ -82,7 +82,7 @@
         <tr>
           <td>Gaji Pokok</td>
           <td class="text-right text-sub">
-            {{ items.gaji || "-" | toTitle }}
+            {{ items.gaji_pokok || "-" | toTitle }}
           </td>
         </tr>
         <tr>
@@ -106,7 +106,7 @@
         <tr>
           <td>Kenaikan YAD Pangkat</td>
           <td class="text-right text-sub">
-            <!-- {{ items.yad_gaji || "-" | toTitle }} -->
+            {{ items.yad_gaji || "-" | toTitle }}
           </td>
         </tr>
         <tr>
@@ -115,12 +115,12 @@
             {{ items.yad_gaji || "-" | toTitle }}
           </td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>Sertifikasi</td>
           <td class="text-right text-sub">
             {{ items.sertifikasi || "-" | toTitle }}
           </td>
-        </tr>
+        </tr> -->
         <tr>
           <td>NUPTK</td>
           <td class="text-right text-sub">

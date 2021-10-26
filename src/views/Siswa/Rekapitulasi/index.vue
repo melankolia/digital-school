@@ -197,7 +197,7 @@
           </tr>
           <tr>
             <td colspan="2" class="table-header text-center border-top">
-              Jumlah Kelas
+              Jumlah {{ kelas }}
             </td>
             <td class="table-header text-center border-top border-left">
               {{ 10 }}
@@ -324,7 +324,7 @@ export default {
       return this.items.length > 0;
     },
     kelas() {
-      return this.tab;
+      return this.tabs[this.tab].text;
     },
   },
   watch: {

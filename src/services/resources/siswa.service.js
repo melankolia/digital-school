@@ -53,6 +53,9 @@ const SiswaService = {
   addKompetensi(data) {
     return MainInstance.post(SISWA.CREATE.KOMPETENSI, data);
   },
+  downloadFile(data, type = "arraybuffer") {
+    return MainInstance.download(SISWA.EXPORT.RAPOR, data, null, type);
+  },
   cancelReq() {
     return MainInstance.cancelRequest();
   },

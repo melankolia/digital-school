@@ -288,6 +288,7 @@ export default {
       const { page, itemsPerPage } = this.options;
       this.createToken(siswaService.cancelReq().source());
       this.loading = true;
+      this.items = [];
       siswaService
         .getAllSiswa(
           {

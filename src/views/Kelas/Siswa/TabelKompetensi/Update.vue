@@ -141,7 +141,7 @@
         </div>
         <v-divider class="my-4" />
         <div class="kelompok-item rounded pa-4" style="width: 100%">
-          <p class="kelompok-sublabel mb-4">Bahasa Inggris</p>
+          <p class="kelompok-sublabel mb-4">Matematika</p>
           <div class="d-flex flex-row justify-space-between">
             <div style="width: 50%" class="mr-4">
               <p class="mb-1 input-custom-label">Nilai</p>
@@ -156,6 +156,56 @@
               <p class="mb-1 input-custom-label">Sikap</p>
               <v-select
                 v-model="items.kelompokA[3].sikap"
+                :items="listSikap"
+                label="Pilihan Sikap"
+                solo
+                hide-details
+              />
+            </div>
+          </div>
+        </div>
+        <v-divider class="my-4" />
+        <div class="kelompok-item rounded pa-4" style="width: 100%">
+          <p class="kelompok-sublabel mb-4">Sejarah Indonesia</p>
+          <div class="d-flex flex-row justify-space-between">
+            <div style="width: 50%" class="mr-4">
+              <p class="mb-1 input-custom-label">Nilai</p>
+              <v-text-field
+                v-model="items.kelompokA[4].nilai"
+                label="0"
+                solo
+                hide-details
+              />
+            </div>
+            <div style="width: 50%">
+              <p class="mb-1 input-custom-label">Sikap</p>
+              <v-select
+                v-model="items.kelompokA[4].sikap"
+                :items="listSikap"
+                label="Pilihan Sikap"
+                solo
+                hide-details
+              />
+            </div>
+          </div>
+        </div>
+        <v-divider class="my-4" />
+        <div class="kelompok-item rounded pa-4" style="width: 100%">
+          <p class="kelompok-sublabel mb-4">Bahasa Inggris</p>
+          <div class="d-flex flex-row justify-space-between">
+            <div style="width: 50%" class="mr-4">
+              <p class="mb-1 input-custom-label">Nilai</p>
+              <v-text-field
+                v-model="items.kelompokA[5].nilai"
+                label="0"
+                solo
+                hide-details
+              />
+            </div>
+            <div style="width: 50%">
+              <p class="mb-1 input-custom-label">Sikap</p>
+              <v-select
+                v-model="items.kelompokA[5].sikap"
                 :items="listSikap"
                 label="Pilihan Sikap"
                 solo
@@ -832,6 +882,18 @@ export default {
           },
           {
             mapel: "Bahasa Indonesia",
+            nilai: "0",
+            keterangan: "Sangat Buruk",
+            sikap: "Baik",
+          },
+          {
+            mapel: "Matematika",
+            nilai: "0",
+            keterangan: "Sangat Buruk",
+            sikap: "Baik",
+          },
+          {
+            mapel: "Sejarah Indonesia",
             nilai: "0",
             keterangan: "Sangat Buruk",
             sikap: "Baik",
