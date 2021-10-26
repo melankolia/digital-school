@@ -228,6 +228,7 @@ export default {
       const { page, itemsPerPage } = this.options;
       this.createToken(KelasService.cancelReq().source());
       this.loading = true;
+      this.items = [];
       KelasService.getAllKelas(
         {
           search: this.search || null,

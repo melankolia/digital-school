@@ -38,6 +38,9 @@ export const SISWA = {
     KOMPETENSI: `${siswa}/kompetensi`,
   },
   PER_KELAS: `${siswa}/all`,
+  EXPORT: {
+    RAPOR: `${siswa}/export-raport`,
+  },
 };
 
 const guru = "guru/v1";

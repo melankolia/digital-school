@@ -106,7 +106,7 @@
         <tr>
           <td>Kenaikan YAD Pangkat</td>
           <td class="text-right text-sub">
-            <!-- {{ items.yad_gaji || "-" | toTitle }} -->
+            {{ items.yad_pangkat || "-" | toTitle }}
           </td>
         </tr>
         <tr>
@@ -115,12 +115,12 @@
             {{ items.yad_gaji || "-" | toTitle }}
           </td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>Sertifikasi</td>
           <td class="text-right text-sub">
             {{ items.sertifikasi || "-" | toTitle }}
           </td>
-        </tr>
+        </tr> -->
         <tr>
           <td>NUPTK</td>
           <td class="text-right text-sub">
