@@ -188,7 +188,7 @@ export default {
       tab: "all",
       tabs: [
         { text: "Lihat Semua Kelas", val: "all" },
-        { text: "IPA", val: "mipa" },
+        { text: "MIPA", val: "mipa" },
         { text: "IPS", val: "ips" },
       ],
       totalItem: 10,

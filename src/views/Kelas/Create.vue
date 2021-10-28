@@ -47,6 +47,7 @@
           <v-col cols="12" xs="12" sm="6">
             <p class="mb-3 title-input">Wali Kelas</p>
             <v-autocomplete
+              :loading="loadingWaliKelas"
               :items="itemsWaliKelas"
               v-model="payload.wali_kelas"
               clearable
@@ -54,7 +55,7 @@
               filled
               solo
               label="Contoh: Sugiono"
-              item-text="nama_guru"
+              item-text="nama"
               return-object
             />
           </v-col>
@@ -110,6 +111,8 @@
 
 <script>
 const DefaultLoader = () => import("@/components/Loader/Default");
+import GuruService from "@/services/resources/guru.service";
+import KelasService from "@/services/resources/kelas.service";
 import { SISWA } from "@/router/name.types";
 
 export default {
@@ -121,20 +124,16 @@ export default {
       loading: false,
       loadingSubmit: false,
       id: this.$route.params?.kelasId,
-      itemsWaliKelas: [
-        {
-          nama_guru: "Sugiono",
-          guru_id: "12345-12312332-123123",
-        },
-      ],
+      itemsWaliKelas: [],
+      loadingWaliKelas: false,
       listKelas: [
-        { text: "X", value: 10 },
-        { text: "XI", value: 11 },
-        { text: "XII", value: 12 },
+        { text: "X", value: "X" },
+        { text: "XI", value: "XI" },
+        { text: "XII", value: "XII" },
       ],
       payload: {
         kelas_id: null,
-        nama_kelas: 10,
+        nama_kelas: "X",
         jurusan: null,
         wali_kelas: null,
         tahun_ajaran_from: null,
@@ -153,32 +152,115 @@ export default {
         name: SISWA.KELAS.BROWSE,
       });
     },
+    getListGuru() {
+      this.loadingWaliKelas = true;
+      GuruService.getList({
+        search: null,
+        page: 1,
+        sort: "nama ASC",
+        limit: 9999,
+      })
+        .then(({ data: { code, message, data } }) => {
+          if (code == 200) {
+            this.itemsWaliKelas = [...data];
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Memuat Data Semua Guru",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Memuat Data Semua Guru",
+            color: "error",
+          });
+          console.error(err);
+        })
+        .finally(() => (this.loadingWaliKelas = false));
+    },
     handleSubmit() {
       this.loadingSubmit = true;
       const payload = {
-        kelas_id: this.payload.kelas_id,
-        nama_kelas: this.payload.nama_kelas,
-        jurusan: this.payload.jurusan,
-        wali_kelas: this.payload.wali_kelas,
-        tahun_ajaran: `${this.payload.tahun_ajaran_from}-${this.payload.tahun_ajaran_to}`,
+        kelas_id: this.payload.kelas_id || "",
+        namaKelas: this.payload.nama_kelas || "",
+        jurusan: this.payload.jurusan || "-",
+        walikelas: this.payload.wali_kelas?.nama || "-",
+        guru_id: this.payload.wali_kelas?.guru_id || "-",
       };
-      console.log(payload);
-      setTimeout(() => {
-        this.$router.replace({
-          name: SISWA.KELAS.BROWSE,
-        });
-        this.loadingSubmit = false;
-      }, 3000);
+      if (this.payload.tahun_ajaran_from && this.payload.tahun_ajaran_to) {
+        payload.tahunAjaran = `${this.payload.tahun_ajaran_from}-${this.payload.tahun_ajaran_to}`;
+      }
+
+      KelasService.createKelas(payload)
+        .then(({ data: { message, success } }) => {
+          if (success == true) {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: "Berhasil Menyimpan Data Kelas",
+              color: "success",
+            });
+            this.$router.replace({
+              name: SISWA.KELAS.BROWSE,
+            });
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Menyimpan Data Kelas",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Menyimpan Data Kelas",
+            color: "error",
+          });
+        })
+        .finally(() => (this.loadingSubmit = false));
     },
-    getDetail() {
+    getDetail(id) {
       this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-      }, 3000);
+      KelasService.getOneKelas(id)
+        .then(({ data: { code, message, data } }) => {
+          if (code == 200) {
+            this.payload = {
+              kelas_id: data.kelas_id,
+              nama_kelas: data.nama_kelas,
+              jurusan: data.jurusan,
+              tahun_ajaran_from: data.tahun_ajaran_awal,
+              tahun_ajaran_to: data.tahun_ajaran_akhir,
+              wali_kelas: {
+                nama: data.wali_kelas,
+                guru_id: data.guru_id,
+              },
+            };
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Memuat Data Kelas",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Memuat Data Kelas",
+            color: "error",
+          });
+        })
+        .finally(() => (this.loading = false));
     },
   },
   mounted() {
-    this.isUpdate && this.getDetail();
+    this.isUpdate && this.getDetail(this.id);
+    this.getListGuru();
   },
 };
 </script>

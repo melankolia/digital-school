@@ -6,6 +6,8 @@ export const USER = {
 const kelas = "kelas/v1";
 export const KELAS = {
   ALL: `${kelas}/all`,
+  ONE: `${kelas}/one`,
+  CREATE: `${kelas}/add`,
   LOV: `${kelas}/list-kelas`,
   LOV_KOMPETENSI: `${kelas}/kompetensi`,
   REKAPITULASI: {
