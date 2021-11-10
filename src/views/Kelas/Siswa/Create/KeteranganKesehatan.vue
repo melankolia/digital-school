@@ -182,7 +182,10 @@ export default {
     },
     getDetail() {
       this.loading = true;
-      SiswaService.getKesehatan(this.siswaId)
+      SiswaService.getKesehatan({
+        siswa_id: this.siswaId,
+        alumni: this.isAlumni ? true : null,
+      })
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
             this.payload = { ...this.payload, ...data };

@@ -15,7 +15,7 @@
       <div>
         <v-btn
           @click="handleEdit"
-          :disabled="loadingKelas || loading"
+          :disabled="loadingKelas || loading || isAlumni"
           depressed
           color="primary"
           class="rounded-lg mr-4"
@@ -474,6 +474,7 @@ export default {
         siswa_id: this.siswaId,
         kelas_id: this.sortByKelas.kelas_id,
         semester: this.sortBySemester,
+        alumni: this.isAlumni ? true : null,
       })
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {

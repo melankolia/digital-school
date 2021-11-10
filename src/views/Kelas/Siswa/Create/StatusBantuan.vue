@@ -63,6 +63,7 @@
 <script>
 const DefaultLoader = () => import("@/components/Loader/Default");
 import { SISWA, ALUMNI } from "@/router/name.types";
+import SiswaService from "@/services/resources/siswa.service";
 
 export default {
   components: {
@@ -91,27 +92,89 @@ export default {
     },
     handleSubmit() {
       this.$emit("handleLoading", true);
-      setTimeout(() => {
-        this.$store.commit("snackbar/setSnack", {
-          show: true,
-          message: `Berhasil Menyimpan Data Status Bantuan ${
-            this.isAlumni ? "Alumni" : "Siswa"
-          }`,
-          color: "success",
-        });
-        this.$router.replace({
-          name: SISWA.KELAS.SISWA.DETAIL,
-        });
-        this.$vuetify.goTo(1, {
-          duration: 300,
-          offset: 0,
-          easing: "easeInOutCubic",
-        });
-        this.$emit("handleLoading", false);
-      }, 2000);
+      const payload = {
+        siswa_id: this.siswaId,
+        pkh: this.payload.pkh || "-",
+        kks: this.payload.kks || "-",
+        kps: this.payload.kps,
+      };
+      SiswaService.addStatusBantuan(payload)
+        .then(({ data: { success, message } }) => {
+          if (success == true) {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: `Berhasil Menyimpan Data Status Bantuan ${
+                this.isAlumni ? "Alumni" : "Siswa"
+              }`,
+              color: "success",
+            });
+            this.$router.replace({
+              name: SISWA.KELAS.SISWA.DETAIL,
+            });
+            this.$vuetify.goTo(1, {
+              duration: 300,
+              offset: 0,
+              easing: "easeInOutCubic",
+            });
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message:
+                message ||
+                `Berhasil Menyimpan Data Status Bantuan ${
+                  this.isAlumni ? "Alumni" : "Siswa"
+                }`,
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: `Berhasil Menyimpan Data Status Bantuan ${
+              this.isAlumni ? "Alumni" : "Siswa"
+            }`,
+            color: "error",
+          });
+        })
+        .finally(() => this.$emit("handleLoading", false));
     },
     getDetail() {
-      console.log("handleGetDetail");
+      this.loading = true;
+      SiswaService.getTentangDiri({
+        siswa_id: this.siswaId,
+        alumni: this.isAlumni ? true : null,
+      })
+        .then(({ data: { data, code, message } }) => {
+          if (code == 200) {
+            this.payload = {
+              ...this.payload,
+              ...data,
+            };
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message:
+                message ||
+                `Gagal Memuat Data Tentang Diri ${
+                  this.isAlumni ? "Alumni" : "Siswa"
+                }`,
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: `Gagal Memuat Data Tentang Diri ${
+              this.isAlumni ? "Alumni" : "Siswa"
+            }`,
+            color: "error",
+          });
+          console.error(err);
+        })
+        .finally(() => (this.loading = false));
     },
   },
   mounted() {

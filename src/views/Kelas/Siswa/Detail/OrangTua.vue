@@ -111,6 +111,7 @@
 <script>
 const ContentNotFound = () => import("@/components/Content/NotFound");
 import SiswaService from "@/services/resources/siswa.service";
+import { ALUMNI } from "@/router/name.types";
 
 export default {
   components: {
@@ -162,12 +163,18 @@ export default {
     isAvailable() {
       return this.items.every((e) => e.siswa_id != null);
     },
+    isAlumni() {
+      return this.$router.currentRoute?.name == ALUMNI.DETAIL;
+    },
   },
   methods: {
     getDetail() {
       this.loading = true;
       this.$emit("on-loading", true);
-      SiswaService.getOrangTua(this.id)
+      SiswaService.getOrangTua({
+        siswa_id: this.id,
+        alumni: this.isAlumni ? true : null,
+      })
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
             const items = this.items.map((e, i) => (e = { ...e, ...data[i] }));

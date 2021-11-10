@@ -44,6 +44,8 @@
 
 <script>
 const ContentNotFound = () => import("@/components/Content/NotFound");
+import { ALUMNI } from "@/router/name.types";
+import SiswaService from "@/services/resources/siswa.service";
 
 export default {
   components: {
@@ -66,9 +68,12 @@ export default {
     isAvailable() {
       return this.items?.siswa_id;
     },
+    isAlumni() {
+      return this.$router.currentRoute?.name == ALUMNI.DETAIL;
+    },
   },
   methods: {
-    getDetail() {
+    getDetails() {
       this.loading = true;
       this.$emit("on-loading", true);
       setTimeout(() => {
@@ -82,6 +87,37 @@ export default {
         };
         this.$emit("on-loading", false);
       }, 3000);
+    },
+    getDetail() {
+      this.loading = true;
+      this.$emit("on-loading", true);
+      SiswaService.getTentangDiri({
+        siswa_id: this.id,
+        alumni: this.isAlumni ? true : null,
+      })
+        .then(({ data: { code, data, message } }) => {
+          if (code == 200) {
+            this.items = { ...this.items, ...data };
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Memuat Data Tentang Diri Siswa",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Memuat Data Tentang Diri Siswa",
+            color: "error",
+          });
+          console.error(err);
+        })
+        .finally(() => {
+          this.loading = false;
+          this.$emit("on-loading", false);
+        });
     },
   },
   mounted() {

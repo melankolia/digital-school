@@ -1170,6 +1170,7 @@ export default {
         siswa_id: this.siswa_id,
         kelas_id: this.kelas_id,
         semester: this.semester,
+        alumni: this.isAlumni ? true : null,
       })
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {

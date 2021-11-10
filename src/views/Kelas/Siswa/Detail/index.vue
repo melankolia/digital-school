@@ -15,7 +15,7 @@
       <div>
         <v-btn
           @click="handleEdit"
-          :disabled="loading"
+          :disabled="loading || isAlumni"
           depressed
           color="primary"
           class="rounded-lg mr-4"

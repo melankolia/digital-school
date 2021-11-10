@@ -297,6 +297,7 @@ export default {
             page,
             limit: itemsPerPage,
             sort: this.sortBy,
+            alumni: this.isAlumni ? true : null,
           },
           { cancelToken: this.cancelRequest.token }
         )
