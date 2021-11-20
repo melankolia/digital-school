@@ -161,7 +161,10 @@ export default {
     getDetail() {
       this.loading = true;
       this.$emit("on-loading", true);
-      SiswaService.getTentangDiri(this.id)
+      SiswaService.getTentangDiri({
+        siswa_id: this.id,
+        alumni: this.isAlumni ? true : null,
+      })
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
             this.setSiswaInfo({

@@ -75,6 +75,10 @@ const MainInstance = {
     return instance.put(`${resource}`, params);
   },
 
+  async edit(resource, config) {
+    return instance.patch(resource, config);
+  },
+
   async delete(resource, config) {
     return instance.delete(resource, config);
   },

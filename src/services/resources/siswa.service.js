@@ -1,30 +1,30 @@
 import MainInstance from "@/services/main.instance";
-import { SISWA } from "@/services/constants.js";
+import { SISWA, ITEM } from "@/services/constants.js";
 
 const SiswaService = {
   getAllSiswa(params, token) {
     return MainInstance.query(SISWA.ALL, { params, ...token });
   },
-  getTentangDiri(id) {
-    return MainInstance.fetch(SISWA.DETAIL.TENTANG_DIRI, id);
+  getTentangDiri(params) {
+    return MainInstance.query(SISWA.DETAIL.TENTANG_DIRI, { params });
   },
-  getTempatTinggal(id) {
-    return MainInstance.fetch(SISWA.DETAIL.TEMPAT_TINGGAL, id);
+  getTempatTinggal(params) {
+    return MainInstance.query(SISWA.DETAIL.TEMPAT_TINGGAL, { params });
   },
-  getPendidikan(id) {
-    return MainInstance.fetch(SISWA.DETAIL.PENDIDIKAN, id);
+  getPendidikan(params) {
+    return MainInstance.query(SISWA.DETAIL.PENDIDIKAN, { params });
   },
-  getKesehatan(id) {
-    return MainInstance.fetch(SISWA.DETAIL.KESEHATAN, id);
+  getKesehatan(params) {
+    return MainInstance.query(SISWA.DETAIL.KESEHATAN, { params });
   },
-  getHobi(id) {
-    return MainInstance.fetch(SISWA.DETAIL.HOBI, id);
+  getHobi(params) {
+    return MainInstance.query(SISWA.DETAIL.HOBI, { params });
   },
-  getOrangTua(id) {
-    return MainInstance.fetch(SISWA.DETAIL.ORANG_TUA, id);
+  getOrangTua(params) {
+    return MainInstance.query(SISWA.DETAIL.ORANG_TUA, { params });
   },
-  getPindahan(id) {
-    return MainInstance.fetch(SISWA.DETAIL.PINDAHAN, id);
+  getPindahan(params) {
+    return MainInstance.query(SISWA.DETAIL.PINDAHAN, { params });
   },
   getKompetensi(params) {
     return MainInstance.query(SISWA.DETAIL.KOMPETENSI, { params });
@@ -53,8 +53,17 @@ const SiswaService = {
   addKompetensi(data) {
     return MainInstance.post(SISWA.CREATE.KOMPETENSI, data);
   },
+  addStatusBantuan(data) {
+    return MainInstance.post(SISWA.CREATE.STATUS_BANTUAN, data);
+  },
+  changeToAlumni(data) {
+    return MainInstance.post(SISWA.ALUMNI.ROOT, data);
+  },
   downloadFile(data, type = "arraybuffer") {
     return MainInstance.download(SISWA.EXPORT.RAPOR, data, null, type);
+  },
+  deleteSiswa(data) {
+    return MainInstance.edit(ITEM.DELETE, data);
   },
   cancelReq() {
     return MainInstance.cancelRequest();

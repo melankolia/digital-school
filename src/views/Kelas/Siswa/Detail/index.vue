@@ -15,7 +15,7 @@
       <div>
         <v-btn
           @click="handleEdit"
-          :disabled="loading"
+          :disabled="loading || isAlumni"
           depressed
           color="primary"
           class="rounded-lg mr-4"
@@ -121,6 +121,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
+import SiswaService from "@/services/resources/siswa.service";
 import { RESET_SISWA_INFO } from "@/store/constants/mutations.type";
 import { SISWA, ALUMNI } from "@/router/name.types";
 const About = () => import("@/views/Kelas/Siswa/Detail/About.vue");
@@ -193,21 +194,58 @@ export default {
       });
     },
     handleAlumni() {
+      this.$confirm({
+        title: "Confirm",
+        message: `Are you sure you want to change this siswa status to alumni ?`,
+        button: {
+          no: "No",
+          yes: "Yes",
+        },
+        callback: (confirm) => {
+          if (confirm) {
+            this.requestChangeAlumni();
+          }
+        },
+      });
+    },
+    requestChangeAlumni() {
       this.loadingAlumni = true;
+      SiswaService.changeToAlumni({
+        siswa_id: this.$route.params?.secureId,
+      })
+        .then(({ data: { success, message } }) => {
+          if (success == true) {
+            this.$router.replace({
+              name: ALUMNI.DETAIL,
+              params: { secureId: this.$route.params?.secureId },
+              query: {
+                kelas: this.kelas,
+                kelasId: this.getSiswa.kelas_id,
+              },
+            });
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: `Berhasil Mengubah Status Siswa Menjadi Alumni`,
+              color: "success",
+            });
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || `Gagal Mengubah Status Siswa Menjadi Alumni`,
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: `Gagal Mengubah Status Siswa Menjadi Alumni`,
+            color: "error",
+          });
+        })
+        .finally(() => (this.loadingAlumni = true));
       setTimeout(() => {
-        this.$router.replace({
-          name: ALUMNI.DETAIL,
-          params: { secureId: this.$route.params?.secureId },
-          query: {
-            kelas: this.kelas,
-            kelasId: this.getSiswa.kelas_id,
-          },
-        });
-        this.$store.commit("snackbar/setSnack", {
-          show: true,
-          message: `Berhasil Mengubah Status Siswa Menjadi Alumni`,
-          color: "success",
-        });
         this.loadingAlumni = false;
       }, 3000);
     },

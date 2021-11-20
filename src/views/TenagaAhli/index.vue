@@ -100,6 +100,7 @@
             <template v-slot:activator="{ attrs, on }">
               <v-hover v-slot="{ hover }" open-delay="100">
                 <v-btn
+                  :loading="loadingDelete"
                   v-bind="attrs"
                   v-on="on"
                   small
@@ -132,7 +133,7 @@
                 <img class="mr-4" src="@/assets/icons/edit-outlined.svg" />
                 <p class="selection-item ma-0">Edit Data</p>
               </v-list-item>
-              <v-list-item link>
+              <v-list-item @click="() => handleDelete(item)" link>
                 <img class="mr-4" src="@/assets/icons/delete-outlined.svg" />
                 <p class="selection-item ma-0">Hapus Data</p>
               </v-list-item>
@@ -236,6 +237,53 @@ export default {
         name: TENAGA_AHLI.UPDATE,
         params: { tenagaAhliId: item.tenaga_ahli_id },
       });
+    },
+    handleDelete(item) {
+      this.$confirm({
+        title: "Confirm",
+        message: `Are you sure you want to delete ?`,
+        button: {
+          no: "No",
+          yes: "Yes",
+        },
+        callback: (confirm) => {
+          if (confirm) {
+            this.requestDelete(item);
+          }
+        },
+      });
+    },
+    requestDelete(item) {
+      this.loading = true;
+      TenagaAhliService.deleteTenagaAhli({
+        id: item.tenaga_ahli_id,
+        type: "tenaga_ahli",
+      })
+        .then(({ data: { success, message } }) => {
+          if (success == true) {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: `Berhasil Menghapus data Tenaga Ahli`,
+              color: "success",
+            });
+            this.getList();
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || `Gagal Menghapus data Tenaga Ahli`,
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: `Gagal Menghapus data Tenaga Ahli`,
+            color: "error",
+          });
+        })
+        .finally(() => (this.loading = false));
     },
     getList() {
       const { page, itemsPerPage } = this.options;

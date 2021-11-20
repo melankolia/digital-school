@@ -1,5 +1,5 @@
 import MainInstance from "@/services/main.instance";
-import { GURU } from "@/services/constants";
+import { GURU, ITEM } from "@/services/constants";
 
 const GuruService = {
   getList(params, token) {
@@ -10,6 +10,9 @@ const GuruService = {
   },
   addGuru(data) {
     return MainInstance.post(GURU.CREATE, data);
+  },
+  deleteGuru(data) {
+    return MainInstance.edit(ITEM.DELETE, data);
   },
   cancelReq() {
     return MainInstance.cancelRequest();

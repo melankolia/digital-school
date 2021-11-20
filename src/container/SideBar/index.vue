@@ -114,6 +114,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import { FORCE_LOGOUT } from "@/store/constants/actions.type";
 import { SISWA, ALUMNI, GURU, TENAGA_AHLI } from "@/router/name.types";
 
 export default {
@@ -177,8 +179,30 @@ export default {
     };
   },
   methods: {
+    ...mapActions([FORCE_LOGOUT]),
     handleLogout() {
-      console.log("handleLogout");
+      this.$confirm({
+        title: "Confirm",
+        message: `Are you sure you want to logout ?`,
+        button: {
+          no: "No",
+          yes: "Yes",
+        },
+        callback: (confirm) => {
+          if (confirm) {
+            this[FORCE_LOGOUT]()
+              .then(() => {
+                this.$router.push({ name: "login" });
+                this.$store.commit("snackbar/setSnack", {
+                  show: true,
+                  message: "Logout Berhasil",
+                  color: "success",
+                });
+              })
+              .catch((err) => console.log(err));
+          }
+        },
+      });
     },
     handleMini() {
       this.mini = !this.mini;

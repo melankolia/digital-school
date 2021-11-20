@@ -8,6 +8,10 @@ import { LOGIN } from "@/router/name.types";
 
 Vue.config.productionTip = false;
 
+// Component
+import DialogConfirm from "./components/Confirm";
+Vue.use(DialogConfirm);
+
 // Filter
 import "./filter/currency.filter";
 import "./filter/case.filter";

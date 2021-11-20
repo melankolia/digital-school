@@ -97,6 +97,7 @@ export default {
         sertifikat: null,
         files: null,
       },
+      imageBase64: null,
     };
   },
   computed: {
@@ -111,10 +112,19 @@ export default {
         params: { siswaId: this.siswa_id },
       });
     },
+    async createBase64Image(fileObject) {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        this.imageBase64 = e.target.result;
+      };
+      reader.readAsDataURL(fileObject);
+    },
     handleSubmit() {
       this.loading = true;
+      this.createBase64Image(this.items.files);
       setTimeout(() => {
         this.loading = false;
+        console.log(this.imageBase64);
         this.$router.replace({
           name: this.isAlumni ? ALUMNI.PRESTASI : SISWA.KELAS.SISWA.PRESTASI,
           params: { siswaId: this.siswa_id },
