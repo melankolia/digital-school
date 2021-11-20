@@ -132,7 +132,7 @@
                 <img class="mr-4" src="@/assets/icons/edit-outlined.svg" />
                 <p class="selection-item ma-0">Edit Data</p>
               </v-list-item>
-              <v-list-item link>
+              <v-list-item @click="() => handleDelete(item)" link>
                 <img class="mr-4" src="@/assets/icons/delete-outlined.svg" />
                 <p class="selection-item ma-0">Hapus Data</p>
               </v-list-item>
@@ -236,6 +236,53 @@ export default {
         name: GURU.UPDATE,
         params: { guruId: item.guru_id },
       });
+    },
+    handleDelete(item) {
+      this.$confirm({
+        title: "Confirm",
+        message: `Are you sure you want to delete ?`,
+        button: {
+          no: "No",
+          yes: "Yes",
+        },
+        callback: (confirm) => {
+          if (confirm) {
+            this.requestDelete(item);
+          }
+        },
+      });
+    },
+    requestDelete(item) {
+      this.loading = true;
+      GuruService.deleteGuru({
+        id: item.guru_id,
+        type: "guru",
+      })
+        .then(({ data: { success, message } }) => {
+          if (success == true) {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: `Berhasil Menghapus data guru`,
+              color: "success",
+            });
+            this.getList();
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || `Gagal Menghapus data guru`,
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: `Gagal Menghapus data guru`,
+            color: "error",
+          });
+        })
+        .finally(() => (this.loading = false));
     },
     getList() {
       const { page, itemsPerPage } = this.options;

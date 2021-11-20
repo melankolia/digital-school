@@ -40,6 +40,9 @@ export const SISWA = {
     STATUS_BANTUAN: `${siswa}/bantuan`,
     KOMPETENSI: `${siswa}/kompetensi`,
   },
+  ALUMNI: {
+    ROOT: `${siswa}/alumni`,
+  },
   PER_KELAS: `${siswa}/all`,
   EXPORT: {
     RAPOR: `${siswa}/export-raport`,
@@ -58,4 +61,9 @@ export const TENAGA_AHLI = {
   ALL: `${tenaga_ahli}/all`,
   DETAIL: `${tenaga_ahli}/detail`,
   CREATE: `${tenaga_ahli}/add`,
+};
+
+const item = "item/v1";
+export const ITEM = {
+  DELETE: `${item}/delete`,
 };

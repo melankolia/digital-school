@@ -1,5 +1,5 @@
 import MainInstance from "@/services/main.instance";
-import { KELAS, SISWA } from "@/services/constants.js";
+import { KELAS, SISWA, ITEM } from "@/services/constants.js";
 
 const KelasService = {
   getAllKelas(params, token) {
@@ -19,6 +19,9 @@ const KelasService = {
   },
   createKelas(data) {
     return MainInstance.post(KELAS.CREATE, data);
+  },
+  deleteSiswa(data) {
+    return MainInstance.edit(ITEM.DELETE, data);
   },
   cancelReq() {
     return MainInstance.cancelRequest();

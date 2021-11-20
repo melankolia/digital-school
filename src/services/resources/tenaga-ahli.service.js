@@ -1,5 +1,5 @@
 import MainInstance from "@/services/main.instance";
-import { TENAGA_AHLI } from "@/services/constants";
+import { TENAGA_AHLI, ITEM } from "@/services/constants";
 
 const TenagaAhliService = {
   getList(params, token) {
@@ -10,6 +10,9 @@ const TenagaAhliService = {
   },
   addTenagaAhli(data) {
     return MainInstance.post(TENAGA_AHLI.CREATE, data);
+  },
+  deleteTenagaAhli(data) {
+    return MainInstance.edit(ITEM.DELETE, data);
   },
   cancelReq() {
     return MainInstance.cancelRequest();

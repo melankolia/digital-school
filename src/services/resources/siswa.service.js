@@ -1,5 +1,5 @@
 import MainInstance from "@/services/main.instance";
-import { SISWA } from "@/services/constants.js";
+import { SISWA, ITEM } from "@/services/constants.js";
 
 const SiswaService = {
   getAllSiswa(params, token) {
@@ -56,8 +56,14 @@ const SiswaService = {
   addStatusBantuan(data) {
     return MainInstance.post(SISWA.CREATE.STATUS_BANTUAN, data);
   },
+  changeToAlumni(data) {
+    return MainInstance.post(SISWA.ALUMNI.ROOT, data);
+  },
   downloadFile(data, type = "arraybuffer") {
     return MainInstance.download(SISWA.EXPORT.RAPOR, data, null, type);
+  },
+  deleteSiswa(data) {
+    return MainInstance.edit(ITEM.DELETE, data);
   },
   cancelReq() {
     return MainInstance.cancelRequest();
