@@ -41,7 +41,6 @@
             hide-details
             filled
             solo
-            type="number"
             label="Contoh: Piagam pada tahun 2009"
           />
         </v-col>
@@ -94,7 +93,7 @@ export default {
         nama_siswa: null,
         nama_kelas: null,
         name: null,
-        sertifikat: null,
+        description: null,
         files: null,
       },
       imageBase64: null,
@@ -112,24 +111,23 @@ export default {
         params: { siswaId: this.siswa_id },
       });
     },
-    async createBase64Image(fileObject) {
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        this.imageBase64 = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
     handleSubmit() {
       this.loading = true;
-      this.createBase64Image(this.items.files);
-      setTimeout(() => {
-        this.loading = false;
-        console.log(this.imageBase64);
-        this.$router.replace({
-          name: this.isAlumni ? ALUMNI.PRESTASI : SISWA.KELAS.SISWA.PRESTASI,
-          params: { siswaId: this.siswa_id },
-        });
-      }, 2000);
+      this.createBase64Image(this.items.files).then((e) =>
+        setTimeout(() => {
+          const Payload = {
+            name: this.items.name,
+            description: this.items.description,
+            file: e.target.result,
+          };
+          console.log(Payload);
+          this.loading = false;
+          this.$router.replace({
+            name: this.isAlumni ? ALUMNI.PRESTASI : SISWA.KELAS.SISWA.PRESTASI,
+            params: { siswaId: this.siswa_id },
+          });
+        }, 2000)
+      );
     },
   },
 };

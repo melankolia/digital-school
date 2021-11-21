@@ -200,31 +200,31 @@
               Jumlah {{ kelas }}
             </td>
             <td class="table-header text-center border-top border-left">
-              {{ 10 }}
+              {{ total.jenis_kelamin.laki || "-" }}
             </td>
             <td class="table-header text-center border-top">
-              {{ 10 }}
+              {{ total.jenis_kelamin.perempuan || "-" }}
             </td>
             <td class="table-header text-center border-top border-right">
-              {{ 10 }}
+              {{ total.jenis_kelamin.total || "-" }}
             </td>
             <td class="table-header text-center border-top">
-              {{ 10 }}
+              {{ total.agama.islam || "-" }}
             </td>
             <td class="table-header text-center border-top">
-              {{ 10 }}
+              {{ total.agama.kristen || "-" }}
             </td>
             <td class="table-header text-center border-top">
-              {{ 10 }}
+              {{ total.agama.protestan || "-" }}
             </td>
             <td class="table-header text-center border-top">
-              {{ 10 }}
+              {{ total.agama.hindu || "-" }}
             </td>
             <td class="table-header text-center border-top">
-              {{ 10 }}
+              {{ total.agama.budha || "-" }}
             </td>
             <td class="table-header text-center border-top border-right">
-              {{ 10 }}
+              {{ total.agama.total || "-" }}
             </td>
             <td
               class="table-header text-center border-top"
@@ -239,22 +239,22 @@
               </span>
             </td>
             <td class="table-header text-center border-top border-left">
-              {{ 10 }}
+              {{ total.tidak_mampu.laki || "-" }}
             </td>
             <td class="table-header text-center border-top">
-              {{ 10 }}
+              {{ total.tidak_mampu.perempuan || "-" }}
             </td>
             <td class="table-header text-center border-top">
-              {{ 10 }}
+              {{ total.tidak_mampu.jumlah || "-" }}
             </td>
             <td class="table-header text-center border-top">
-              {{ 10 }}
+              {{ total.tidak_mampu.kps || "-" }}
             </td>
             <td class="table-header text-center border-top">
-              {{ 10 }}
+              {{ total.tidak_mampu.non_kps || "-" }}
             </td>
             <td class="table-header text-center border-top">
-              {{ 10 }}
+              {{ total.tidak_mampu.jumlah || "-" }}
             </td>
           </tr>
         </tbody>
@@ -283,6 +283,29 @@ export default {
       items: [],
       loading: false,
 
+      total: {
+        jenis_kelamin: {
+          laki: 0,
+          perempuan: 0,
+          total: 0,
+        },
+        agama: {
+          islam: 0,
+          kristen: 0,
+          protestan: 0,
+          hindu: 0,
+          budha: 0,
+          total: 0,
+        },
+        tidak_mampu: {
+          laki: 0,
+          perempuan: 0,
+          jumlah: 0,
+          kps: 0,
+          non_kps: 0,
+        },
+      },
+
       // Data Table Properties
     };
   },
@@ -298,6 +321,27 @@ export default {
             if (data.length > 0) {
               this.tahun_kelahiran = data[0].tahun_kelahiran;
               data.map((e, i) => (e.no = i + 1));
+              data.map((e) => {
+                // Jenis Kelamin
+                this.total.jenis_kelamin.laki += e.kelamin?.L;
+                this.total.jenis_kelamin.perempuan += e.kelamin?.P;
+                this.total.jenis_kelamin.total += e.kelamin?.total;
+
+                // Agama
+                this.total.agama.islam += e.agama?.islam;
+                this.total.agama.kristen += e.agama?.kristen;
+                this.total.agama.protestan += e.agama?.protestan;
+                this.total.agama.hindu += e.agama?.hindu;
+                this.total.agama.budha += e.agama?.budha;
+                this.total.agama.total += e.agama?.total;
+
+                // Tidak Mampu
+                this.total.tidak_mampu.laki += e.tidak_mampu.L;
+                this.total.tidak_mampu.perempuan += e.tidak_mampu.P;
+                this.total.tidak_mampu.jumlah += e.tidak_mampu.total;
+                this.total.tidak_mampu.kps += e.tidak_mampu.kps;
+                this.total.tidak_mampu.non_kps += e.tidak_mampu.non_kps;
+              });
               this.items = [...data];
             }
           } else {

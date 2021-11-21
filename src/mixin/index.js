@@ -26,6 +26,15 @@ Vue.mixin({
     createToken(callback) {
       callback && (this.cancelRequest = callback);
     },
+    async createBase64Image(fileObject) {
+      return await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          resolve(e);
+        };
+        reader.readAsDataURL(fileObject);
+      });
+    },
   },
   computed: {
     isFirst() {

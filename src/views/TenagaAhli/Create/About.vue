@@ -18,7 +18,19 @@
         <p class="header-title-input mb-1">Input Tabel</p>
         <p class="header-subtitle-input mb-1">A. Tentang Diri Tenaga Ahli</p>
       </div>
-      <div class="picture-border rounded-lg"></div>
+      <div
+        id="preview-photo"
+        class="picture-border rounded-lg"
+        @click="$refs.file.click()"
+      >
+        <input
+          type="file"
+          ref="file"
+          style="display: none"
+          accept="image/*"
+          @change="filesChange($event.target.files)"
+        />
+      </div>
     </div>
     <ContentNotFound
       message="Data Tentang Diri Tenaga Ahli Not Found"
@@ -282,12 +294,24 @@ export default {
         yad_pangkat: null,
         yad_gaji: null,
         nuptk: null,
+        files: null,
       },
     };
   },
   methods: {
     handleBack() {
       this.$router.back();
+    },
+    filesChange(file) {
+      this.payload.files = file[0];
+      const doc = document.getElementById("preview-photo");
+      this.createBase64Image(this.payload.files).then((e) => {
+        doc.style.background = "none";
+        doc.style.backgroundImage = 'url("' + e.target.result + '")';
+        doc.style.backgroundPosition = "center";
+        doc.style.backgroundRepeat = "no-repeat";
+        doc.style.backgroundSize = "contain";
+      });
     },
     getDetail() {
       this.$emit("handleLoading", true);
@@ -322,58 +346,61 @@ export default {
     },
     handleSubmit() {
       this.$emit("handleLoading", true);
-      const payload = {
-        nama: this.payload.nama,
-        jenis_kelamin: this.payload.jenis_kelamin || "-",
-        ttl: this.payload.ttl || "-",
-        nip_karpeg: this.payload.nip_karpeg || "-",
-        pendidikan: this.payload.pendidikan || "-",
-        mulai_bertugas: this.payload.mulai_bertugas || "-",
-        jabatan: this.payload.jabatan || "-",
-        gol_pangkat: this.payload.gol_pangkat || "-",
-        tmt_pangkat: this.payload.tmt_pangkat || "-",
-        sk_pertama: this.payload.sk_pertama || "-",
-        gaji_pokok: this.payload.gaji_pokok || "-",
-        mk_gol_tahun: this.payload.mk_gol_tahun || "-",
-        mk_gol_bulan: this.payload.mk_gol_bulan || "-",
-        k_tk: this.payload.k_tk || "-",
-        yad_pangkat: this.payload.yad_pangkat || "-",
-        yad_gaji: this.payload.yad_gaji || "-",
-        nuptk: this.payload.nuptk || "-",
-      };
-      if (this.payload?.tenaga_ahli_id)
-        payload.tenaga_ahli_id = this.payload.tenaga_ahli_id;
-      TenagaAhliService.addTenagaAhli(payload)
-        .then(({ data: { success, message } }) => {
-          if (success == true) {
+      this.createBase64Image(this.payload.files).then((e) => {
+        const payload = {
+          image: e.target.result,
+          nama: this.payload.nama,
+          jenis_kelamin: this.payload.jenis_kelamin || "-",
+          ttl: this.payload.ttl || "-",
+          nip_karpeg: this.payload.nip_karpeg || "-",
+          pendidikan: this.payload.pendidikan || "-",
+          mulai_bertugas: this.payload.mulai_bertugas || "-",
+          jabatan: this.payload.jabatan || "-",
+          gol_pangkat: this.payload.gol_pangkat || "-",
+          tmt_pangkat: this.payload.tmt_pangkat || "-",
+          sk_pertama: this.payload.sk_pertama || "-",
+          gaji_pokok: this.payload.gaji_pokok || "-",
+          mk_gol_tahun: this.payload.mk_gol_tahun || "-",
+          mk_gol_bulan: this.payload.mk_gol_bulan || "-",
+          k_tk: this.payload.k_tk || "-",
+          yad_pangkat: this.payload.yad_pangkat || "-",
+          yad_gaji: this.payload.yad_gaji || "-",
+          nuptk: this.payload.nuptk || "-",
+        };
+        if (this.payload?.tenaga_ahli_id)
+          payload.tenaga_ahli_id = this.payload.tenaga_ahli_id;
+        TenagaAhliService.addTenagaAhli(payload)
+          .then(({ data: { success, message } }) => {
+            if (success == true) {
+              this.$store.commit("snackbar/setSnack", {
+                show: true,
+                message: "Berhasil Menyimpan Data Tenaga Ahli",
+                color: "success",
+              });
+              this.$router.replace({ name: TENAGA_AHLI.BROWSE });
+              this.$vuetify.goTo(1, {
+                duration: 300,
+                offset: 0,
+                easing: "easeInOutCubic",
+              });
+            } else {
+              this.$store.commit("snackbar/setSnack", {
+                show: true,
+                message: message || "Gagal Menyimpan Data Tenaga Ahli",
+                color: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            console.error(err);
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: "Berhasil Menyimpan Data Tenaga Ahli",
-              color: "success",
-            });
-            this.$router.replace({ name: TENAGA_AHLI.BROWSE });
-            this.$vuetify.goTo(1, {
-              duration: 300,
-              offset: 0,
-              easing: "easeInOutCubic",
-            });
-          } else {
-            this.$store.commit("snackbar/setSnack", {
-              show: true,
-              message: message || "Gagal Menyimpan Data Tenaga Ahli",
+              message: "Gagal Menyimpan Data Tenaga Ahli",
               color: "error",
             });
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          this.$store.commit("snackbar/setSnack", {
-            show: true,
-            message: "Gagal Menyimpan Data Tenaga Ahli",
-            color: "error",
-          });
-        })
-        .finally(() => this.$emit("handleLoading", false));
+          })
+          .finally(() => this.$emit("handleLoading", false));
+      });
     },
   },
   computed: {
@@ -395,6 +422,11 @@ export default {
   width: 135px;
   height: 180px;
   background: gray;
+  border: 1px solid #f4f4f4;
+}
+
+.picture-border:hover {
+  cursor: pointer;
 }
 
 .v-input__control {
