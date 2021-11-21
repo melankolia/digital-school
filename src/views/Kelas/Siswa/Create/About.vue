@@ -359,7 +359,6 @@ export default {
     },
     handleSubmit() {
       this.$emit("handleLoading", true);
-      console.log(this.payload.files);
       this.createBase64Image(this.payload.files).then((e) => {
         const payload = {
           image: e.target.result,
