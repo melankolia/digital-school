@@ -100,7 +100,6 @@
             <template v-slot:activator="{ attrs, on }">
               <v-hover v-slot="{ hover }" open-delay="100">
                 <v-btn
-                  :loading="loadingDelete"
                   v-bind="attrs"
                   v-on="on"
                   small

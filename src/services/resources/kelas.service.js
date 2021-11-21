@@ -23,6 +23,9 @@ const KelasService = {
   deleteSiswa(data) {
     return MainInstance.edit(ITEM.DELETE, data);
   },
+  deleteKelas(data) {
+    return MainInstance.edit(ITEM.DELETE, data);
+  },
   cancelReq() {
     return MainInstance.cancelRequest();
   },
