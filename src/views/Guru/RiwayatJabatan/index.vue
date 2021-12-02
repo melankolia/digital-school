@@ -28,51 +28,148 @@
         </v-btn>
       </div>
     </div>
-    <div class="d-flex flex-column pr-12 mr-12">
-      <p class="header-subtitle">
-        {{ items.nama || "-" | toTitle }} -
-        {{ items.jabatan || "-" | upperCase }}
-      </p>
-    </div>
     <div class="d-flex flex-row">
-      <Card v-for="(item, index) in cardList" :cardDetail="item" :key="index" />
+      <ContentNotFound
+        message="Data Riwayat Jabatan Not Found"
+        :loading="loading"
+        v-if="!isAvailable"
+        style="width: 100%"
+      >
+        <template v-slot:action>
+          <v-btn
+            @click="() => getList()"
+            depressed
+            color="header"
+            class="rounded-lg outlined-custom"
+          >
+            <v-icon class="mr-1" small>mdi-reload</v-icon>
+            <p class="header-button-back ma-0">Reload</p>
+          </v-btn>
+        </template>
+      </ContentNotFound>
+      <Card
+        v-for="(item, index) in cardList"
+        :cardDetail="item"
+        :key="index"
+        :handleDelete="handleDelete"
+        :handleDetail="handleDetail"
+      />
     </div>
   </div>
 </template>
 
 <script>
 const Card = () => import("@/components/Card");
+const ContentNotFound = () => import("@/components/Content/NotFound");
 import { GURU } from "@/router/name.types";
+import GuruService from "@/services/resources/guru.service";
 
 export default {
   components: {
     Card,
+    ContentNotFound,
   },
   data() {
     return {
-      items: {
-        nama: null,
-        jabatan: null,
-      },
-      cardList: [
-        {
-          sertifikat_id: 1,
-          title: "Sertifikat Jabatan 1",
-          description: "Deskripsi 1",
-        },
-        {
-          sertifikat_id: 2,
-          title: "Sertifikat Jabatan 2",
-          description: "Deskripsi 2",
-        },
-      ],
+      id: this.$route.params.guruId,
+      loading: false,
+      cardList: [],
     };
   },
   methods: {
     handleAdd() {
       this.$router.push({
         name: GURU.JABATAN.CREATE,
+        params: { guruId: this.id },
       });
+    },
+    getList() {
+      this.loading = true;
+      GuruService.getListJabatan({
+        guru_id: this.id,
+      })
+        .then(({ data: { code, data, message } }) => {
+          if (code == 200) {
+            this.cardList = [...data];
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Memuat Data Riwayat Jabatan",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Memuat Data Riwayat Jabatan",
+            color: "error",
+          });
+        })
+        .finally(() => (this.loading = false));
+    },
+    handleDelete(item) {
+      this.$confirm({
+        title: "Confirm",
+        message: `Are you sure you want to delete ?`,
+        button: {
+          no: "No",
+          yes: "Yes",
+        },
+        callback: (confirm) => {
+          if (confirm) {
+            this.requestDelete(item);
+          }
+        },
+      });
+    },
+    requestDelete(item) {
+      this.loading = true;
+      this.cardList = [];
+      GuruService.deleteJabatan(item.jabatan_id)
+        .then(({ data: { success, message } }) => {
+          if (success == true) {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: `Berhasil Menghapus data Riwayat Jabatan`,
+              color: "success",
+            });
+            this.getList();
+          } else {
+            this.loading = false;
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || `Gagal Menghapus data Riwayat Jabatan`,
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          this.loading = false;
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: `Gagal Menghapus data Prestasi`,
+            color: "error",
+          });
+        });
+    },
+    handleDetail(item) {
+      this.$router.push({
+        name: GURU.JABATAN.UPDATE,
+        params: {
+          jabatanId: item.jabatan_id,
+        },
+      });
+    },
+  },
+  mounted() {
+    this.getList();
+  },
+  computed: {
+    isAvailable() {
+      return this.cardList.length > 0;
     },
   },
 };

@@ -40,6 +40,11 @@ export const SISWA = {
     STATUS_BANTUAN: `${siswa}/bantuan`,
     KOMPETENSI: `${siswa}/kompetensi`,
   },
+  PRESTASI: {
+    ALL: `${siswa}/prestasi`,
+    ONE: `${siswa}/one-prestasi`,
+    CREATE: `${siswa}/prestasi`,
+  },
   ALUMNI: {
     ROOT: `${siswa}/alumni`,
   },
@@ -54,6 +59,12 @@ export const GURU = {
   ALL: `${guru}/all`,
   DETAIL: `${guru}/detail`,
   CREATE: `${guru}/add`,
+  JABATAN: {
+    ONE: `staf/v1/one-jabatan`,
+    ALL: `${guru}/jabatan`,
+    CREATE: `${guru}/jabatan`,
+    DELETE: `${guru}/jabatan`,
+  },
 };
 
 const tenaga_ahli = "tenaga-ahli/v1";
@@ -61,6 +72,12 @@ export const TENAGA_AHLI = {
   ALL: `${tenaga_ahli}/all`,
   DETAIL: `${tenaga_ahli}/detail`,
   CREATE: `${tenaga_ahli}/add`,
+  JABATAN: {
+    ONE: `staf/v1/one-jabatan`,
+    ALL: `${tenaga_ahli}/jabatan`,
+    CREATE: `${tenaga_ahli}/jabatan`,
+    DELETE: `${tenaga_ahli}/jabatan`,
+  },
 };
 
 const item = "item/v1";

@@ -175,6 +175,16 @@ export default {
               kelas_id: data.kelas_id,
             });
             this.items = { ...this.items, ...data };
+
+            if (data.image) {
+              // Binding Image
+              const doc = document.getElementById("preview-photo");
+              doc.style.background = "none";
+              doc.style.backgroundImage = 'url("' + data.image + '")';
+              doc.style.backgroundPosition = "center";
+              doc.style.backgroundRepeat = "no-repeat";
+              doc.style.backgroundSize = "contain";
+            }
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,

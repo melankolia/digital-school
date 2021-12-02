@@ -14,6 +14,18 @@ const GuruService = {
   deleteGuru(data) {
     return MainInstance.edit(ITEM.DELETE, data);
   },
+  createJabatan(data) {
+    return MainInstance.post(GURU.JABATAN.CREATE, data);
+  },
+  getListJabatan(params) {
+    return MainInstance.query(GURU.JABATAN.ALL, { params });
+  },
+  deleteJabatan(id) {
+    return MainInstance.edit(`${GURU.JABATAN.ALL}/${id}`);
+  },
+  getOneJabatan(id) {
+    return MainInstance.fetch(GURU.JABATAN.ONE, id);
+  },
   cancelReq() {
     return MainInstance.cancelRequest();
   },

@@ -359,72 +359,82 @@ export default {
     },
     handleSubmit() {
       this.$emit("handleLoading", true);
-      this.createBase64Image(this.payload.files).then((e) => {
-        const payload = {
-          image: e.target.result,
-          siswa_id: this.id,
-          kelas_id: this.payload.kelas_id || "-",
-          NIS: this.payload.NIS || "-",
-          NISN: this.payload.NISN || "-",
-          nama_lengkap: this.payload.nama_lengkap || "-",
-          nama_panggilan: this.payload.nama_panggilan || "-",
-          ttl: this.payload.ttl || "-",
-          jenis_kelamin: this.payload.jenis_kelamin || "-",
-          agama: this.payload.agama || "-",
-          kewarganegaraan: this.payload.kewarganegaraan || "-",
-          anak_ke: this.payload.anak_ke || "-",
-          jml_sdr_kandung: this.payload.jml_sdr_kandung || "-",
-          jml_sdr_tiri: this.payload.jml_sdr_tiri || "-",
-          jml_sdr_angkat: this.payload.jml_sdr_angkat || "-",
-          status_anak: this.payload.status_anak || "-",
-          bahasa: this.payload.bahasa || "-",
-          penanggung_biaya: this.payload.penanggung_biaya || "-",
-          pihak_dihubungi: this.payload.pihak_dihubungi || "-",
-          pkh: 0,
-          kks: 0,
-          kps: "Tidak Ada",
-        };
-        SiswaService.addAbout(payload)
-          .then(({ data: { data, success, message } }) => {
-            if (success == true) {
-              this.$store.commit("snackbar/setSnack", {
-                show: true,
-                message: `Berhasil Menyimpan Data Tentang Diri ${
-                  this.isAlumni ? "Alumni" : "Siswa"
-                }`,
-                color: "success",
-              });
-              this.$emit("handleId", data.siswa_id);
-              this.$emit("handleNext");
-              this.$vuetify.goTo(1, {
-                duration: 300,
-                offset: 0,
-                easing: "easeInOutCubic",
-              });
-            } else {
-              this.$store.commit("snackbar/setSnack", {
-                show: true,
-                message:
-                  message ||
-                  `Gagal Menyimpan Data Tentang Diri ${
+      this.createBase64Image(this.payload.files)
+        .then((e) => {
+          const payload = {
+            image: e.target.result,
+            siswa_id: this.id,
+            kelas_id: this.payload.kelas_id || "-",
+            NIS: this.payload.NIS || "-",
+            NISN: this.payload.NISN || "-",
+            nama_lengkap: this.payload.nama_lengkap || "-",
+            nama_panggilan: this.payload.nama_panggilan || "-",
+            ttl: this.payload.ttl || "-",
+            jenis_kelamin: this.payload.jenis_kelamin || "-",
+            agama: this.payload.agama || "-",
+            kewarganegaraan: this.payload.kewarganegaraan || "-",
+            anak_ke: this.payload.anak_ke || "-",
+            jml_sdr_kandung: this.payload.jml_sdr_kandung || "-",
+            jml_sdr_tiri: this.payload.jml_sdr_tiri || "-",
+            jml_sdr_angkat: this.payload.jml_sdr_angkat || "-",
+            status_anak: this.payload.status_anak || "-",
+            bahasa: this.payload.bahasa || "-",
+            penanggung_biaya: this.payload.penanggung_biaya || "-",
+            pihak_dihubungi: this.payload.pihak_dihubungi || "-",
+            pkh: 0,
+            kks: 0,
+            kps: "Tidak Ada",
+          };
+          SiswaService.addAbout(payload)
+            .then(({ data: { data, success, message } }) => {
+              if (success == true) {
+                this.$store.commit("snackbar/setSnack", {
+                  show: true,
+                  message: `Berhasil Menyimpan Data Tentang Diri ${
                     this.isAlumni ? "Alumni" : "Siswa"
                   }`,
+                  color: "success",
+                });
+                this.$emit("handleId", data.siswa_id);
+                this.$emit("handleNext");
+                this.$vuetify.goTo(1, {
+                  duration: 300,
+                  offset: 0,
+                  easing: "easeInOutCubic",
+                });
+              } else {
+                this.$store.commit("snackbar/setSnack", {
+                  show: true,
+                  message:
+                    message ||
+                    `Gagal Menyimpan Data Tentang Diri ${
+                      this.isAlumni ? "Alumni" : "Siswa"
+                    }`,
+                  color: "error",
+                });
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+              this.$store.commit("snackbar/setSnack", {
+                show: true,
+                message: `Gagal Menyimpan Data Tentang Diri ${
+                  this.isAlumni ? "Alumni" : "Siswa"
+                }`,
                 color: "error",
               });
-            }
-          })
-          .catch((err) => {
-            console.error(err);
-            this.$store.commit("snackbar/setSnack", {
-              show: true,
-              message: `Gagal Menyimpan Data Tentang Diri ${
-                this.isAlumni ? "Alumni" : "Siswa"
-              }`,
-              color: "error",
-            });
-          })
-          .finally(() => this.$emit("handleLoading", false));
-      });
+            })
+            .finally(() => this.$emit("handleLoading", false));
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "File Foto Harus Diisi",
+            color: "error",
+          });
+          this.$emit("handleLoading", false);
+        });
     },
     getLovKelas() {
       this.loadingListKelas = true;

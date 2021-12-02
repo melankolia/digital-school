@@ -34,6 +34,7 @@
       </div>
     </div>
     <div class="d-flex flex-row justify-space-between mb-9 mt-1">
+      <div id="preview-photo" class="picture-border rounded-lg mr-4" />
       <div class="d-flex flex-column" style="width: 100vw">
         <div class="d-flex flex-row justify-space-between">
           <div class="d-flex flex-row">
@@ -289,4 +290,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.picture-border {
+  width: 186px;
+  height: 180px;
+  background: gray;
+  border: 1px solid #f4f4f4;
+}
+</style>
