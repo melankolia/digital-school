@@ -16,13 +16,25 @@
     <div class="d-flex flex-row justify-space-between">
       <p class="header-title mb-4">Tambah Jabatan</p>
     </div>
-    <div class="d-flex flex-column pr-12 mr-12">
-      <p class="header-subtitle">
-        {{ items.nama || "-" | toTitle }} -
-        {{ items.jabatan || "-" | toTitle }}
-      </p>
-    </div>
-    <div class="d-flex flex-column">
+    <ContentNotFound
+      message="Data Riwayat Jabatan Not Found"
+      :loading="loading"
+      v-if="!isAvailable && isUpdate"
+      style="width: 100%"
+    >
+      <template v-slot:action>
+        <v-btn
+          @click="() => getDetail()"
+          depressed
+          color="header"
+          class="rounded-lg outlined-custom"
+        >
+          <v-icon class="mr-1" small>mdi-reload</v-icon>
+          <p class="header-button-back ma-0">Reload</p>
+        </v-btn>
+      </template>
+    </ContentNotFound>
+    <div v-else class="d-flex flex-column">
       <v-row>
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Judul Jabatan</p>
@@ -41,7 +53,6 @@
             hide-details
             filled
             solo
-            type="number"
             label="Contoh: Guru"
           />
         </v-col>
@@ -58,6 +69,7 @@
             prepend-icon=""
             outlined
             :show-size="1000"
+            :rules="[(v) => !!v || 'File harus diisi']"
           >
           </v-file-input>
         </v-col>
@@ -83,18 +95,24 @@
 </template>
 
 <script>
+const ContentNotFound = () => import("@/components/Content/NotFound");
 import { GURU } from "@/router/name.types";
+import GuruService from "@/services/resources/guru.service";
 
 export default {
+  components: {
+    ContentNotFound,
+  },
   data() {
     return {
       guru_id: this.$route.params.guruId,
+      id: this.$route.params?.jabatanId,
       loading: false,
       items: {
-        nama: null,
-        jabatan: null,
+        guru_id: null,
+        jabatan_id: null,
         name: null,
-        sertifikat: null,
+        description: null,
         files: null,
       },
     };
@@ -102,12 +120,84 @@ export default {
   methods: {
     handleSubmit() {
       this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-        this.$router.push({
-          name: GURU.JABATAN.DETAIL,
-        });
-      }, 2000);
+      this.createBase64Image(this.items.files).then((e) => {
+        GuruService.createJabatan({
+          jabatan_id: this.id || "",
+          guru_id: this.guru_id || this.items.guru_id,
+          judul: this.items.name,
+          deskripsi: this.items.description,
+          file: e.target.result,
+        })
+          .then(({ data: { success, message } }) => {
+            if (success == true) {
+              this.$store.commit("snackbar/setSnack", {
+                show: true,
+                message: `Berhasil Menambahkan Riwayat Jabatan`,
+                color: "success",
+              });
+              this.$router.push({
+                name: GURU.JABATAN.ALL,
+                params: { guruId: this.guru_id || this.items.guru_id },
+              });
+            } else {
+              this.$store.commit("snackbar/setSnack", {
+                show: true,
+                message: message || `Gagal Menambahkan Riwayat Jabatan`,
+                color: "error",
+              });
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: `Gagal Menambahkan Riwayat Jabatan`,
+              color: "error",
+            });
+          })
+          .finally(() => (this.loading = false));
+      });
+    },
+    getDetail() {
+      this.loading = true;
+      GuruService.getOneJabatan(this.id)
+        .then(({ data: { code, data, message } }) => {
+          if (code == 200) {
+            this.items = {
+              guru_id: data.guru_id,
+              jabatan_id: data.jabatan_id,
+              name: data.judul,
+              description: data.deskripsi,
+              file: data.file,
+            };
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || "Gagal Memuat Data Riwayat Jabatan",
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "Gagal Memuat Data Riwayat Jabatan",
+            color: "error",
+          });
+        })
+        .finally(() => (this.loading = false));
+    },
+  },
+  mounted() {
+    this.id && this.getDetail();
+  },
+  computed: {
+    isUpdate() {
+      return this.id;
+    },
+    isAvailable() {
+      return this.items.jabatan_id;
     },
   },
 };

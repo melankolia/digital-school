@@ -363,61 +363,71 @@ export default {
     },
     handleSubmit() {
       this.$emit("handleLoading", true);
-      this.createBase64Image(this.payload.files).then((e) => {
-        const payload = {
-          image: e.target.result,
-          nama: this.payload.nama || "-",
-          jenis_kelamin: this.payload.jenis_kelamin || "-",
-          ttl: this.payload.ttl || "-",
-          nip_karpeg: this.payload.nip_karpeg || "-",
-          pendidikan: this.payload.pendidikan || "-",
-          mulai_bertugas: this.payload.mulai_bertugas || "-",
-          jabatan: this.payload.jabatan || "-",
-          gol_pangkat: this.payload.gol_pangkat || "-",
-          tmt_pangkat: this.payload.tmt_pangkat || "-",
-          sk_pertama: this.payload.sk_pertama || "-",
-          gaji_pokok: this.payload.gaji_pokok || "-",
-          mk_gol_tahun: this.payload.mk_gol_tahun || "-",
-          mk_gol_bulan: this.payload.mk_gol_bulan || "-",
-          k_tk: this.payload.k_tk || "-",
-          yad_pangkat: this.payload.yad_pangkat || "-",
-          yad_gaji: this.payload.yad_gaji || "-",
-          // sertifikasi: this.payload.sertifikasi || "-",
-          nuptk: this.payload.nuptk || "-",
-        };
-        if (this.payload?.guru_id) payload.guru_id = this.payload.guru_id;
-        GuruService.addGuru(payload)
-          .then(({ data: { success, message } }) => {
-            if (success == true) {
+      this.createBase64Image(this.payload.files)
+        .then((e) => {
+          const payload = {
+            image: e.target.result,
+            nama: this.payload.nama || "-",
+            jenis_kelamin: this.payload.jenis_kelamin || "-",
+            ttl: this.payload.ttl || "-",
+            nip_karpeg: this.payload.nip_karpeg || "-",
+            pendidikan: this.payload.pendidikan || "-",
+            mulai_bertugas: this.payload.mulai_bertugas || "-",
+            jabatan: this.payload.jabatan || "-",
+            gol_pangkat: this.payload.gol_pangkat || "-",
+            tmt_pangkat: this.payload.tmt_pangkat || "-",
+            sk_pertama: this.payload.sk_pertama || "-",
+            gaji_pokok: this.payload.gaji_pokok || "-",
+            mk_gol_tahun: this.payload.mk_gol_tahun || "-",
+            mk_gol_bulan: this.payload.mk_gol_bulan || "-",
+            k_tk: this.payload.k_tk || "-",
+            yad_pangkat: this.payload.yad_pangkat || "-",
+            yad_gaji: this.payload.yad_gaji || "-",
+            // sertifikasi: this.payload.sertifikasi || "-",
+            nuptk: this.payload.nuptk || "-",
+          };
+          if (this.payload?.guru_id) payload.guru_id = this.payload.guru_id;
+          GuruService.addGuru(payload)
+            .then(({ data: { success, message } }) => {
+              if (success == true) {
+                this.$store.commit("snackbar/setSnack", {
+                  show: true,
+                  message: "Berhasil Menyimpan Data Guru",
+                  color: "success",
+                });
+                this.$router.replace({ name: GURU.BROWSE });
+                this.$vuetify.goTo(1, {
+                  duration: 300,
+                  offset: 0,
+                  easing: "easeInOutCubic",
+                });
+              } else {
+                this.$store.commit("snackbar/setSnack", {
+                  show: true,
+                  message: message || "Gagal Menyimpan Data Guru",
+                  color: "error",
+                });
+              }
+            })
+            .catch((err) => {
+              console.error(err);
               this.$store.commit("snackbar/setSnack", {
                 show: true,
-                message: "Berhasil Menyimpan Data Guru",
-                color: "success",
-              });
-              this.$router.replace({ name: GURU.BROWSE });
-              this.$vuetify.goTo(1, {
-                duration: 300,
-                offset: 0,
-                easing: "easeInOutCubic",
-              });
-            } else {
-              this.$store.commit("snackbar/setSnack", {
-                show: true,
-                message: message || "Gagal Menyimpan Data Guru",
+                message: "Gagal Menyimpan Data Guru",
                 color: "error",
               });
-            }
-          })
-          .catch((err) => {
-            console.error(err);
-            this.$store.commit("snackbar/setSnack", {
-              show: true,
-              message: "Gagal Menyimpan Data Guru",
-              color: "error",
-            });
-          })
-          .finally(() => this.$emit("handleLoading", false));
-      });
+            })
+            .finally(() => this.$emit("handleLoading", false));
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: "File Foto Harus Diisi",
+            color: "error",
+          });
+          this.$emit("handleLoading", false);
+        });
     },
   },
   mounted() {

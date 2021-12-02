@@ -62,6 +62,18 @@ const SiswaService = {
   downloadFile(data, type = "arraybuffer") {
     return MainInstance.download(SISWA.EXPORT.RAPOR, data, null, type);
   },
+  addPrestasi(data) {
+    return MainInstance.post(SISWA.PRESTASI.CREATE, data);
+  },
+  getPrestasi(params) {
+    return MainInstance.query(SISWA.PRESTASI.ALL, { params });
+  },
+  getOnePrestasi(id) {
+    return MainInstance.fetch(SISWA.PRESTASI.ONE, id);
+  },
+  deletePrestasi(id) {
+    return MainInstance.edit(`${SISWA.PRESTASI.ALL}/${id}`);
+  },
   deleteSiswa(data) {
     return MainInstance.edit(ITEM.DELETE, data);
   },

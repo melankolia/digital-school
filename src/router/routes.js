@@ -134,6 +134,14 @@ export const configRoutes = [
                 },
               },
               {
+                path: "prestasi/update/:prestasiId",
+                name: SISWA.KELAS.SISWA.UPDATE_PRESTASI,
+                component: CreatePrestasiSiswa,
+                meta: {
+                  requiresAuth: true,
+                },
+              },
+              {
                 path: "prestasi/:siswaId",
                 name: SISWA.KELAS.SISWA.PRESTASI,
                 component: PrestasiSiswa,
@@ -221,7 +229,7 @@ export const configRoutes = [
           },
           {
             path: "jabatan/:guruId",
-            name: GURU.JABATAN.DETAIL,
+            name: GURU.JABATAN.ALL,
             component: JabatanGuru,
             meta: {
               requiresAuth: true,
@@ -230,6 +238,14 @@ export const configRoutes = [
           {
             path: "jabatan/create/:guruId",
             name: GURU.JABATAN.CREATE,
+            component: CreateJabatanGuru,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "jabatan/update/:jabatanId",
+            name: GURU.JABATAN.UPDATE,
             component: CreateJabatanGuru,
             meta: {
               requiresAuth: true,
@@ -280,6 +296,14 @@ export const configRoutes = [
           {
             path: "jabatan/create/:tenagaAhliId",
             name: TENAGA_AHLI.JABATAN.CREATE,
+            component: CreateJabatanTenagaAhli,
+            meta: {
+              requiresAuth: true,
+            },
+          },
+          {
+            path: "jabatan/update/:jabatanId",
+            name: TENAGA_AHLI.JABATAN.UPDATE,
             component: CreateJabatanTenagaAhli,
             meta: {
               requiresAuth: true,

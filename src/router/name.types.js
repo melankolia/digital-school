@@ -24,6 +24,7 @@ export const SISWA = {
       UPDATE: `${siswa}.update`,
       PRESTASI: `${siswa}.prestasi`,
       CREATE_PRESTASI: `${siswa}.create.prestasi`,
+      UPDATE_PRESTASI: `${siswa}.update.prestasi`,
     },
   },
 };
@@ -49,8 +50,10 @@ export const GURU = {
   UPDATE: `${guru}.update`,
   CREATE: `${guru}.create`,
   JABATAN: {
+    ALL: `${guru}.jabatan.all`,
     DETAIL: `${guru}.jabatan.detail`,
     CREATE: `${guru}.jabatan.create`,
+    UPDATE: `${guru}.jabatan.update`,
   },
 };
 
@@ -63,5 +66,6 @@ export const TENAGA_AHLI = {
   JABATAN: {
     DETAIL: `${tenaga_ahli}.jabatan.detail`,
     CREATE: `${tenaga_ahli}.jabatan.create`,
+    UPDATE: `${tenaga_ahli}.jabatan.update`,
   },
 };

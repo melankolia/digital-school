@@ -26,6 +26,19 @@ Vue.mixin({
     createToken(callback) {
       callback && (this.cancelRequest = callback);
     },
+    async downloadTemplate(URL_TEMPLATE, NAME_TEMPLATE, TYPE = "force") {
+      const link = document.createElement("a");
+      if (TYPE == "force") {
+        link.href = URL_TEMPLATE;
+      } else {
+        let blob = await fetch(URL_TEMPLATE).then((r) => r.blob());
+        const url = window.URL.createObjectURL(blob);
+        link.href = url;
+      }
+      link.setAttribute("download", NAME_TEMPLATE);
+      document.body.appendChild(link);
+      link.click();
+    },
     async createBase64Image(fileObject) {
       return await new Promise((resolve) => {
         const reader = new FileReader();

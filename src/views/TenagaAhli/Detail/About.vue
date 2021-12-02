@@ -52,7 +52,7 @@
         <tr>
           <td>Mulai Bertugas Disini</td>
           <td class="text-right text-sub">
-            {{ items.mulai_tugas || "-" | toTitle }}
+            {{ items.mulai_bertugas || "-" | toTitle }}
           </td>
         </tr>
         <tr>
@@ -82,7 +82,7 @@
         <tr>
           <td>Gaji Pokok</td>
           <td class="text-right text-sub">
-            {{ items.gaji || "-" | toTitle }}
+            {{ items.gaji_pokok || "-" | toTitle }}
           </td>
         </tr>
         <tr>
@@ -178,6 +178,16 @@ export default {
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
             this.items = { ...this.items, ...data };
+
+            if (data.image) {
+              // Binding Image
+              const doc = document.getElementById("preview-photo");
+              doc.style.background = "none";
+              doc.style.backgroundImage = 'url("' + data.image + '")';
+              doc.style.backgroundPosition = "center";
+              doc.style.backgroundRepeat = "no-repeat";
+              doc.style.backgroundSize = "contain";
+            }
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,

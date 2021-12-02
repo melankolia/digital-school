@@ -1,5 +1,5 @@
 <template>
-  <v-card class="rounded-lg ma-2" width="397">
+  <v-card class="rounded-lg ma-2" width="30%">
     <div class="pa-8" style="background-color: #dddddd !important">
       <v-img
         src="@/assets/image/prestasi.png"
@@ -11,10 +11,9 @@
 
     <v-card-actions>
       <div>
-        <v-card-title class="card-title"> {{ cardDetail.title }} </v-card-title>
-
+        <v-card-title class="card-title"> {{ cardDetail.judul }} </v-card-title>
         <v-card-subtitle class="card-description">
-          {{ cardDetail.description }}
+          {{ cardDetail.deskripsi }}
         </v-card-subtitle>
       </div>
 
@@ -27,15 +26,21 @@
           </v-btn>
         </template>
         <v-list>
-          <v-list-item link>
+          <v-list-item @click="() => handleDetail(cardDetail)" link>
             <img class="mr-4" src="@/assets/icons/edit-outlined.svg" />
             <p class="selection-item ma-0">Edit</p>
           </v-list-item>
-          <v-list-item link>
+          <v-list-item
+            @click="
+              () =>
+                downloadTemplate(cardDetail.file, cardDetail.judul, 'forcing')
+            "
+            link
+          >
             <img class="mr-4" src="@/assets/icons/detail.svg" />
             <p class="selection-item ma-0">Download</p>
           </v-list-item>
-          <v-list-item link>
+          <v-list-item @click="() => handleDelete(cardDetail)" link>
             <img class="mr-4" src="@/assets/icons/delete-outlined.svg" />
             <p class="selection-item ma-0">Hapus</p>
           </v-list-item>
@@ -47,13 +52,15 @@
 
 <script>
 const cardDetail = {
-  title: "Sertifikat Berprestasi",
-  description: "Deskripsi",
-  sertifikat_id: "12345",
+  judul: "Sertifikat Berprestasi",
+  deskripsi: "Deskripsi",
+  prestasi_id: "12345",
 };
 export default {
   props: {
     cardDetail: { type: Object, required: true, default: () => cardDetail },
+    handleDelete: { type: Function, required: true, default: () => {} },
+    handleDetail: { type: Function, required: true, default: () => {} },
   },
   data() {
     return {
