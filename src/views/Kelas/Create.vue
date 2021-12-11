@@ -18,109 +18,124 @@
     </div>
     <DefaultLoader :loading="loading" v-if="loading" />
     <template v-else>
-      <div class="d-flex flex-column">
-        <v-row>
+      <v-form
+        id="form"
+        ref="form"
+        v-model="valid"
+        @submit.prevent="handleSubmit"
+        class="mt-4"
+      >
+        <div class="d-flex flex-column">
+          <v-row>
+            <v-col cols="12" xs="12" sm="6">
+              <p class="mb-3 title-input">Kelas</p>
+              <v-select
+                v-model="payload.nama_kelas"
+                :items="listKelas"
+                hide-details
+                filled
+                solo
+                item-text="text"
+                item-value="value"
+              />
+            </v-col>
+            <v-col cols="12" xs="12" sm="6">
+              <p class="mb-3 title-input">Jurusan</p>
+              <v-row>
+                <v-col cols="12" xs="12" sm="8">
+                  <v-select
+                    v-model="payload.jurusan"
+                    :items="['MIPA', 'IPS']"
+                    placeholder="Pilih Jurusan"
+                    hide-details
+                    filled
+                    solo
+                    item-text="text"
+                    item-value="value"
+                  />
+                </v-col>
+                <v-col cols="12" xs="12" sm="4">
+                  <v-text-field
+                    class="password"
+                    v-model="payload.jurusanNo"
+                    :rules="[
+                      (v) => !!v || 'Jurusan harus diisi',
+                      (v) => /^\S{1,}$/.test(v) || 'Format harus sesuai',
+                    ]"
+                    filled
+                    outlined
+                    solo
+                    label="Contoh: 1"
+                  />
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" xs="12" sm="6">
+              <p class="mb-3 title-input">Wali Kelas</p>
+              <v-autocomplete
+                :loading="loadingWaliKelas"
+                :items="itemsWaliKelas"
+                v-model="payload.wali_kelas"
+                clearable
+                hide-details
+                filled
+                solo
+                label="Contoh: Sugiono"
+                item-text="nama"
+                return-object
+              />
+            </v-col>
+            <v-col cols="12" xs="12" sm="6">
+              <p class="mb-3 title-input">Tahun Ajaran</p>
+              <v-row align="center">
+                <v-col cols="12" xs="12" sm="5">
+                  <v-text-field
+                    v-model="payload.tahun_ajaran_from"
+                    hide-details
+                    filled
+                    solo
+                    label="Contoh: 2019"
+                    type="number"
+                  />
+                </v-col>
+                <v-col cols="2">
+                  <div class="text-center">-</div>
+                </v-col>
+                <v-col cols="12" xs="12" sm="5">
+                  <v-text-field
+                    v-model="payload.tahun_ajaran_to"
+                    hide-details
+                    filled
+                    solo
+                    label="Contoh: 2020"
+                    type="number"
+                  />
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+        </div>
+        <v-row class="my-12">
           <v-col cols="12" xs="12" sm="6">
-            <p class="mb-3 title-input">Kelas</p>
-            <v-select
-              v-model="payload.nama_kelas"
-              :items="listKelas"
-              hide-details
-              filled
-              solo
-              item-text="text"
-              item-value="value"
-            />
-          </v-col>
-          <v-col cols="12" xs="12" sm="6">
-            <p class="mb-3 title-input">Jurusan</p>
-            <v-row>
-              <v-col cols="12" xs="12" sm="6">
-                <v-select
-                  v-model="payload.jurusan"
-                  :items="['MIPA', 'IPS']"
-                  placeholder="Pilih Jurusan"
-                  hide-details
-                  filled
-                  solo
-                  item-text="text"
-                  item-value="value"
-                />
-              </v-col>
-              <v-col cols="12" xs="12" sm="3">
-                <v-text-field
-                  v-model="payload.jurusanNo"
-                  hide-details
-                  filled
-                  solo
-                  label="Contoh: 1"
-                />
-              </v-col>
-            </v-row>
+            <v-btn
+              block
+              depressed
+              color="primary"
+              class="rounded-lg pa-6"
+              :loading="loadingSubmit"
+              :disabled="!valid"
+              type="submit"
+              form="form"
+            >
+              <p class="header-button-back ma-0">
+                <span> Submit </span>
+              </p>
+            </v-btn>
           </v-col>
         </v-row>
-        <v-row>
-          <v-col cols="12" xs="12" sm="6">
-            <p class="mb-3 title-input">Wali Kelas</p>
-            <v-autocomplete
-              :loading="loadingWaliKelas"
-              :items="itemsWaliKelas"
-              v-model="payload.wali_kelas"
-              clearable
-              hide-details
-              filled
-              solo
-              label="Contoh: Sugiono"
-              item-text="nama"
-              return-object
-            />
-          </v-col>
-          <v-col cols="12" xs="12" sm="6">
-            <p class="mb-3 title-input">Tahun Ajaran</p>
-            <v-row align="center">
-              <v-col cols="12" xs="12" sm="4">
-                <v-text-field
-                  v-model="payload.tahun_ajaran_from"
-                  hide-details
-                  filled
-                  solo
-                  label="Contoh: 2019"
-                  type="number"
-                />
-              </v-col>
-              <v-col cols="1">
-                <div class="text-center">-</div>
-              </v-col>
-              <v-col cols="12" xs="12" sm="4">
-                <v-text-field
-                  v-model="payload.tahun_ajaran_to"
-                  hide-details
-                  filled
-                  solo
-                  label="Contoh: 2020"
-                  type="number"
-                />
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-      </div>
-      <v-row class="my-12">
-        <v-col cols="12" xs="12" sm="6">
-          <v-btn
-            block
-            depressed
-            color="primary"
-            class="rounded-lg pa-6"
-            :loading="loadingSubmit"
-            @click="handleSubmit"
-          >
-            <p class="header-button-back ma-0">
-              <span> Submit </span>
-            </p>
-          </v-btn>
-        </v-col>
-      </v-row>
+      </v-form>
     </template>
   </div>
 </template>
@@ -137,6 +152,7 @@ export default {
   },
   data() {
     return {
+      valid: false,
       loading: false,
       loadingSubmit: false,
       id: this.$route.params?.kelasId,
@@ -248,7 +264,6 @@ export default {
             this.payload = {
               kelas_id: data.kelas_id,
               nama_kelas: data.nama_kelas,
-              jurusan: data.jurusan,
               tahun_ajaran_from: data.tahun_ajaran_awal,
               tahun_ajaran_to: data.tahun_ajaran_akhir,
               wali_kelas: {
@@ -256,6 +271,14 @@ export default {
                 guru_id: data.guru_id,
               },
             };
+            const tempJurusan = data.jurusan.split(" ");
+            if (tempJurusan.length > 0 && tempJurusan.length <= 2) {
+              this.payload = {
+                ...this.payload,
+                jurusan: tempJurusan[0],
+                jurusanNo: tempJurusan[1],
+              };
+            }
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,
@@ -282,4 +305,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.password > .v-input__control {
+  border: none;
+}
+</style>
