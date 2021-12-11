@@ -40,11 +40,12 @@ Vue.mixin({
       link.click();
     },
     async createBase64Image(fileObject) {
-      return await new Promise((resolve) => {
+      return await new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = (e) => {
           resolve(e);
         };
+        reader.onerror = reject;
         reader.readAsDataURL(fileObject);
       });
     },

@@ -16,7 +16,9 @@
           </v-btn>
         </div>
         <p class="header-title-input mb-1">Input Tabel</p>
-        <p class="header-subtitle-input mb-1">A. Tentang Diri Tenaga Ahli</p>
+        <p class="header-subtitle-input mb-1">
+          A. Tentang Diri Tenaga Kependidikan
+        </p>
       </div>
       <div
         id="preview-photo"
@@ -33,7 +35,7 @@
       </div>
     </div>
     <ContentNotFound
-      message="Data Tentang Diri Tenaga Ahli Not Found"
+      message="Data Tentang Diri Tenaga Kependidikan Not Found"
       :loading="loading"
       v-if="!isAvailable && isUpdate"
     >
@@ -265,6 +267,7 @@ export default {
 
       // List Golongan
       listGolongan: [
+        "-",
         "III A",
         "III B",
         "III C",
@@ -323,10 +326,28 @@ export default {
               ...this.payload,
               ...data,
             };
+
+            if (data.image) {
+              fetch(data.image)
+                .then((response) => response.blob())
+                .then((blob) => {
+                  this.createBase64Image(blob).then((e) => {
+                    this.payload.files = blob;
+                    const doc = document.getElementById("preview-photo");
+                    doc.style.background = "none";
+                    doc.style.backgroundImage =
+                      'url("' + e.target.result + '")';
+                    doc.style.backgroundPosition = "center";
+                    doc.style.backgroundRepeat = "no-repeat";
+                    doc.style.backgroundSize = "contain";
+                  });
+                });
+            }
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: message || "Gagal Memuat Data Tentang Diri Tenaga Ahli",
+              message:
+                message || "Gagal Memuat Data Tentang Diri Tenaga Kependidikan",
               color: "error",
             });
           }
@@ -334,7 +355,7 @@ export default {
         .catch((err) => {
           this.$store.commit("snackbar/setSnack", {
             show: true,
-            message: "Gagal Memuat Data Tentang Diri Tenaga Ahli",
+            message: "Gagal Memuat Data Tentang Diri Tenaga Kependidikan",
             color: "error",
           });
           console.error(err);
@@ -375,7 +396,7 @@ export default {
               if (success == true) {
                 this.$store.commit("snackbar/setSnack", {
                   show: true,
-                  message: "Berhasil Menyimpan Data Tenaga Ahli",
+                  message: "Berhasil Menyimpan Data Tenaga Kependidikan",
                   color: "success",
                 });
                 this.$router.replace({ name: TENAGA_AHLI.BROWSE });
@@ -387,7 +408,8 @@ export default {
               } else {
                 this.$store.commit("snackbar/setSnack", {
                   show: true,
-                  message: message || "Gagal Menyimpan Data Tenaga Ahli",
+                  message:
+                    message || "Gagal Menyimpan Data Tenaga Kependidikan",
                   color: "error",
                 });
               }
@@ -396,7 +418,7 @@ export default {
               console.error(err);
               this.$store.commit("snackbar/setSnack", {
                 show: true,
-                message: "Gagal Menyimpan Data Tenaga Ahli",
+                message: "Gagal Menyimpan Data Tenaga Kependidikan",
                 color: "error",
               });
             })

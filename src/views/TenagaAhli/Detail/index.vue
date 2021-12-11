@@ -24,19 +24,19 @@
             <span> Edit Data </span>
           </p>
         </v-btn>
-        <v-btn depressed class="rounded-lg outlined-custom">
+        <!-- <v-btn depressed class="rounded-lg outlined-custom">
           <p class="header-button-export ma-0">
             <v-icon class="mr-1" small>mdi-download</v-icon>
-            <span> Download Detail Tenaga Ahli </span>
+            <span> Download Detail Tenaga Kependidikan </span>
           </p>
-        </v-btn>
+        </v-btn> -->
       </div>
     </div>
     <div class="d-flex flex-row justify-space-between mb-9 mt-1">
       <div id="preview-photo" class="picture-border rounded-lg mr-4" />
       <div class="d-flex flex-column" style="width: 100vw">
         <div class="d-flex flex-row justify-space-between">
-          <p class="header-title mb-4">Tentang Diri Tenaga Ahli</p>
+          <p class="header-title mb-4">Tentang Diri Tenaga Kependidikan</p>
           <div>
             <v-btn
               @click="handleRiwayatJabatan"
@@ -96,7 +96,7 @@ export default {
       },
       tab: 0,
       tabs: [
-        { text: "Tentang Diri Tenaga Ahli", component: "About" },
+        { text: "Tentang Diri Tenaga Kependidikan", component: "About" },
         // { text: "Riwayat Jabatan", component: "RiwayatJabatan" },
       ],
     };

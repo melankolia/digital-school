@@ -512,7 +512,7 @@ export default {
       listAgama: [
         "Islam",
         "Katolik",
-        "Kristen",
+        "Protestan",
         "Hindu",
         "Buddha",
         "Kong Hu Chu",

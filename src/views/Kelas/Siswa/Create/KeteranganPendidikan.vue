@@ -24,13 +24,32 @@
       <v-row>
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Tanggal Diterima</p>
-          <v-text-field
-            v-model="payload.tanggal_diterima"
-            hide-details
-            filled
-            solo
-            label="01-20-2002"
-          />
+          <v-menu
+            v-model="menuDateCreated"
+            close-on-content-click
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on }">
+              <v-text-field
+                v-model="payload.tanggal_diterima"
+                label="Pilih Tanggal Diterima"
+                readonly
+                hide-details
+                filled
+                solo
+                @click:clear="payload.tanggal_diterima = []"
+                v-on="on"
+              />
+            </template>
+            <v-date-picker
+              v-model="payload.tanggal_diterima"
+              no-title
+              :min="payload.tanggal_diterima"
+            />
+          </v-menu>
         </v-col>
       </v-row>
       <v-divider class="my-9"></v-divider>
@@ -113,6 +132,7 @@ export default {
       update: this.$route.query?.isUpdate,
       kelas: this.$route.query?.kelas,
       loading: false,
+      menuDateCreated: false,
       payload: {
         siswa_id: null,
         tanggal_diterima: null,

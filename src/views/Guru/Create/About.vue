@@ -273,6 +273,7 @@ export default {
 
       // List Golongan
       listGolongan: [
+        "-",
         "III/a",
         "III/b",
         "III/c",
@@ -340,6 +341,23 @@ export default {
               ...this.payload,
               ...data,
             };
+
+            if (data.image) {
+              fetch(data.image)
+                .then((response) => response.blob())
+                .then((blob) => {
+                  this.createBase64Image(blob).then((e) => {
+                    this.payload.files = blob;
+                    const doc = document.getElementById("preview-photo");
+                    doc.style.background = "none";
+                    doc.style.backgroundImage =
+                      'url("' + e.target.result + '")';
+                    doc.style.backgroundPosition = "center";
+                    doc.style.backgroundRepeat = "no-repeat";
+                    doc.style.backgroundSize = "contain";
+                  });
+                });
+            }
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,

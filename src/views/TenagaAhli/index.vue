@@ -15,14 +15,16 @@
       <v-btn @click="handleAdd" depressed color="primary" class="rounded-lg">
         <p class="header-button-title ma-0">
           <v-icon class="mr-1" small>mdi-plus</v-icon>
-          <span> Tambah Tenaga Ahli</span>
+          <span> Tambah Tenaga Kependidikan</span>
         </p>
       </v-btn>
     </div>
     <div class="d-flex flex-row justify-space-between mb-9 mt-1">
       <div>
-        <p class="header-title mb-1">Tabel Tenaga Ahli</p>
-        <p class="header-subtitle mb-1">Daftar Tenaga Ahli SMAN 1 Kota Jambi</p>
+        <p class="header-title mb-1">Tabel Tenaga Kependidikan</p>
+        <p class="header-subtitle mb-1">
+          Daftar Tenaga Kependidikan SMAN 1 Kota Jambi
+        </p>
       </div>
     </div>
     <div
@@ -262,14 +264,14 @@ export default {
           if (success == true) {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: `Berhasil Menghapus data Tenaga Ahli`,
+              message: `Berhasil Menghapus data Tenaga Kependidikan`,
               color: "success",
             });
             this.getList();
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: message || `Gagal Menghapus data Tenaga Ahli`,
+              message: message || `Gagal Menghapus data Tenaga Kependidikan`,
               color: "error",
             });
           }
@@ -278,7 +280,7 @@ export default {
           console.error(err);
           this.$store.commit("snackbar/setSnack", {
             show: true,
-            message: `Gagal Menghapus data Tenaga Ahli`,
+            message: `Gagal Menghapus data Tenaga Kependidikan`,
             color: "error",
           });
         })
@@ -308,7 +310,7 @@ export default {
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: message || "Gagal Memuat Data Semua Tenaga Ahli",
+              message: message || "Gagal Memuat Data Semua Tenaga Kependidikan",
               color: "error",
             });
           }

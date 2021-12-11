@@ -43,7 +43,7 @@
             hide-details
             filled
             solo
-            label="Contoh: Tenaga Ahli"
+            label="Contoh: Tenaga Kependidikan"
           />
         </v-col>
         <v-col cols="12" xs="12" sm="6">
@@ -53,7 +53,7 @@
             hide-details
             filled
             solo
-            label="Contoh: Tenaga Ahli"
+            label="Contoh: Tenaga Kependidikan"
           />
         </v-col>
       </v-row>

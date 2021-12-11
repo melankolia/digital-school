@@ -34,13 +34,29 @@
           </v-col>
           <v-col cols="12" xs="12" sm="6">
             <p class="mb-3 title-input">Jurusan</p>
-            <v-text-field
-              v-model="payload.jurusan"
-              hide-details
-              filled
-              solo
-              label="Contoh: MIPA 1"
-            />
+            <v-row>
+              <v-col cols="12" xs="12" sm="6">
+                <v-select
+                  v-model="payload.jurusan"
+                  :items="['MIPA', 'IPS']"
+                  placeholder="Pilih Jurusan"
+                  hide-details
+                  filled
+                  solo
+                  item-text="text"
+                  item-value="value"
+                />
+              </v-col>
+              <v-col cols="12" xs="12" sm="3">
+                <v-text-field
+                  v-model="payload.jurusanNo"
+                  hide-details
+                  filled
+                  solo
+                  label="Contoh: 1"
+                />
+              </v-col>
+            </v-row>
           </v-col>
         </v-row>
         <v-row>
@@ -135,6 +151,7 @@ export default {
         kelas_id: null,
         nama_kelas: "X",
         jurusan: null,
+        jurusanNo: null,
         wali_kelas: null,
         tahun_ajaran_from: null,
         tahun_ajaran_to: null,
@@ -186,7 +203,7 @@ export default {
       const payload = {
         kelas_id: this.payload.kelas_id || "",
         namaKelas: this.payload.nama_kelas || "",
-        jurusan: this.payload.jurusan || "-",
+        jurusan: `${this.payload.jurusan} ${this.payload.jurusanNo}` || "-",
         walikelas: this.payload.wali_kelas?.nama || "-",
         guru_id: this.payload.wali_kelas?.guru_id || "-",
       };
