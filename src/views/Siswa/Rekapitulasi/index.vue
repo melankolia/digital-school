@@ -96,12 +96,12 @@
               Total
             </th>
             <th class="text-center table-header-text border-bottom">Islam</th>
-            <th class="text-center table-header-text border-bottom">Kristen</th>
+            <th class="text-center table-header-text border-bottom">Katolik</th>
             <th class="text-center table-header-text border-bottom">
               Protestan
             </th>
             <th class="text-center table-header-text border-bottom">Hindu</th>
-            <th class="text-center table-header-text border-bottom">Budha</th>
+            <th class="text-center table-header-text border-bottom">Buddha</th>
             <th
               class="text-center table-header-text border-bottom border-right"
             >

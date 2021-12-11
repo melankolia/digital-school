@@ -24,8 +24,9 @@
       <v-row>
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Golongan darah</p>
-          <v-text-field
+          <v-select
             v-model="payload.gol_darah"
+            :items="['-', 'A', 'B', 'AB', 'O']"
             hide-details
             filled
             solo

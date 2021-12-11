@@ -16,8 +16,8 @@
           <div class="d-flex flex-column white--text">
             <p class="school-name ma-0">SMAN 1 Kota Jambi</p>
             <p class="school-address ma-0">
-              Jl. Jenderal Urip Sumoharjo Lorong Pustu Sei. Putri No.15 <br />
-              Kel, Sungai Putri, Kec. Telanaipura, Kota Jambi, Jambi <br />
+              Jl. Urip Sumoharjo No.15 <br />
+              Kel, Sungai Putri, Kec. Danau Sipin, Kota Jambi, Jambi <br />
               36122
             </p>
           </div>
@@ -121,9 +121,10 @@ export default {
             }
           })
           .catch((err) => {
+            console.error(err);
             this.$store.commit("snackbar/setSnack", {
               show: true,
-              message: err || "Login Gagal",
+              message: "Login Gagal, Mohon Coba Lagi atau Hubungi Admin",
               color: "error",
             });
           })

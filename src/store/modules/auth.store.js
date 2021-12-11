@@ -48,15 +48,9 @@ const actions = {
             reject({ status, message });
           }
         })
-        .catch(
-          ({
-            response: {
-              data: { message },
-            },
-          }) => {
-            reject(message);
-          }
-        );
+        .catch((err) => {
+          reject(err);
+        });
     });
   },
   [FORCE_LOGOUT](context) {

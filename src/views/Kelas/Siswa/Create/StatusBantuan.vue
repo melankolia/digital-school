@@ -94,8 +94,8 @@ export default {
       this.$emit("handleLoading", true);
       const payload = {
         siswa_id: this.siswaId,
-        pkh: this.payload.pkh || "-",
-        kks: this.payload.kks || "-",
+        pkh: this.payload.pkh || 0,
+        kks: this.payload.kks || 0,
         kps: this.payload.kps,
       };
       SiswaService.addStatusBantuan(payload)
@@ -110,6 +110,7 @@ export default {
             });
             this.$router.replace({
               name: SISWA.KELAS.SISWA.DETAIL,
+              params: { secureId: this.siswaId },
             });
             this.$vuetify.goTo(1, {
               duration: 300,
@@ -121,7 +122,7 @@ export default {
               show: true,
               message:
                 message ||
-                `Berhasil Menyimpan Data Status Bantuan ${
+                `Gagal Menyimpan Data Status Bantuan ${
                   this.isAlumni ? "Alumni" : "Siswa"
                 }`,
               color: "error",
@@ -132,7 +133,7 @@ export default {
           console.error(err);
           this.$store.commit("snackbar/setSnack", {
             show: true,
-            message: `Berhasil Menyimpan Data Status Bantuan ${
+            message: `Gagal Menyimpan Data Status Bantuan ${
               this.isAlumni ? "Alumni" : "Siswa"
             }`,
             color: "error",

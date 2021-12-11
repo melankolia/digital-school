@@ -155,10 +155,10 @@ export default {
         },
         {
           icon: "mdi-account-multiple-outline",
-          title: "Tenaga Ahli",
+          title: "Tenaga Kependidikan",
           subItems: [
             {
-              title: "Seluruh Tenaga Ahli",
+              title: "Seluruh Tenaga Kependidikan",
               to: { name: TENAGA_AHLI.BROWSE },
             },
           ],
