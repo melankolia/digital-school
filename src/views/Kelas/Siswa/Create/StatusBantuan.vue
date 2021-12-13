@@ -111,6 +111,9 @@ export default {
             this.$router.replace({
               name: SISWA.KELAS.SISWA.DETAIL,
               params: { secureId: this.siswaId },
+              query: {
+                kelasId: this.id,
+              },
             });
             this.$vuetify.goTo(1, {
               duration: 300,
