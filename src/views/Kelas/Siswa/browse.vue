@@ -271,7 +271,7 @@ export default {
       });
     },
     handleBack() {
-      this.$router.push({ name: SISWA.KELAS.BROWSE });
+      this.$router.back();
     },
     handleDetail(item) {
       // this.setSiswaInfo(item);

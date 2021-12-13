@@ -418,23 +418,31 @@ export default {
       });
     },
     handleEdit() {
-      this.setKompetensiSiswa({
-        ...this.getSiswa,
-        nama_kelas: this.sortByKelas.kelas,
-      });
-      this.$router.push({
-        name: this.isAlumni
-          ? ALUMNI.UPDATE_KOMPETENSI
-          : SISWA.KELAS.SISWA.UPDATE_KOMPETENSI,
-        params: {
-          siswaId: this.siswaId,
-          kelasId: this.kelasId,
-        },
-        query: {
-          semester: this.sortBySemester,
-          kompetensi_id: this.listItem.kompetensi_id,
-        },
-      });
+      if (this.sortByKelas?.kelas_id) {
+        this.setKompetensiSiswa({
+          ...this.getSiswa,
+          nama_kelas: this.sortByKelas.kelas,
+        });
+        this.$router.push({
+          name: this.isAlumni
+            ? ALUMNI.UPDATE_KOMPETENSI
+            : SISWA.KELAS.SISWA.UPDATE_KOMPETENSI,
+          params: {
+            siswaId: this.siswaId,
+            kelasId: this.kelasId,
+          },
+          query: {
+            semester: this.sortBySemester,
+            kompetensi_id: this.listItem.kompetensi_id,
+          },
+        });
+      } else {
+        this.$store.commit("snackbar/setSnack", {
+          show: true,
+          message: "Mohon pilih kelas terlebih dahulu",
+          color: "error",
+        });
+      }
     },
     getListKelas() {
       this.loadingKelas = true;
@@ -485,20 +493,10 @@ export default {
             };
           } else {
             throw new Error(message);
-            // this.$store.commit("snackbar/setSnack", {
-            //   show: true,
-            //   message: message || "Gagal Memuat Data Kompetensi Siswa",
-            //   color: "error",
-            // });
           }
         })
         .catch((err) => {
           console.error(err);
-          // this.$store.commit("snackbar/setSnack", {
-          //   show: true,
-          //   message: "Gagal Memuat Data Kompetensi Siswa",
-          //   color: "error",
-          // });
         })
         .finally(() => (this.loading = false));
     },
