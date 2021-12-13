@@ -69,6 +69,7 @@
             prepend-icon=""
             outlined
             :show-size="1000"
+            accept="application/pdf"
           >
           </v-file-input>
         </v-col>

@@ -21,6 +21,7 @@
           depressed
           class="rounded-lg mr-4"
           color="primary"
+          :disabled="isAlumni"
         >
           <p class="header-button-export ma-0">
             <span> Tambah Prestasi </span>

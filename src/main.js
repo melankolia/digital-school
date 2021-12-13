@@ -16,6 +16,10 @@ Vue.use(DialogConfirm);
 import "./filter/currency.filter";
 import "./filter/case.filter";
 
+// Prototype
+import { DateTime } from "luxon";
+Object.defineProperty(Vue.prototype, "$DateTime", { value: DateTime });
+
 // Vue Mixin
 import "./mixin";
 

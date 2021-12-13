@@ -70,6 +70,7 @@
             outlined
             :show-size="1000"
             :rules="[(v) => !!v || 'File harus diisi']"
+            accept="application/pdf"
           >
           </v-file-input>
         </v-col>

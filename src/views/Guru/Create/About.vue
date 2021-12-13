@@ -76,13 +76,54 @@
       <v-row>
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Tempat Tanggal Lahir</p>
-          <v-text-field
-            v-model="payload.ttl"
-            hide-details
-            filled
-            solo
-            label="Contoh : Jambi / 15 April 1970"
-          />
+          <v-row>
+            <v-col cols="12" xs="12" sm="4">
+              <v-text-field
+                v-model="payload.tempat_lahir"
+                hide-details
+                filled
+                solo
+                label="Contoh: Jambi"
+              />
+            </v-col>
+            <v-col cols="12" xs="12" sm="8">
+              <v-menu
+                ref="menu"
+                v-model="birthDateMenu"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                max-width="290px"
+                min-width="290px"
+                :return-value.sync="payload.tanggal_lahir"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    v-model="tanggal_lahir"
+                    label="Pilih Tanggal Lahir"
+                    readonly
+                    hide-details
+                    filled
+                    solo
+                    v-on="on"
+                  />
+                </template>
+                <v-date-picker v-model="payload.tanggal_lahir">
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="birthDateMenu = false">
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    text
+                    color="primary"
+                    @click="$refs.menu.save(payload.tanggal_lahir)"
+                  >
+                    OK
+                  </v-btn>
+                </v-date-picker>
+              </v-menu>
+            </v-col>
+          </v-row>
         </v-col>
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">NIP / KARPEG</p>
@@ -284,11 +325,15 @@ export default {
         "IV/d",
       ],
 
+      // Birthdate Menu Properties
+      birthDateMenu: false,
+
       payload: {
         guru_id: null,
         nama: null,
         jenis_kelamin: null,
-        ttl: null,
+        tempat_lahir: null,
+        tanggal_lahir: null,
         nip_karpeg: null,
         pendidikan: null,
         mulai_bertugas: null,
@@ -314,6 +359,13 @@ export default {
     },
     isAvailable() {
       return this.payload.guru_id ? true : false;
+    },
+    tanggal_lahir() {
+      if (this.payload.tanggal_lahir) {
+        return this.$DateTime
+          .fromISO(this.payload.tanggal_lahir)
+          .toFormat("dd LLLL yyyy");
+      } else return "-";
     },
   },
   methods: {
@@ -341,6 +393,15 @@ export default {
               ...this.payload,
               ...data,
             };
+
+            if (data.ttl) {
+              const ttl = data.ttl.split(", ");
+              if (ttl.length > 0 && ttl.length <= 2) {
+                this.payload.tempat_lahir = ttl[0];
+                this.payload.tanggal_lahir = this.toOurFormatDetail(ttl[1]);
+                console.log(this.payload.tanggal_lahir);
+              }
+            }
 
             if (data.image) {
               fetch(data.image)
@@ -383,11 +444,16 @@ export default {
       this.$emit("handleLoading", true);
       this.createBase64Image(this.payload.files)
         .then((e) => {
+          const tanggal_lahir = this.$DateTime
+            .fromISO(this.payload.tanggal_lahir)
+            .setLocale("id")
+            .toFormat("dd-MM-yyyy");
+
           const payload = {
             image: e.target.result,
             nama: this.payload.nama || "-",
             jenis_kelamin: this.payload.jenis_kelamin || "-",
-            ttl: this.payload.ttl || "-",
+            ttl: `${this.payload.tempat_lahir}, ${tanggal_lahir}` || "-",
             nip_karpeg: this.payload.nip_karpeg || "-",
             pendidikan: this.payload.pendidikan || "-",
             mulai_bertugas: this.payload.mulai_bertugas || "-",

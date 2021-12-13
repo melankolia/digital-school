@@ -25,30 +25,39 @@
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Tanggal Diterima</p>
           <v-menu
+            ref="menu"
             v-model="menuDateCreated"
-            close-on-content-click
+            :close-on-content-click="false"
             transition="scale-transition"
             offset-y
             max-width="290px"
             min-width="290px"
+            :return-value.sync="payload.tanggal_diterima"
           >
             <template v-slot:activator="{ on }">
               <v-text-field
-                v-model="payload.tanggal_diterima"
+                v-model="tanggal_diterima"
                 label="Pilih Tanggal Diterima"
                 readonly
                 hide-details
                 filled
                 solo
-                @click:clear="payload.tanggal_diterima = []"
                 v-on="on"
               />
             </template>
-            <v-date-picker
-              v-model="payload.tanggal_diterima"
-              no-title
-              :min="payload.tanggal_diterima"
-            />
+            <v-date-picker v-model="payload.tanggal_diterima">
+              <v-spacer></v-spacer>
+              <v-btn text color="primary" @click="menuDateCreated = false">
+                Cancel
+              </v-btn>
+              <v-btn
+                text
+                color="primary"
+                @click="$refs.menu.save(payload.tanggal_diterima)"
+              >
+                OK
+              </v-btn>
+            </v-date-picker>
           </v-menu>
         </v-col>
       </v-row>
@@ -150,9 +159,14 @@ export default {
     },
     handleSubmit() {
       this.$emit("handleLoading", true);
+      const tanggal_diterima = this.$DateTime
+        .fromISO(this.payload.tanggal_diterima)
+        .setLocale("id")
+        .toFormat("dd-MM-yyyy");
+
       const payload = {
         siswa_id: this.siswaId,
-        tanggal_diterima: this.payload.tanggal_diterima || "-",
+        tanggal_diterima: tanggal_diterima || "-",
         lulus_dari: this.payload.lulus_dari || "-",
         tanggal_no_ijazah: this.payload.tanggal_no_ijazah || "-",
         tanggal_no_stl: this.payload.tanggal_no_stl || "-",
@@ -209,6 +223,9 @@ export default {
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
             this.payload = { ...this.items, ...data };
+            this.payload.tanggal_diterima = this.toOurFormatDetail(
+              this.payload.tanggal_diterima
+            );
           } else {
             throw new Error(message);
           }
@@ -231,6 +248,13 @@ export default {
     },
     isAlumni() {
       return this.$router.currentRoute?.name == ALUMNI.UPDATE;
+    },
+    tanggal_diterima() {
+      if (this.payload.tanggal_diterima) {
+        return this.$DateTime
+          .fromISO(this.payload.tanggal_diterima)
+          .toFormat("dd LLLL yyyy");
+      } else return "-";
     },
   },
 };

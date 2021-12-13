@@ -49,6 +49,32 @@ Vue.mixin({
         reader.readAsDataURL(fileObject);
       });
     },
+    toOurFormat(str) {
+      if (str) {
+        const parseDate = this.$DateTime.fromFormatExplain(str, "dd-MM-yyyy");
+        if (Object.entries(parseDate.result).length !== 0) {
+          return this.$DateTime
+            .fromISO(
+              `${parseDate.result.year}-${parseDate.result.month}-${parseDate.result.day}`
+            )
+            .toFormat("dd LLLL yyyy");
+        }
+      } else return "-";
+    },
+    toOurFormatDetail(str) {
+      if (str) {
+        const parseDate = this.$DateTime.fromFormatExplain(str, "dd-MM-yyyy");
+        if (Object.entries(parseDate.result).length !== 0) {
+          return `${parseDate.result.year}-${this.expandDigit(
+            parseDate.result.month
+          )}-${this.expandDigit(parseDate.result.day)}`;
+        }
+      } else return "-";
+    },
+    expandDigit(str) {
+      if (str < 10) return `0${str}`;
+      else return str;
+    },
   },
   computed: {
     isFirst() {
