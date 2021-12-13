@@ -153,7 +153,11 @@
                 <img class="mr-4" src="@/assets/icons/detail.svg" />
                 <p class="selection-item ma-0">Buka Detail</p>
               </v-list-item>
-              <v-list-item @click="() => handleEdit(item)" link>
+              <v-list-item
+                v-if="!isAlumni"
+                @click="() => handleEdit(item)"
+                link
+              >
                 <img class="mr-4" src="@/assets/icons/edit-outlined.svg" />
                 <p class="selection-item ma-0">Edit Data</p>
               </v-list-item>

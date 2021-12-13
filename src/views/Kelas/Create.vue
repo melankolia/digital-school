@@ -307,6 +307,6 @@ export default {
 
 <style scoped>
 .password > .v-input__control {
-  border: none;
+  border: none !important;
 }
 </style>

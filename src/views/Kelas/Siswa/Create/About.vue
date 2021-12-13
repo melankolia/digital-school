@@ -121,13 +121,54 @@
       <v-row>
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Tempat Tanggal Lahir</p>
-          <v-text-field
-            v-model="payload.ttl"
-            hide-details
-            filled
-            solo
-            label="Contoh: Jambi, 18 April 2007"
-          />
+          <v-row>
+            <v-col cols="12" xs="12" sm="4">
+              <v-text-field
+                v-model="payload.tempat_lahir"
+                hide-details
+                filled
+                solo
+                label="Contoh: Jambi"
+              />
+            </v-col>
+            <v-col cols="12" xs="12" sm="8">
+              <v-menu
+                ref="menu"
+                v-model="birthDateMenu"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                max-width="290px"
+                min-width="290px"
+                :return-value.sync="payload.tanggal_lahir"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    v-model="tanggal_lahir"
+                    label="Pilih Tanggal Lahir"
+                    readonly
+                    hide-details
+                    filled
+                    solo
+                    v-on="on"
+                  />
+                </template>
+                <v-date-picker v-model="payload.tanggal_lahir">
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="birthDateMenu = false">
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    text
+                    color="primary"
+                    @click="$refs.menu.save(payload.tanggal_lahir)"
+                  >
+                    OK
+                  </v-btn>
+                </v-date-picker>
+              </v-menu>
+            </v-col>
+          </v-row>
         </v-col>
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Jenis Kelamin</p>
@@ -230,6 +271,7 @@
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Anak yatim / piatu / yatim piatu</p>
           <v-select
+            v-model="payload.status_orang_tua"
             :items="listStatusYatim"
             hide-details
             filled
@@ -314,10 +356,13 @@ export default {
       ],
 
       // Yatim properties
-      listStatusYatim: ["Yatim", "Piatu", "Yatim Piatu"],
+      listStatusYatim: ["-", "Yatim", "Piatu", "Yatim Piatu"],
 
       // Kewarganegaraan Properties
       listKewarganegaraan: ["Indonesia", "WNA"],
+
+      // Birthdate Menu Properties
+      birthDateMenu: false,
 
       payload: {
         siswa_id: null,
@@ -327,7 +372,8 @@ export default {
         NISN: null,
         nama_lengkap: null,
         nama_panggilan: null,
-        ttl: null,
+        tempat_lahir: null,
+        tanggal_lahir: null,
         jenis_kelamin: null,
         agama: null,
         kewarganegaraan: null,
@@ -336,6 +382,7 @@ export default {
         jml_sdr_tiri: null,
         jml_sdr_angkat: null,
         status_anak: null,
+        status_orang_tua: null,
         bahasa: null,
         penanggung_biaya: null,
         pihak_dihubungi: null,
@@ -361,6 +408,11 @@ export default {
       this.$emit("handleLoading", true);
       this.createBase64Image(this.payload.files)
         .then((e) => {
+          const tanggal_lahir = this.$DateTime
+            .fromISO(this.payload.tanggal_lahir)
+            .setLocale("id")
+            .toFormat("dd-MM-yyyy");
+
           const payload = {
             image: e.target.result,
             siswa_id: this.id,
@@ -369,7 +421,7 @@ export default {
             NISN: this.payload.NISN || "-",
             nama_lengkap: this.payload.nama_lengkap || "-",
             nama_panggilan: this.payload.nama_panggilan || "-",
-            ttl: this.payload.ttl || "-",
+            ttl: `${this.payload.tempat_lahir}, ${tanggal_lahir}` || "-",
             jenis_kelamin: this.payload.jenis_kelamin || "-",
             agama: this.payload.agama || "-",
             kewarganegaraan: this.payload.kewarganegaraan || "-",
@@ -378,6 +430,7 @@ export default {
             jml_sdr_tiri: this.payload.jml_sdr_tiri || "-",
             jml_sdr_angkat: this.payload.jml_sdr_angkat || "-",
             status_anak: this.payload.status_anak || "-",
+            // status_orang_tua: this.payload.status_orang_tua || "-",
             bahasa: this.payload.bahasa || "-",
             penanggung_biaya: this.payload.penanggung_biaya || "-",
             pihak_dihubungi: this.payload.pihak_dihubungi || "-",
@@ -468,6 +521,13 @@ export default {
               ...data,
             };
 
+            if (data.ttl) {
+              const ttl = data.ttl.split(", ");
+              if (ttl.length > 0 && ttl.length <= 2) {
+                this.payload.tempat_lahir = ttl[0];
+                this.payload.tanggal_lahir = this.toOurFormatDetail(ttl[1]);
+              }
+            }
             if (data.image) {
               fetch(data.image)
                 .then((response) => response.blob())
@@ -518,6 +578,13 @@ export default {
     },
     isAlumni() {
       return this.$router.currentRoute?.name == ALUMNI.UPDATE;
+    },
+    tanggal_lahir() {
+      if (this.payload.tanggal_lahir) {
+        return this.$DateTime
+          .fromISO(this.payload.tanggal_lahir)
+          .toFormat("dd LLLL yyyy");
+      } else return "-";
     },
   },
   mounted() {

@@ -86,7 +86,7 @@
         <tr>
           <td>Anak yatim/piatu/yatim piatu</td>
           <td class="text-right text-sub">
-            {{ items.status_anak || "-" | toTitle }}
+            {{ items.status_orang_tua || "-" | toTitle }}
           </td>
         </tr>
         <tr>
@@ -175,6 +175,17 @@ export default {
               kelas_id: data.kelas_id,
             });
             this.items = { ...this.items, ...data };
+
+            if (data.ttl) {
+              const ttl = data.ttl.split(", ");
+              let tempat_lahir, tanggal_lahir;
+              if (ttl.length > 0 && ttl.length <= 2) {
+                tempat_lahir = ttl[0];
+                tanggal_lahir = this.toOurFormat(ttl[1]);
+              }
+
+              this.items.ttl = `${tempat_lahir}, ${tanggal_lahir}`;
+            }
 
             if (data.image) {
               // Binding Image

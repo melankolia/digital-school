@@ -179,6 +179,17 @@ export default {
           if (code == 200) {
             this.items = { ...this.items, ...data };
 
+            if (data.ttl) {
+              const ttl = data.ttl.split(", ");
+              let tempat_lahir, tanggal_lahir;
+              if (ttl.length > 0 && ttl.length <= 2) {
+                tempat_lahir = ttl[0];
+                tanggal_lahir = this.toOurFormat(ttl[1]);
+              }
+
+              this.items.ttl = `${tempat_lahir}, ${tanggal_lahir}`;
+            }
+
             if (data.image) {
               // Binding Image
               const doc = document.getElementById("preview-photo");

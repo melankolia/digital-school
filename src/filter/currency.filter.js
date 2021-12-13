@@ -6,7 +6,7 @@ import Vue from "vue";
  * @param  {String} str the string to convert
  * @return {String}
  */
-Vue.filter("currency", str => {
+Vue.filter("currency", (str) => {
   return str && !isNaN(str)
     ? (str / 1)
         .toFixed(0)
@@ -16,7 +16,7 @@ Vue.filter("currency", str => {
     : "-";
 });
 
-Vue.filter("threeDots", str => {
+Vue.filter("threeDots", (str) => {
   return (
     str &&
     !isNaN(str) &&
@@ -27,10 +27,10 @@ Vue.filter("threeDots", str => {
   );
 });
 
-Vue.filter("number", str => {
+Vue.filter("number", (str) => {
   return str ? str.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.") : "0";
 });
 
-Vue.filter("percentage", str => {
+Vue.filter("percentage", (str) => {
   return str && !isNaN(str) && Math.floor(str * 100);
 });

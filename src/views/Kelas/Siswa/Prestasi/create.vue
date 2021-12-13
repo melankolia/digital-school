@@ -75,7 +75,7 @@
               append-icon="mdi-paperclip"
               prepend-icon=""
               outlined
-              accept="application/pdf, image/*"
+              accept="application/pdf"
               :show-size="1000"
               :rules="[(v) => !!v || 'File harus diisi']"
             >
