@@ -16,7 +16,7 @@
           </v-btn>
         </div>
         <p class="header-title-input mb-1">Input Tabel</p>
-        <p class="header-subtitle-input mb-1">G. Status Bantuan</p>
+        <p class="header-subtitle-input mb-1">H. Status Bantuan</p>
       </div>
     </div>
     <DefaultLoader :loading="loading" v-if="loading" />
@@ -112,6 +112,7 @@ export default {
               name: SISWA.KELAS.SISWA.DETAIL,
               params: { secureId: this.siswaId },
               query: {
+                kelas: this.kelas,
                 kelasId: this.id,
               },
             });
