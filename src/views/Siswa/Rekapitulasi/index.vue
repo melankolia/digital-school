@@ -112,8 +112,8 @@
               v-for="(items, index) in tahun_kelahiran"
               :key="index"
             >
-              <span v-for="(item, index2) in items" :key="index2">
-                {{ index2 }}
+              <span>
+                {{ items }}
               </span>
             </th>
             <th
@@ -169,11 +169,11 @@
             </td>
             <td
               class="text-center"
-              v-for="(items, tahunIndex) in item.tahun_kelahiran"
+              v-for="(items, tahunIndex) in item.tahun_kelahiran_object"
               :key="`tahun-row-${tahunIndex}`"
             >
-              <span v-for="(item, index) in items" :key="`tahun-span-${index}`">
-                {{ item || "-" }}
+              <span>
+                {{ items || "-" }}
               </span>
             </td>
             <td class="text-center border-left">
@@ -228,14 +228,11 @@
             </td>
             <td
               class="table-header text-center border-top"
-              v-for="(items, tahunIndex) in tahun_kelahiran"
+              v-for="(items, tahunIndex) in total.tahun_kelahiran"
               :key="`tahun-row-${tahunIndex}`"
             >
-              <span
-                v-for="(item, index) in items"
-                :key="`tahun-footer-span-${index}`"
-              >
-                {{ item || "-" }}
+              <span>
+                {{ items || "-" }}
               </span>
             </td>
             <td class="table-header text-center border-top border-left">
@@ -304,6 +301,7 @@ export default {
           kps: 0,
           non_kps: 0,
         },
+        tahun_kelahiran: {},
       },
 
       // Data Table Properties
@@ -312,6 +310,29 @@ export default {
   methods: {
     getRekapitulasi() {
       this.items = [];
+      this.total = {
+        jenis_kelamin: {
+          laki: 0,
+          perempuan: 0,
+          total: 0,
+        },
+        agama: {
+          islam: 0,
+          kristen: 0,
+          protestan: 0,
+          hindu: 0,
+          budha: 0,
+          total: 0,
+        },
+        tidak_mampu: {
+          laki: 0,
+          perempuan: 0,
+          jumlah: 0,
+          kps: 0,
+          non_kps: 0,
+        },
+        tahun_kelahiran: {},
+      };
       this.loading = true;
       RekapitulasiService.getPerkelas({
         type: this.tabs[this.tab].val,
@@ -319,7 +340,18 @@ export default {
         .then(({ data: { code, message, data } }) => {
           if (code == 200) {
             if (data.length > 0) {
-              this.tahun_kelahiran = data[0].tahun_kelahiran;
+              const tahun_kelahiran = [
+                ...data.map((e) =>
+                  e.tahun_kelahiran.map((e2) => Object.keys(e2))
+                ),
+              ].flat(2);
+              tahun_kelahiran.sort((a, b) => a - b);
+              const result_tahun_kelahiran = [...new Set(tahun_kelahiran)];
+              this.tahun_kelahiran = [...result_tahun_kelahiran];
+              this.tahun_kelahiran.map((e) => {
+                this.total.tahun_kelahiran[e] = "";
+              });
+
               data.map((e, i) => (e.no = i + 1));
               data.map((e) => {
                 // Jenis Kelamin
@@ -342,6 +374,31 @@ export default {
                 this.total.tidak_mampu.kps += e.tidak_mampu.kps;
                 this.total.tidak_mampu.non_kps += e.tidak_mampu.non_kps;
               });
+
+              data.map((e) => {
+                e.tahun_kelahiran.map((e2) => {
+                  e.tahun_kelahiran_object = {
+                    ...e.tahun_kelahiran_object,
+                    ...e2,
+                  };
+                });
+              });
+
+              data.map((e) => {
+                this.tahun_kelahiran.map((e2) => {
+                  if (!e.tahun_kelahiran_object[e2])
+                    e.tahun_kelahiran_object[e2] = "";
+                });
+              });
+
+              data.map((e) => {
+                Object.keys(this.total.tahun_kelahiran).map((e2) => {
+                  this.total.tahun_kelahiran[e2] =
+                    +this.total.tahun_kelahiran[e2] +
+                    +e.tahun_kelahiran_object[e2];
+                });
+              });
+
               this.items = [...data];
             }
           } else {

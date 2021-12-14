@@ -86,7 +86,7 @@
         <tr>
           <td>Anak yatim/piatu/yatim piatu</td>
           <td class="text-right text-sub">
-            {{ items.status_orang_tua || "-" | toTitle }}
+            {{ items.status_ortu || "-" | toTitle }}
           </td>
         </tr>
         <tr>
@@ -142,6 +142,7 @@ export default {
         jml_sdr_tiri: null,
         jml_sdr_angkat: null,
         status_anak: null,
+        status_ortu: null,
         bahasa_sehari: null,
         pihak_dihubungi: null,
         penanggung_biaya: null,

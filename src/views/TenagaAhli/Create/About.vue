@@ -485,6 +485,11 @@ export default {
         })
         .catch((err) => {
           console.error(err);
+          this.$vuetify.goTo("#preview-photo", {
+            duration: 500,
+            offset: 0,
+            easing: "easeInOutCubic",
+          });
           this.$store.commit("snackbar/setSnack", {
             show: true,
             message: "File Foto Harus Diisi",

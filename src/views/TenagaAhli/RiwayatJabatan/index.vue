@@ -28,6 +28,11 @@
         </v-btn>
       </div>
     </div>
+    <div class="d-flex flex-column pr-12 mr-12">
+      <p class="header-subtitle">
+        {{ items.nama_tenaga_ahli || "-" | toTitle }}
+      </p>
+    </div>
     <div class="d-flex flex-row">
       <ContentNotFound
         message="Data Riwayat Jabatan Not Found"
@@ -73,6 +78,9 @@ export default {
     return {
       id: this.$route.params.tenagaAhliId,
       loading: false,
+      items: {
+        nama_tenaga_ahli: null,
+      },
       cardList: [],
     };
   },
@@ -89,7 +97,10 @@ export default {
       })
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
-            this.cardList = [...data];
+            this.items = {
+              nama_tenaga_ahli: data.nama,
+            };
+            this.cardList = [...data.data];
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,

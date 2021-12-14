@@ -271,7 +271,7 @@
         <v-col cols="12" xs="12" sm="6">
           <p class="mb-3 title-input">Anak yatim / piatu / yatim piatu</p>
           <v-select
-            v-model="payload.status_orang_tua"
+            v-model="payload.status_ortu"
             :items="listStatusYatim"
             hide-details
             filled
@@ -430,7 +430,7 @@ export default {
             jml_sdr_tiri: this.payload.jml_sdr_tiri || "-",
             jml_sdr_angkat: this.payload.jml_sdr_angkat || "-",
             status_anak: this.payload.status_anak || "-",
-            // status_orang_tua: this.payload.status_orang_tua || "-",
+            status_ortu: this.payload.status_ortu || "-",
             bahasa: this.payload.bahasa || "-",
             penanggung_biaya: this.payload.penanggung_biaya || "-",
             pihak_dihubungi: this.payload.pihak_dihubungi || "-",
@@ -481,6 +481,11 @@ export default {
         })
         .catch((err) => {
           console.error(err);
+          this.$vuetify.goTo("#preview-photo", {
+            duration: 500,
+            offset: 0,
+            easing: "easeInOutCubic",
+          });
           this.$store.commit("snackbar/setSnack", {
             show: true,
             message: "File Foto Harus Diisi",

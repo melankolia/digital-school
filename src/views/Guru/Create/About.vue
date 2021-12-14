@@ -510,6 +510,11 @@ export default {
             message: "File Foto Harus Diisi",
             color: "error",
           });
+          this.$vuetify.goTo("#preview-photo", {
+            duration: 500,
+            offset: 0,
+            easing: "easeInOutCubic",
+          });
           this.$emit("handleLoading", false);
         });
     },
