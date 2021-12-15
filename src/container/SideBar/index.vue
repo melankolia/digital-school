@@ -74,7 +74,7 @@
         :class="{ 'mx-5': !mini, 'mx-4': mini }"
         nav
       >
-        <v-list-item to="/about" :active-class="'primary white--text'">
+        <!-- <v-list-item to="/about" :active-class="'primary white--text'">
           <v-list-item-action
             :class="{ 'mr-4': !mini }"
             class="d-flex flex-row justify-center align-center"
@@ -84,7 +84,7 @@
           <v-list-item-content>
             <p class="ma-0 item-style">Pengaturan</p>
           </v-list-item-content>
-        </v-list-item>
+        </v-list-item> -->
         <v-list-item @click="handleLogout" style="color: #ff5252 !important">
           <v-list-item-action
             :class="{ 'mr-4': !mini }"
