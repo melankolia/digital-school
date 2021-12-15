@@ -4,12 +4,12 @@
       <div>
         <p class="header-title mb-1">Rekapitulasi Siswa</p>
       </div>
-      <v-btn depressed class="rounded-lg outlined-custom">
+      <!-- <v-btn depressed class="rounded-lg outlined-custom">
         <p class="header-button-export ma-0">
           <v-icon class="mr-1" small>mdi-download</v-icon>
           <span> Export Rekapitulasi Siswa </span>
         </p>
-      </v-btn>
+      </v-btn> -->
     </div>
     <v-tabs class="mb-6" v-model="tab" color="tabMenu">
       <v-tab v-for="item in tabs" :key="item.val">
