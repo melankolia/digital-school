@@ -21,7 +21,6 @@
           depressed
           class="rounded-lg mr-4"
           color="primary"
-          :disabled="isAlumni"
         >
           <p class="header-button-export ma-0">
             <span> Tambah Prestasi </span>
@@ -37,7 +36,7 @@
     </div>
     <div class="d-flex flex-row flex-wrap">
       <ContentNotFound
-        message="Data Prestasi Siswa Not Found"
+        :message="`Data Prestasi ${isAlumni ? 'Alumni' : 'Siswa'} Not Found`"
         :loading="loading"
         v-if="!isAvailable"
         style="width: 100%"

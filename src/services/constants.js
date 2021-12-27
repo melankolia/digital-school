@@ -51,6 +51,8 @@ export const SISWA = {
   PER_KELAS: `${siswa}/all`,
   EXPORT: {
     RAPOR: `${siswa}/export-raport`,
+    SISWA: `${siswa}/export-siswa`,
+    REKAPITULASI_KELAS: `${siswa}/export-rekapitulasi-kelas`,
   },
 };
 

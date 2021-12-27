@@ -17,6 +17,14 @@ const KelasService = {
   lovKelasKompetensi(id) {
     return MainInstance.fetch(KELAS.LOV_KOMPETENSI, id);
   },
+  downloadRekapitulasi(data, type = "arraybuffer") {
+    return MainInstance.download(
+      SISWA.EXPORT.REKAPITULASI_KELAS,
+      data,
+      null,
+      type
+    );
+  },
   createKelas(data) {
     return MainInstance.post(KELAS.CREATE, data);
   },

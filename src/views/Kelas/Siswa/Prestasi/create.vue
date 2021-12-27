@@ -17,7 +17,7 @@
       <p class="header-title mb-4">Tambah Prestasi</p>
     </div>
     <ContentNotFound
-      message="Data Prestasi Siswa Not Found"
+      :message="`Data Prestasi ${isAlumni ? 'Alumni' : 'Siswa'} Not Found`"
       :loading="loading"
       v-if="!isAvailable && isUpdate"
       style="width: 100%"

@@ -228,6 +228,7 @@ export default {
         },
         { text: "Kelas", value: "nama_kelas", sortable: false },
         { text: "Jenis Kelamin", value: "jenis_kelamin", sortable: false },
+        { text: "Status", value: "status", align: "center", sortable: false },
         { text: "Aksi", value: "action", sortable: false },
       ],
       items: [],

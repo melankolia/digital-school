@@ -62,6 +62,9 @@ const SiswaService = {
   downloadFile(data, type = "arraybuffer") {
     return MainInstance.download(SISWA.EXPORT.RAPOR, data, null, type);
   },
+  downloadDetail(data, type = "arraybuffer") {
+    return MainInstance.download(SISWA.EXPORT.SISWA, data, null, type);
+  },
   addPrestasi(data) {
     return MainInstance.post(SISWA.PRESTASI.CREATE, data);
   },

@@ -12,6 +12,18 @@
             <span> Close </span>
           </p>
         </v-btn>
+        <v-btn
+          @click="handleDownload"
+          :loading="loadingDownload"
+          :disabled="loading"
+          depressed
+          class="rounded-lg outlined-custom"
+        >
+          <p class="header-button-export ma-0">
+            <v-icon class="mr-1" small>mdi-download</v-icon>
+            <span>Download Rekapitulasi Kelas</span>
+          </p>
+        </v-btn>
       </div>
       <div class="d-flex flex-row justify-space-between mb-6 mt-1">
         <div>
@@ -154,6 +166,7 @@
 <script>
 const ContentNotFound = () => import("@/components/Content/NotFound");
 import RekapitulasiService from "@/services/resources/rekapitulasi.service";
+import KelasService from "@/services/resources/kelas.service";
 
 export default {
   components: {
@@ -162,6 +175,7 @@ export default {
   data() {
     return {
       loading: false,
+      loadingDownload: false,
       kelas: this.$route.query?.kelas,
       id: this.$route.params?.kelasId,
       tahun_ajaran: this.$route.query?.tahun_ajaran,
@@ -192,6 +206,35 @@ export default {
   methods: {
     closeRekapitulasi() {
       this.$emit("close-rekapitulasi");
+    },
+    handleDownload() {
+      try {
+        this.loadingDownload = true;
+        KelasService.downloadRekapitulasi({
+          kelas_id: this.id,
+        })
+          .then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute(
+              "download",
+              `Rekapitulasi Kelas ${this.kelas}.xlsx`
+            );
+            document.body.appendChild(link);
+            link.click();
+          })
+          .catch((err) => {
+            throw new Error(err);
+          })
+          .finally(() => (this.loadingDownload = false));
+      } catch (error) {
+        this.$store.commit("snackbar/setSnack", {
+          show: true,
+          message: "Gagal Download Detail Siswa",
+          color: "error",
+        });
+      }
     },
     getRekapitulasi() {
       this.loading = true;

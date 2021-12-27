@@ -25,12 +25,18 @@
             <span> Edit Data </span>
           </p>
         </v-btn>
-        <!-- <v-btn depressed class="rounded-lg outlined-custom">
+        <v-btn
+          @click="handleDownload"
+          :loading="loadingDownload"
+          :disabled="loading"
+          depressed
+          class="rounded-lg outlined-custom"
+        >
           <p class="header-button-export ma-0">
             <v-icon class="mr-1" small>mdi-download</v-icon>
             <span> Download Detail {{ isAlumni ? "Alumni" : "Siswa" }} </span>
           </p>
-        </v-btn> -->
+        </v-btn>
       </div>
     </div>
     <div class="d-flex flex-row justify-space-between mb-9 mt-1">
@@ -152,6 +158,7 @@ export default {
       kelas: this.$route.query?.kelas,
       loading: false,
       loadingAlumni: false,
+      loadingDownload: false,
       items: {
         NIS: null,
         NISN: null,
@@ -193,6 +200,35 @@ export default {
       this.$router.push({
         name: this.isAlumni ? ALUMNI.ALL.BROWSE : SISWA.ALL.BROWSE,
       });
+    },
+    handleDownload() {
+      try {
+        this.loadingDownload = true;
+        SiswaService.downloadDetail({
+          siswa_id: this.$route.params?.secureId,
+        })
+          .then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute(
+              "download",
+              `${this.getSiswa.NISN} - ${this.getSiswa.nama_siswa}.xlsx`
+            );
+            document.body.appendChild(link);
+            link.click();
+          })
+          .catch((err) => {
+            throw new Error(err);
+          })
+          .finally(() => (this.loadingDownload = false));
+      } catch (error) {
+        this.$store.commit("snackbar/setSnack", {
+          show: true,
+          message: "Gagal Download Detail Siswa",
+          color: "error",
+        });
+      }
     },
     handleAlumni() {
       this.$confirm({

@@ -224,6 +224,18 @@ export default {
           text: "Tahun 2022",
           value: 2022,
         },
+        {
+          text: "Tahun 2023",
+          value: 2023,
+        },
+        {
+          text: "Tahun 2024",
+          value: 2024,
+        },
+        {
+          text: "Tahun 2025",
+          value: 2025,
+        },
       ],
       filteredByTahunLulus: 2021,
       headers: [
@@ -237,6 +249,7 @@ export default {
         },
         { text: "Kelas", value: "nama_kelas", sortable: false },
         { text: "Jenis Kelamin", value: "jenis_kelamin", sortable: false },
+        { text: "Status", value: "status", align: "center", sortable: false },
         { text: "Aksi", value: "action", sortable: false },
       ],
       items: [],
