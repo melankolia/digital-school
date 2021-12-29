@@ -140,8 +140,8 @@
         <template #item.ket="{ item }">
           {{ convertKet(item.nilai) }}
         </template>
-        <template #item.sikap="{ item }">
-          {{ item.sikap || "Belum Tersedia" }}
+        <template #item.keterampilan="{ item }">
+          {{ item.keterampilan || "Belum Tersedia" }}
         </template>
       </v-data-table>
     </div>
@@ -176,8 +176,8 @@
         <template #item.ket="{ item }">
           {{ convertKet(item.nilai) }}
         </template>
-        <template #item.sikap="{ item }">
-          {{ item.sikap || "Belum Tersedia" }}
+        <template #item.keterampilan="{ item }">
+          {{ item.keterampilan || "Belum Tersedia" }}
         </template>
       </v-data-table>
     </div>
@@ -212,8 +212,8 @@
         <template #item.ket="{ item }">
           {{ convertKet(item.nilai) }}
         </template>
-        <template #item.sikap="{ item }">
-          {{ item.sikap || "Belum Tersedia" }}
+        <template #item.keterampilan="{ item }">
+          {{ item.keterampilan || "Belum Tersedia" }}
         </template>
       </v-data-table>
     </div>
@@ -245,8 +245,8 @@
         <template #item.nilai="{ item }">
           {{ item.nilai || "Belum Tersedia" }}
         </template>
-        <template #item.sikap="{ item }">
-          {{ item.sikap || "Belum Tersedia" }}
+        <template #item.keterampilan="{ item }">
+          {{ item.keterampilan || "Belum Tersedia" }}
         </template>
       </v-data-table>
     </div>
@@ -321,7 +321,7 @@ export default {
         { text: "Mata Pelajaran", value: "mapel", sortable: false },
         { text: "Pengetahuan", value: "nilai", sortable: false },
         { text: "Keterangan", value: "keterangan", sortable: false },
-        { text: "Sikap", value: "sikap", sortable: false },
+        { text: "Keterampilan", value: "keterampilan", sortable: false },
       ],
       absenHeaders: [
         { text: "Sakit", value: "sakit", sortable: false },
