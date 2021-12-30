@@ -22,37 +22,37 @@
         <tr>
           <td>Golongan Darah</td>
           <td class="text-right text-sub">
-            {{ items.gol_darah || "-" | toTitle }}
+            {{ items.gol_darah || "-" }}
           </td>
         </tr>
         <tr>
           <td>Kelainan Jasmani</td>
           <td class="text-right text-sub">
-            {{ items.kelainan_jasmani || "-" | toTitle }}
+            {{ items.kelainan_jasmani || "-" }}
           </td>
         </tr>
         <tr>
           <td>Tinggi Berat Badan</td>
           <td class="text-right text-sub">
-            {{ items.tinggi_berat_badan || "-" | toTitle }}
+            {{ items.tinggi_berat_badan || "-" }}
           </td>
         </tr>
         <tr>
           <td>Nama Penyakit</td>
           <td class="text-right text-sub">
-            {{ items.nama_penyakit || "-" | toTitle }}
+            {{ items.nama_penyakit || "-" }}
           </td>
         </tr>
         <tr>
           <td>Tahun Sakit</td>
           <td class="text-right text-sub">
-            {{ items.tahun_sakit || "-" | toTitle }}
+            {{ items.tahun_sakit || "-" }}
           </td>
         </tr>
         <tr>
           <td>Lama Sakit</td>
           <td class="text-right text-sub">
-            {{ items.lama_sakit || "-" | toTitle }}
+            {{ items.lama_sakit || "-" }}
           </td>
         </tr>
       </tbody>

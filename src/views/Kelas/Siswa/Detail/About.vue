@@ -26,85 +26,85 @@
         <tr>
           <td class="pl-9 text-sub">a. Nama lengkap</td>
           <td class="text-right text-sub">
-            {{ items.nama_lengkap || "-" | toTitle }}
+            {{ items.nama_lengkap || "-" }}
           </td>
         </tr>
         <tr>
           <td class="pl-9 text-sub">b. Nama panggilan</td>
           <td class="text-right text-sub">
-            {{ items.nama_panggilan || "-" | toTitle }}
+            {{ items.nama_panggilan || "-" }}
           </td>
         </tr>
         <tr>
           <td>Tempat tanggal lahir</td>
           <td class="text-right text-sub">
-            {{ items.ttl || "-" | toTitle }}
+            {{ items.ttl || "-" }}
           </td>
         </tr>
         <tr>
           <td>Jenis Kelamin</td>
           <td class="text-right text-sub">
-            {{ items.jenis_kelamin || "-" | toTitle }}
+            {{ items.jenis_kelamin || "-" }}
           </td>
         </tr>
         <tr>
           <td>Agama</td>
           <td class="text-right text-sub">
-            {{ items.agama || "-" | toTitle }}
+            {{ items.agama || "-" }}
           </td>
         </tr>
         <tr>
           <td>Kewarganegaraan</td>
           <td class="text-right text-sub">
-            {{ items.kewarganegaraan || "-" | toTitle }}
+            {{ items.kewarganegaraan || "-" }}
           </td>
         </tr>
         <tr>
           <td>Anak ke berapa</td>
           <td class="text-right text-sub">
-            {{ items.anak_ke || "-" | toTitle }}
+            {{ items.anak_ke || "-" }}
           </td>
         </tr>
         <tr>
           <td>Jumlah saudara kandung</td>
           <td class="text-right text-sub">
-            {{ items.jml_sdr_kandung || "-" | toTitle }}
+            {{ items.jml_sdr_kandung || "-" }}
           </td>
         </tr>
         <tr>
           <td>Jumlah saudara tiri</td>
           <td class="text-right text-sub">
-            {{ items.jml_sdr_tiri || "-" | toTitle }}
+            {{ items.jml_sdr_tiri || "-" }}
           </td>
         </tr>
         <tr>
           <td>Jumlah saudara angkat</td>
           <td class="text-right text-sub">
-            {{ items.jml_sdr_angkat || "-" | toTitle }}
+            {{ items.jml_sdr_angkat || "-" }}
           </td>
         </tr>
         <tr>
           <td>Anak yatim/piatu/yatim piatu</td>
           <td class="text-right text-sub">
-            {{ items.status_ortu || "-" | toTitle }}
+            {{ items.status_ortu || "-" }}
           </td>
         </tr>
         <tr>
           <td>Bahasa sehari-hari di rumah</td>
           <td class="text-right text-sub">
-            {{ items.bahasa_sehari || "-" | toTitle }}
+            {{ items.bahasa_sehari || "-" }}
           </td>
         </tr>
         <tr>
           <td>Pihak yang bisa dihubungi</td>
           <td class="text-right text-sub">
-            {{ items.pihak_dihubungi || "-" | toTitle }}
+            {{ items.pihak_dihubungi || "-" }}
           </td>
         </tr>
         <tr>
           <td>Penanggung biaya</td>
           <td class="text-right text-sub">
-            {{ items.penanggung_biaya || "-" | toTitle }}
+            {{ items.penanggung_biaya || "-" }}
           </td>
         </tr>
       </tbody>

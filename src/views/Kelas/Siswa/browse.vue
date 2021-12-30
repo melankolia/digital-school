@@ -114,7 +114,7 @@
           </tr>
         </template>
         <template #item.jenis_kelamin="{ item }">
-          {{ item.jenis_kelamin | toTitle }}
+          {{ item.jenis_kelamin }}
         </template>
         <template #item.action="{ item }">
           <v-menu rounded left min-width="188px">

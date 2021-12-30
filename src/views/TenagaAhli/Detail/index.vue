@@ -52,8 +52,8 @@
         </div>
         <div class="d-flex flex-column pr-12 mr-12">
           <p class="header-subtitle">
-            {{ items.nama || "-" | toTitle }} -
-            {{ items.jabatan || "-" | toTitle }}
+            {{ items.nama || "-" }} -
+            {{ items.jabatan || "-" }}
           </p>
         </div>
       </div>

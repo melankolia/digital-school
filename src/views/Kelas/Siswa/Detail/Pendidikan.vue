@@ -22,37 +22,37 @@
         <tr>
           <td>Tanggal Diterima</td>
           <td class="text-right text-sub">
-            {{ items.tanggal_diterima || "-" | toTitle }}
+            {{ items.tanggal_diterima || "-" }}
           </td>
         </tr>
         <tr>
           <td>Lulus Dari</td>
           <td class="text-right text-sub">
-            {{ items.lulus_dari || "-" | toTitle }}
+            {{ items.lulus_dari || "-" }}
           </td>
         </tr>
         <tr>
           <td>Tanggal No Ijazah</td>
           <td class="text-right text-sub">
-            {{ items.tanggal_no_ijazah || "-" | toTitle }}
+            {{ items.tanggal_no_ijazah || "-" }}
           </td>
         </tr>
         <tr>
           <td>Tanggal No STL</td>
           <td class="text-right text-sub">
-            {{ items.tanggal_no_stl || "-" | toTitle }}
+            {{ items.tanggal_no_stl || "-" }}
           </td>
         </tr>
         <tr>
           <td>Lama Belajar</td>
           <td class="text-right text-sub">
-            {{ items.lama_belajar || "-" | toTitle }}
+            {{ items.lama_belajar || "-" }}
           </td>
         </tr>
         <tr>
           <td>Nilai SKHUN</td>
           <td class="text-right text-sub">
-            {{ items.nilai_skhun || "-" | toTitle }}
+            {{ items.nilai_skhun || "-" }}
           </td>
         </tr>
       </tbody>

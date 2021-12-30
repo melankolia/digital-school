@@ -30,7 +30,7 @@
     </div>
     <div class="d-flex flex-column pr-12 mr-12">
       <p class="header-subtitle">
-        {{ items.nama_guru || "-" | toTitle }}
+        {{ items.nama_guru || "-" }}
       </p>
     </div>
     <div class="d-flex flex-row">

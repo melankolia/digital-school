@@ -22,43 +22,43 @@
         <tr>
           <td>Nama</td>
           <td class="text-right text-sub">
-            {{ items.nama || "-" | toTitle }}
+            {{ items.nama || "-" }}
           </td>
         </tr>
         <tr>
           <td>Jenis Kelamin</td>
           <td class="text-right text-sub">
-            {{ items.jenis_kelamin || "-" | toTitle }}
+            {{ items.jenis_kelamin || "-" }}
           </td>
         </tr>
         <tr>
           <td>Tempat Tanggal Lahir</td>
           <td class="text-right text-sub">
-            {{ items.ttl || "-" | toTitle }}
+            {{ items.ttl || "-" }}
           </td>
         </tr>
         <tr>
           <td>NIP</td>
           <td class="text-right text-sub">
-            {{ items.nip_karpeg || "-" | toTitle }}
+            {{ items.nip_karpeg || "-" }}
           </td>
         </tr>
         <tr>
           <td>Pendidikan Terakhir</td>
           <td class="text-right text-sub">
-            {{ items.pendidikan || "-" | toTitle }}
+            {{ items.pendidikan || "-" }}
           </td>
         </tr>
         <tr>
           <td>Mulai Bertugas Disini</td>
           <td class="text-right text-sub">
-            {{ items.mulai_bertugas || "-" | toTitle }}
+            {{ items.mulai_bertugas || "-" }}
           </td>
         </tr>
         <tr>
           <td>Jabatan / Tugas</td>
           <td class="text-right text-sub">
-            {{ items.jabatan || "-" | toTitle }}
+            {{ items.jabatan || "-" }}
           </td>
         </tr>
         <tr>
@@ -70,61 +70,61 @@
         <tr>
           <td>Pangkat TMT</td>
           <td class="text-right text-sub">
-            {{ items.tmt_pangkat || "-" | toTitle }}
+            {{ items.tmt_pangkat || "-" }}
           </td>
         </tr>
         <tr>
           <td>SK Pertama</td>
           <td class="text-right text-sub">
-            {{ items.sk_pertama || "-" | toTitle }}
+            {{ items.sk_pertama || "-" }}
           </td>
         </tr>
         <tr>
           <td>Gaji Pokok</td>
           <td class="text-right text-sub">
-            {{ items.gaji_pokok || "-" | toTitle }}
+            {{ items.gaji_pokok || "-" }}
           </td>
         </tr>
         <tr>
           <td>MK. GOL Tahun</td>
           <td class="text-right text-sub">
-            {{ items.mk_gol_tahun || "-" | toTitle }}
+            {{ items.mk_gol_tahun || "-" }}
           </td>
         </tr>
         <tr>
           <td>MK. GOL Bulan</td>
           <td class="text-right text-sub">
-            {{ items.mk_gol_bulan || "-" | toTitle }}
+            {{ items.mk_gol_bulan || "-" }}
           </td>
         </tr>
         <tr>
           <td>K / TK</td>
           <td class="text-right text-sub">
-            {{ items.k_tk || "-" | toTitle }}
+            {{ items.k_tk || "-" }}
           </td>
         </tr>
         <tr>
           <td>Kenaikan YAD Pangkat</td>
           <td class="text-right text-sub">
-            {{ items.yad_gaji || "-" | toTitle }}
+            {{ items.yad_gaji || "-" }}
           </td>
         </tr>
         <tr>
           <td>Kenaikan YAD Gaji Berkala</td>
           <td class="text-right text-sub">
-            {{ items.yad_gaji || "-" | toTitle }}
+            {{ items.yad_gaji || "-" }}
           </td>
         </tr>
         <!-- <tr>
           <td>Sertifikasi</td>
           <td class="text-right text-sub">
-            {{ items.sertifikasi || "-" | toTitle }}
+            {{ items.sertifikasi || "-" }}
           </td>
         </tr> -->
         <tr>
           <td>NUPTK</td>
           <td class="text-right text-sub">
-            {{ items.nuptk || "-" | toTitle }}
+            {{ items.nuptk || "-" }}
           </td>
         </tr>
       </tbody>

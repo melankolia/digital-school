@@ -30,7 +30,7 @@
     </div>
     <div class="d-flex flex-column pr-12 mr-12">
       <p class="header-subtitle">
-        {{ items.nama_siswa || "-" | toTitle }} -
+        {{ items.nama_siswa || "-" }} -
         {{ items.nama_kelas || "-" | upperCase }}
       </p>
     </div>

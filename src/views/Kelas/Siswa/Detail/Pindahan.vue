@@ -22,55 +22,55 @@
         <tr>
           <td>Pindah Sekolah</td>
           <td class="text-right text-sub">
-            {{ items.pindah_sekolah || "-" | toTitle }}
+            {{ items.pindah_sekolah || "-" }}
           </td>
         </tr>
         <tr>
           <td>Pindah Alasahn</td>
           <td class="text-right text-sub">
-            {{ items.pindah_alasan || "-" | toTitle }}
+            {{ items.pindah_alasan || "-" }}
           </td>
         </tr>
         <tr>
           <td>Diterima Di</td>
           <td class="text-right text-sub">
-            {{ items.diterima_di || "-" | toTitle }}
+            {{ items.diterima_di || "-" }}
           </td>
         </tr>
         <tr>
           <td>Diterima Program</td>
           <td class="text-right text-sub">
-            {{ items.diterima_program || "-" | toTitle }}
+            {{ items.diterima_program || "-" }}
           </td>
         </tr>
         <tr>
           <td>Meninggalkan Di</td>
           <td class="text-right text-sub">
-            {{ items.meinggalkan_di || "-" | toTitle }}
+            {{ items.meinggalkan_di || "-" }}
           </td>
         </tr>
         <tr>
           <td>Meninggalkan Program</td>
           <td class="text-right text-sub">
-            {{ items.meninggalkan_program || "-" | toTitle }}
+            {{ items.meninggalkan_program || "-" }}
           </td>
         </tr>
         <tr>
           <td>Meninggalkan Alasan</td>
           <td class="text-right text-sub">
-            {{ items.meninggalkan_alasan || "-" | toTitle }}
+            {{ items.meninggalkan_alasan || "-" }}
           </td>
         </tr>
         <tr>
           <td>Akhir Tamat Belajar</td>
           <td class="text-right text-sub">
-            {{ items.meninggalkan_program || "-" | toTitle }}
+            {{ items.meninggalkan_program || "-" }}
           </td>
         </tr>
         <tr>
           <td>Akhir STTB</td>
           <td class="text-right text-sub">
-            {{ items.akhir_STTB || "-" | toTitle }}
+            {{ items.akhir_STTB || "-" }}
           </td>
         </tr>
       </tbody>

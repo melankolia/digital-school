@@ -47,18 +47,18 @@
         </div>
         <div class="d-flex flex-column pr-12 mr-12">
           <p class="header-subtitle">
-            {{ items.nama_siswa || "-" | toTitle }} -
+            {{ items.nama_siswa || "-" }} -
             {{ items.nama_kelas || "-" | upperCase }}
           </p>
           <div class="d-flex flex-row">
             <div class="backgroundLabel mr-4">
               <p class="header-subtitle py-2 px-3 ma-0">
-                NIS : {{ items.NIS || "-" | toTitle }}
+                NIS : {{ items.NIS || "-" }}
               </p>
             </div>
             <div class="backgroundLabel">
               <p class="header-subtitle py-2 px-3 ma-0">
-                NISN : {{ items.NISN || "-" | toTitle }}
+                NISN : {{ items.NISN || "-" }}
               </p>
             </div>
           </div>

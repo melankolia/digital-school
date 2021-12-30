@@ -22,25 +22,25 @@
         <tr>
           <td>Alamat</td>
           <td class="text-right text-sub">
-            {{ items.alamat || "-" | toTitle }}
+            {{ items.alamat || "-" }}
           </td>
         </tr>
         <tr>
           <td>No Telephone</td>
           <td class="text-right text-sub">
-            {{ items.no_telephone || "-" | toTitle }}
+            {{ items.no_telephone || "-" }}
           </td>
         </tr>
         <tr>
           <td>Tinggal Di</td>
           <td class="text-right text-sub">
-            {{ items.tinggal_di || "-" | toTitle }}
+            {{ items.tinggal_di || "-" }}
           </td>
         </tr>
         <tr>
           <td>Jarak Ke Sekolah</td>
           <td class="text-right text-sub">
-            {{ items.jarak_ke_sekolah || "-" | toTitle }}
+            {{ items.jarak_ke_sekolah || "-" }}
           </td>
         </tr>
       </tbody>

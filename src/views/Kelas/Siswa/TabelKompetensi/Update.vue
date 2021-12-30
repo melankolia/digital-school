@@ -22,18 +22,18 @@
         </div>
         <div class="d-flex flex-column pr-12 mr-12">
           <p class="header-subtitle">
-            {{ getKompetensi.nama_siswa || "-" | toTitle }} -
+            {{ getKompetensi.nama_siswa || "-"  }} -
             {{ getKompetensi.nama_kelas || "-" | upperCase }}
           </p>
           <div class="d-flex flex-row">
             <div class="backgroundLabel mr-4">
               <p class="header-subtitle py-2 px-3 ma-0">
-                NIS : {{ getKompetensi.NIS || "-" | toTitle }}
+                NIS : {{ getKompetensi.NIS || "-"  }}
               </p>
             </div>
             <div class="backgroundLabel mr-4">
               <p class="header-subtitle py-2 px-3 ma-0">
-                NISN : {{ getKompetensi.NISN || "-" | toTitle }}
+                NISN : {{ getKompetensi.NISN || "-"  }}
               </p>
             </div>
             <div class="backgroundLabel mr-4">

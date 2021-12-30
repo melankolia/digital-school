@@ -21,85 +21,85 @@
       <tbody>
         <template v-for="(item, i) in items">
           <tr :key="'type' + i">
-            <td>{{ item.type | toTitle }}</td>
+            <td>{{ item.type }}</td>
             <td></td>
           </tr>
           <tr :key="'a' + i">
             <td class="pl-9 text-sub">a. Nama Lengkap</td>
             <td class="text-right text-sub">
-              {{ item.nama || "-" | toTitle }}
+              {{ item.nama || "-" }}
             </td>
           </tr>
           <tr :key="'b' + i">
             <td class="pl-9 text-sub">b. Tempat, Tanggal Lahir</td>
             <td class="text-right text-sub">
-              {{ item.TTL || "-" | toTitle }}
+              {{ item.TTL || "-" }}
             </td>
           </tr>
           <tr :key="'c' + i">
             <td class="pl-9 text-sub">c. Agama</td>
             <td class="text-right text-sub">
-              {{ item.agama || "-" | toTitle }}
+              {{ item.agama || "-" }}
             </td>
           </tr>
           <tr :key="'d' + i">
             <td class="pl-9 text-sub">d. Kewarganegaraan</td>
             <td class="text-right text-sub">
-              {{ item.kewarganegaraan || "-" | toTitle }}
+              {{ item.kewarganegaraan || "-" }}
             </td>
           </tr>
           <tr :key="'e' + i">
             <td class="pl-9 text-sub">e. Pendidikan</td>
             <td class="text-right text-sub">
-              {{ item.pendidikan || "-" | toTitle }}
+              {{ item.pendidikan || "-" }}
             </td>
           </tr>
           <tr :key="'f' + i">
             <td class="pl-9 text-sub">f. Golongan Pejerjaan</td>
             <td class="text-right text-sub">
-              {{ item.gol_pekerjaan || "-" | toTitle }}
+              {{ item.gol_pekerjaan || "-" }}
             </td>
           </tr>
           <tr :key="'g' + i">
             <td class="pl-9 text-sub">g. Pekerjaan</td>
             <td class="text-right text-sub">
-              {{ item.pekerjaan || "-" | toTitle }}
+              {{ item.pekerjaan || "-" }}
             </td>
           </tr>
           <tr :key="'h' + i">
             <td class="pl-9 text-sub">h. Penghasilan</td>
             <td class="text-right text-sub">
-              {{ item.penghasilan || "-" | toTitle }}
+              {{ item.penghasilan || "-" }}
             </td>
           </tr>
           <tr :key="'i' + i">
             <td class="pl-9 text-sub">i. Alamat</td>
             <td class="text-right text-sub">
-              {{ item.alamat || "-" | toTitle }}
+              {{ item.alamat || "-" }}
             </td>
           </tr>
           <tr :key="'j' + i">
             <td class="pl-9 text-sub">j. No Telpon</td>
             <td class="text-right text-sub">
-              {{ item.no_telpon || "-" | toTitle }}
+              {{ item.no_telpon || "-" }}
             </td>
           </tr>
           <tr :key="'k' + i">
             <td class="pl-9 text-sub">k. Status</td>
             <td class="text-right text-sub">
-              {{ item.status || "-" | toTitle }}
+              {{ item.status || "-" }}
             </td>
           </tr>
           <tr :key="'l' + i">
             <td class="pl-9 text-sub">l. Status Nikah</td>
             <td class="text-right text-sub">
-              {{ item.status_nikah || "-" | toTitle }}
+              {{ item.status_nikah || "-" }}
             </td>
           </tr>
           <tr :key="'m' + i">
             <td class="pl-9 text-sub">m. Tahun Meninggal</td>
             <td class="text-right text-sub">
-              {{ item.tahun_meninggal || "-" | toTitle }}
+              {{ item.tahun_meninggal || "-" }}
             </td>
           </tr>
         </template>

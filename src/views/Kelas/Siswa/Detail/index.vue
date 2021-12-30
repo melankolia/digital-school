@@ -46,7 +46,7 @@
           <div class="d-flex flex-row">
             <p class="header-title mb-4">
               Tabel {{ isAlumni ? "Alumni" : "Siswa" }} -
-              {{ getSiswa.nama_siswa || "-" | toTitle }}
+              {{ getSiswa.nama_siswa || "-" }}
             </p>
             <v-btn
               v-if="!isAlumni"
@@ -89,18 +89,18 @@
         </div>
         <div class="d-flex flex-column pr-12 mr-12">
           <p class="header-subtitle">
-            {{ getSiswa.nama_siswa || "-" | toTitle }} -
+            {{ getSiswa.nama_siswa || "-" }} -
             {{ getSiswa.nama_kelas || "-" | upperCase }}
           </p>
           <div class="d-flex flex-row">
             <div class="backgroundLabel mr-4">
               <p class="header-subtitle py-2 px-3 ma-0">
-                NIS : {{ getSiswa.NIS || "-" | toTitle }}
+                NIS : {{ getSiswa.NIS || "-" }}
               </p>
             </div>
             <div class="backgroundLabel">
               <p class="header-subtitle py-2 px-3 ma-0">
-                NISN : {{ getSiswa.NISN || "-" | toTitle }}
+                NISN : {{ getSiswa.NISN || "-" }}
               </p>
             </div>
           </div>

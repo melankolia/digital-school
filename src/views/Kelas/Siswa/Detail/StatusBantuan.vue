@@ -22,19 +22,19 @@
         <tr>
           <td>Kartu Pelindungan Sosial (KPS)</td>
           <td class="text-right text-sub">
-            {{ items.kps || "-" | toTitle }}
+            {{ items.kps || "-" }}
           </td>
         </tr>
         <tr>
           <td>Program Keluarga Harapan (PKH)</td>
           <td class="text-right text-sub">
-            {{ items.pkh || "-" | toTitle }}
+            {{ items.pkh || "-" }}
           </td>
         </tr>
         <tr>
           <td>Kartu Keluarga Sejahtera (KKS)</td>
           <td class="text-right text-sub">
-            {{ items.kks || "-" | toTitle }}
+            {{ items.kks || "-" }}
           </td>
         </tr>
       </tbody>

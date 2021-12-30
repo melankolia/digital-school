@@ -22,25 +22,25 @@
         <tr>
           <td>Seni</td>
           <td class="text-right text-sub">
-            {{ items.seni || "-" | toTitle }}
+            {{ items.seni || "-" }}
           </td>
         </tr>
         <tr>
           <td>Olahraga</td>
           <td class="text-right text-sub">
-            {{ items.olahraga || "-" | toTitle }}
+            {{ items.olahraga || "-" }}
           </td>
         </tr>
         <tr>
           <td>Organisasi</td>
           <td class="text-right text-sub">
-            {{ items.organisasi || "-" | toTitle }}
+            {{ items.organisasi || "-" }}
           </td>
         </tr>
         <tr>
           <td>Lain</td>
           <td class="text-right text-sub">
-            {{ items.lain || "-" | toTitle }}
+            {{ items.lain || "-" }}
           </td>
         </tr>
       </tbody>
