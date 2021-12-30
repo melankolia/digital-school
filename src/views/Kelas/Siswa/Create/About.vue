@@ -138,7 +138,6 @@
                 :close-on-content-click="false"
                 transition="scale-transition"
                 offset-y
-                max-width="290px"
                 min-width="290px"
                 :return-value.sync="payload.tanggal_lahir"
               >

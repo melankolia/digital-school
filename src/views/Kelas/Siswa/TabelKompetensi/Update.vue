@@ -1030,7 +1030,6 @@ export default {
       kelas_id: this.$route.params.kelasId,
       semester: this.$route.query?.semester,
       kompetensi_id: this.$route.query?.kompetensi_id,
-      listSikap: ["Sangat Buruk", "Buruk", "Sedang", "Baik", "Sangat Baik"],
     };
   },
   computed: {
@@ -1066,19 +1065,6 @@ export default {
       });
     },
     handleSubmit() {
-      this.items.kelompokA.map(
-        (e) => (e.keterangan = this.convertKet(e.nilai))
-      );
-      this.items.kelompokB.map(
-        (e) => (e.keterangan = this.convertKet(e.nilai))
-      );
-      this.items.kelompokC.map(
-        (e) => (e.keterangan = this.convertKet(e.nilai))
-      );
-      this.items.kelompokCLintas.map(
-        (e) => (e.keterangan = this.convertKet(e.nilai))
-      );
-
       const payload = {
         siswa_id: this.siswa_id,
         kelas_id: this.kelas_id,

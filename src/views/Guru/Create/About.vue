@@ -93,7 +93,6 @@
                 :close-on-content-click="false"
                 transition="scale-transition"
                 offset-y
-                max-width="290px"
                 min-width="290px"
                 :return-value.sync="payload.tanggal_lahir"
               >
@@ -399,7 +398,6 @@ export default {
               if (ttl.length > 0 && ttl.length <= 2) {
                 this.payload.tempat_lahir = ttl[0];
                 this.payload.tanggal_lahir = this.toOurFormatDetail(ttl[1]);
-                console.log(this.payload.tanggal_lahir);
               }
             }
 

@@ -320,7 +320,6 @@ export default {
       headers: [
         { text: "Mata Pelajaran", value: "mapel", sortable: false },
         { text: "Pengetahuan", value: "nilai", sortable: false },
-        { text: "Keterangan", value: "keterangan", sortable: false },
         { text: "Keterampilan", value: "keterampilan", sortable: false },
       ],
       absenHeaders: [
