@@ -80,6 +80,9 @@ const SiswaService = {
   deleteSiswa(data) {
     return MainInstance.edit(ITEM.DELETE, data);
   },
+  importSiswa(data) {
+    return MainInstance.post(SISWA.IMPORT, data);
+  },
   cancelReq() {
     return MainInstance.cancelRequest();
   },

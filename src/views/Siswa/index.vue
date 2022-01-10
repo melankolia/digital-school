@@ -70,6 +70,24 @@
             </template>
           </v-select>
         </div>
+        <div class="ml-4" v-if="!isAlumni">
+          <v-btn
+            class="primary"
+            :loading="loadingImport"
+            depressed
+            @click="$refs.file.click()"
+          >
+            <v-icon class="mr-1" small>mdi-download</v-icon>
+            <p class="header-button-back ma-0">Import Excel</p>
+          </v-btn>
+          <input
+            type="file"
+            ref="file"
+            style="display: none"
+            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            @change="filesChange($event.target.files)"
+          />
+        </div>
         <div class="ml-4" v-if="isAlumni" style="width: 150px">
           <v-select
             id="list"
@@ -267,10 +285,45 @@ export default {
       totalPage: 1,
       rowsPerPageItems: [10, 20, 50, 100],
       doubleClickPrevent: false,
+
+      loadingImport: false,
     };
   },
   methods: {
     ...mapMutations([SET_SISWA_INFO]),
+    filesChange(file) {
+      const payload = new FormData();
+      payload.append("file", file[0]);
+
+      this.loadingImport = true;
+      siswaService
+        .importSiswa(payload)
+        .then(({ data: { data, success, message } }) => {
+          if (success) {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: data || `Berhasil Import data siswa`,
+              color: "success",
+            });
+            this.getList();
+          } else {
+            this.$store.commit("snackbar/setSnack", {
+              show: true,
+              message: message || `Gagal Import data siswa`,
+              color: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          this.$store.commit("snackbar/setSnack", {
+            show: true,
+            message: `Gagal Import data siswa`,
+            color: "error",
+          });
+        })
+        .finally(() => (this.loadingImport = false));
+    },
     customWidth(head) {
       if (head == "NIS") return "10%";
       else if (head == "NISN") return "10%";

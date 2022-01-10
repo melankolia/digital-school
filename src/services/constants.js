@@ -49,6 +49,7 @@ export const SISWA = {
     ROOT: `${siswa}/alumni`,
   },
   PER_KELAS: `${siswa}/all`,
+  IMPORT: `${siswa}/import`,
   EXPORT: {
     RAPOR: `${siswa}/export-raport`,
     SISWA: `${siswa}/export-siswa`,
