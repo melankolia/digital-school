@@ -375,8 +375,6 @@ export default {
               const ttl = data.ttl.split(", ");
               if (ttl.length > 0 && ttl.length <= 2) {
                 this.payload.tempat_lahir = ttl[0];
-                this.payload.tanggal_lahir = this.toOurFormatDetail(ttl[1]);
-                console.log(this.payload.tanggal_lahir);
               }
             }
 

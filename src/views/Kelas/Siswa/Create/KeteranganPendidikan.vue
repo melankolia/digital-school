@@ -222,9 +222,6 @@ export default {
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
             this.payload = { ...this.items, ...data };
-            this.payload.tanggal_diterima = this.toOurFormatDetail(
-              this.payload.tanggal_diterima
-            );
           } else {
             throw new Error(message);
           }
