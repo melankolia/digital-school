@@ -83,10 +83,10 @@
             <tbody>
               <tr>
                 <td class="table-header-text">{{ agama.islam || "-" }}</td>
-                <td class="table-header-text">{{ agama.khatolik || "-" }}</td>
+                <td class="table-header-text">{{ agama.katolik || "-" }}</td>
                 <td class="table-header-text">{{ agama.protestan || "-" }}</td>
                 <td class="table-header-text">{{ agama.hindu || "-" }}</td>
-                <td class="table-header-text">{{ agama.budha || "-" }}</td>
+                <td class="table-header-text">{{ agama.buddha || "-" }}</td>
                 <td class="table-header-text">{{ agama.total || "-" }}</td>
               </tr>
             </tbody>
@@ -186,10 +186,10 @@ export default {
         total: null,
       },
       agama: {
-        budha: null,
+        buddha: null,
         hindu: null,
         islam: null,
-        khatolik: null,
+        katolik: null,
         protestan: null,
         total: null,
       },
@@ -249,10 +249,10 @@ export default {
               total: data[0].kelamin.total,
             };
             this.agama = {
-              budha: data[0].agama.budha,
+              buddha: data[0].agama.buddha,
               hindu: data[0].agama.hindu,
               islam: data[0].agama.islam,
-              khatolik: data[0].agama.khatolik,
+              katolik: data[0].agama.katolik,
               protestan: data[0].agama.protestan,
               total: data[0].agama.total,
             };

@@ -587,7 +587,7 @@ export default {
           e.no_telpon = e.no_telpon || "-";
           e.status = e.status || "-";
           e.status_nikah = e.status_nikah || "-";
-          e.tahun_meninggal = e.tahun_meninggal || "-";
+          e.tahun_meninggal = e?.tahun_meninggal?.toString() || "-";
           e.pendidikan = e.pendidikan || "-";
           return e;
         }),

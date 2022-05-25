@@ -153,7 +153,7 @@
               {{ (item.agama && item.agama.islam) || "-" }}
             </td>
             <td class="text-center">
-              {{ (item.agama && item.agama.kristen) || "-" }}
+              {{ (item.agama && item.agama.katolik) || "-" }}
             </td>
             <td class="text-center">
               {{ (item.agama && item.agama.protestan) || "-" }}
@@ -162,7 +162,7 @@
               {{ (item.agama && item.agama.hindu) || "-" }}
             </td>
             <td class="text-center">
-              {{ (item.agama && item.agama.budha) || "-" }}
+              {{ (item.agama && item.agama.buddha) || "-" }}
             </td>
             <td class="text-center border-right">
               {{ (item.agama && item.agama.total) || "-" }}
@@ -212,7 +212,7 @@
               {{ total.agama.islam || "-" }}
             </td>
             <td class="table-header text-center border-top">
-              {{ total.agama.kristen || "-" }}
+              {{ total.agama.katolik || "-" }}
             </td>
             <td class="table-header text-center border-top">
               {{ total.agama.protestan || "-" }}
@@ -221,7 +221,7 @@
               {{ total.agama.hindu || "-" }}
             </td>
             <td class="table-header text-center border-top">
-              {{ total.agama.budha || "-" }}
+              {{ total.agama.buddha || "-" }}
             </td>
             <td class="table-header text-center border-top border-right">
               {{ total.agama.total || "-" }}
@@ -288,7 +288,7 @@ export default {
         },
         agama: {
           islam: 0,
-          kristen: 0,
+          katolik: 0,
           protestan: 0,
           hindu: 0,
           budha: 0,
@@ -318,7 +318,7 @@ export default {
         },
         agama: {
           islam: 0,
-          kristen: 0,
+          katolik: 0,
           protestan: 0,
           hindu: 0,
           budha: 0,
@@ -361,10 +361,10 @@ export default {
 
                 // Agama
                 this.total.agama.islam += e.agama?.islam;
-                this.total.agama.kristen += e.agama?.kristen;
+                this.total.agama.katolik += e.agama?.katolik;
                 this.total.agama.protestan += e.agama?.protestan;
                 this.total.agama.hindu += e.agama?.hindu;
-                this.total.agama.budha += e.agama?.budha;
+                this.total.agama.buddha += e.agama?.buddha;
                 this.total.agama.total += e.agama?.total;
 
                 // Tidak Mampu
