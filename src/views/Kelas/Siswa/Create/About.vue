@@ -433,8 +433,8 @@ export default {
             bahasa: this.payload.bahasa || "-",
             penanggung_biaya: this.payload.penanggung_biaya || "-",
             pihak_dihubungi: this.payload.pihak_dihubungi || "-",
-            pkh: 0,
-            kks: 0,
+            pkh: "0",
+            kks: "0",
             kps: "Tidak Ada",
           };
           SiswaService.addAbout(payload)
