@@ -221,7 +221,9 @@ export default {
       })
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
-            this.payload = { ...this.items, ...data };
+            const { tanggal_diterima, ...etc } = data;
+            console.log(tanggal_diterima);
+            this.payload = { ...this.items, ...etc };
           } else {
             throw new Error(message);
           }

@@ -81,8 +81,8 @@ export default {
       listKPS: ["Ada", "Tidak Ada"],
       payload: {
         kps: "Tidak Ada",
-        pkh: null,
-        kks: null,
+        pkh: "",
+        kks: "",
       },
     };
   },
@@ -94,8 +94,8 @@ export default {
       this.$emit("handleLoading", true);
       const payload = {
         siswa_id: this.siswaId,
-        pkh: this.payload.pkh || 0,
-        kks: this.payload.kks || 0,
+        pkh: this.payload.pkh ? String(this.payload.pkh) : "0",
+        kks: this.payload.kks ? String(this.payload.kks) : "0",
         kps: this.payload.kps,
       };
       SiswaService.addStatusBantuan(payload)
