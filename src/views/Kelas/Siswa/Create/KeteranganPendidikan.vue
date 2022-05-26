@@ -170,7 +170,7 @@ export default {
         tanggal_no_ijazah: this.payload.tanggal_no_ijazah || "-",
         tanggal_no_stl: this.payload.tanggal_no_stl || "-",
         lama_belajar: this.payload.lama_belajar || "-",
-        nilai_skhun: this.payload.nilai_skhun || "-",
+        nilai_skhun: String(this.payload.nilai_skhun) || "-",
       };
       SiswaService.addPendidikan(payload)
         .then(({ data: { data, success, message } }) => {
