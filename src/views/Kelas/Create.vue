@@ -45,7 +45,7 @@
                 <v-col cols="12" xs="12" sm="8">
                   <v-select
                     v-model="payload.jurusan"
-                    :items="['MIPA', 'IPS']"
+                    :items="['MIPA', 'IPS', 'E', 'F']"
                     placeholder="Pilih Jurusan"
                     hide-details
                     filled
@@ -219,7 +219,7 @@ export default {
       const payload = {
         kelas_id: this.payload.kelas_id || "",
         namaKelas: this.payload.nama_kelas || "",
-        jurusan: `${this.payload.jurusan} ${this.payload.jurusanNo}` || "-",
+        jurusan: `${this.payload.jurusan}.${this.payload.jurusanNo}` || "-",
         walikelas: this.payload.wali_kelas?.nama || "-",
         guru_id: this.payload.wali_kelas?.guru_id || "-",
       };

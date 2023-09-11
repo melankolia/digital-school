@@ -190,6 +190,8 @@ export default {
         { text: "Lihat Semua Kelas", val: "all" },
         { text: "MIPA", val: "mipa" },
         { text: "IPS", val: "ips" },
+        { text: "E", val: "E" },
+        { text: "F", val: "F" },
       ],
       totalItem: 10,
       totalPage: 1,

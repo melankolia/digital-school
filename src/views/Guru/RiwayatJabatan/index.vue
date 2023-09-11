@@ -23,7 +23,7 @@
           color="primary"
         >
           <p class="header-button-export ma-0">
-            <span> Tambah Sertifikat </span>
+            <span> Tambah Riwayat Jabatan </span>
           </p>
         </v-btn>
       </div>
