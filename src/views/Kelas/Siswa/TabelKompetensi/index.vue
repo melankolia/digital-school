@@ -118,6 +118,7 @@
         :loading="loading"
         hide-default-header
         hide-default-footer
+        disable-pagination
       >
         <template #header="{ props }">
           <tr class="table-header">
@@ -154,6 +155,7 @@
         :loading="loading"
         hide-default-header
         hide-default-footer
+        disable-pagination
       >
         <template #header="{ props }">
           <tr class="table-header">
@@ -190,6 +192,7 @@
         :loading="loading"
         hide-default-header
         hide-default-footer
+        disable-pagination
       >
         <template #header="{ props }">
           <tr class="table-header">
@@ -226,6 +229,7 @@
         :loading="loading"
         hide-default-header
         hide-default-footer
+        disable-pagination
       >
         <template #header="{ props }">
           <tr class="table-header">
@@ -259,6 +263,7 @@
         :loading="loading"
         hide-default-header
         hide-default-footer
+        disable-pagination
       >
         <template #header="{ props }">
           <tr class="table-header">

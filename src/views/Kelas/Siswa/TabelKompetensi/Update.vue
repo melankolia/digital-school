@@ -22,18 +22,18 @@
         </div>
         <div class="d-flex flex-column pr-12 mr-12">
           <p class="header-subtitle">
-            {{ getKompetensi.nama_siswa || "-"  }} -
+            {{ getKompetensi.nama_siswa || "-" }} -
             {{ getKompetensi.nama_kelas || "-" | upperCase }}
           </p>
           <div class="d-flex flex-row">
             <div class="backgroundLabel mr-4">
               <p class="header-subtitle py-2 px-3 ma-0">
-                NIS : {{ getKompetensi.NIS || "-"  }}
+                NIS : {{ getKompetensi.NIS || "-" }}
               </p>
             </div>
             <div class="backgroundLabel mr-4">
               <p class="header-subtitle py-2 px-3 ma-0">
-                NISN : {{ getKompetensi.NISN || "-"  }}
+                NISN : {{ getKompetensi.NISN || "-" }}
               </p>
             </div>
             <div class="backgroundLabel mr-4">
@@ -66,7 +66,7 @@
       <div class="table-border mb-6 rounded-lg pa-4">
         <p class="mb-6 kelompok-label">Kelompok A (Wajib)</p>
         <div class="kelompok-item rounded pa-4" style="width: 100%">
-          <p class="kelompok-sublabel mb-4">Pendidikan Agama Islam</p>
+          <p class="kelompok-sublabel mb-4">Pendidikan Agama</p>
           <div class="d-flex flex-row justify-space-between">
             <div style="width: 50%" class="mr-4">
               <p class="mb-1 input-custom-label">Nilai</p>
@@ -840,7 +840,7 @@ export default {
         kompetensi_id: null,
         kelompokA: [
           {
-            mapel: "Pendidikan Agama Islam",
+            mapel: "Pendidikan Agama",
             nilai: "0",
             keterampilan: "0",
             sikap: "Baik",

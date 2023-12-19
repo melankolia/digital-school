@@ -88,7 +88,7 @@
             @change="filesChange($event.target.files)"
           />
         </div>
-        <div class="ml-4" v-if="isAlumni" style="width: 150px">
+        <!--<div class="ml-4" v-if="isAlumni" style="width: 150px">
           <v-select
             id="list"
             v-model="filteredByTahunLulus"
@@ -104,6 +104,7 @@
           >
           </v-select>
         </div>
+        -->
       </div>
     </div>
     <div class="table-border rounded-lg pa-4">
