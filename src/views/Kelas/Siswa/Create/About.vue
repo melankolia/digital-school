@@ -499,6 +499,9 @@ export default {
         .then(({ data: { data, code, message } }) => {
           if (code == 200) {
             this.listKelas = [...data];
+
+            const findKelas = data.find((e) => e.kelas == this.kelas);
+            if (findKelas) this.payload.kelas_id = findKelas.kelas_id;
           } else {
             this.$store.commit("snackbar/setSnack", {
               show: true,
