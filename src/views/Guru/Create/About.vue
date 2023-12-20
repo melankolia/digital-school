@@ -397,6 +397,11 @@ export default {
               const ttl = data.ttl.split(", ");
               if (ttl.length > 0 && ttl.length <= 2) {
                 this.payload.tempat_lahir = ttl[0];
+
+                let splittedTTL = ttl[1].split("-");
+                this.payload.tanggal_lahir = [...splittedTTL]
+                  .reverse()
+                  .join("-");
               }
             }
 

@@ -222,8 +222,17 @@ export default {
         .then(({ data: { code, data, message } }) => {
           if (code == 200) {
             const { tanggal_diterima, ...etc } = data;
-            console.log(tanggal_diterima);
-            this.payload = { ...this.items, ...etc };
+
+            let splittedTanggalDiterima = tanggal_diterima.split("-");
+            splittedTanggalDiterima = [...splittedTanggalDiterima]
+              .reverse()
+              .join("-");
+
+            this.payload = {
+              ...this.items,
+              ...etc,
+              tanggal_diterima: splittedTanggalDiterima,
+            };
           } else {
             throw new Error(message);
           }

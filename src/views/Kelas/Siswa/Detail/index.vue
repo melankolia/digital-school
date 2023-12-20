@@ -197,9 +197,9 @@ export default {
   methods: {
     ...mapMutations([RESET_SISWA_INFO]),
     handleBack() {
-      this.$router.push({
-        name: this.isAlumni ? ALUMNI.ALL.BROWSE : SISWA.ALL.BROWSE,
-      });
+      if (this.isAlumni) return this.$router.push({ name: ALUMNI.ALL.BROWSE });
+
+      this.$router.back();
     },
     handleDownload() {
       try {
