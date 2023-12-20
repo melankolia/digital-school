@@ -7,6 +7,7 @@ export const siswa = "siswa";
 export const SISWA = {
   ALL: {
     BROWSE: `${siswa}.browse`,
+    CREATE: `${siswa}.all.create`,
   },
   REKAPITULASI: {
     BROWSE: `${siswa}.rekapitulasi.browse`,

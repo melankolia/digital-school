@@ -178,7 +178,7 @@ export const configRoutes = [
         },
         children: [
           {
-            path: "/",
+            path: "",
             name: SISWA.ALL.BROWSE,
             component: Siswa,
             meta: {
@@ -186,9 +186,9 @@ export const configRoutes = [
             },
           },
           {
-            path: "/rekapitulasi",
-            name: SISWA.REKAPITULASI.BROWSE,
-            component: RekapitulasiSiswa,
+            path: "create",
+            name: SISWA.ALL.CREATE,
+            component: CreateSiswa,
             meta: {
               requiresAuth: true,
             },
@@ -400,6 +400,14 @@ export const configRoutes = [
             },
           },
         ],
+      },
+      {
+        path: "/rekapitulasi",
+        name: SISWA.REKAPITULASI.BROWSE,
+        component: RekapitulasiSiswa,
+        meta: {
+          requiresAuth: true,
+        },
       },
       {
         path: "/about",

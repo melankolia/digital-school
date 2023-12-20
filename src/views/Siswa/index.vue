@@ -12,6 +12,17 @@
           <span> Kembali </span>
         </p>
       </v-btn>
+      <v-btn
+        @click="handleCreate"
+        depressed
+        color="primary"
+        class="rounded-lg mr-4"
+      >
+        <p class="header-button-title ma-0">
+          <v-icon class="mr-1" small>mdi-plus</v-icon>
+          <span> Tambah Siswa </span>
+        </p>
+      </v-btn>
     </div>
     <div class="d-flex flex-row justify-space-between mb-9 mt-1">
       <div>
@@ -344,6 +355,11 @@ export default {
           kelas: item.nama_kelas,
           kelasId: item.kelas_id,
         },
+      });
+    },
+    handleCreate() {
+      this.$router.push({
+        name: SISWA.ALL.CREATE,
       });
     },
     handleEdit(item) {

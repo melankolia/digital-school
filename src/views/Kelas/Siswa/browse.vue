@@ -13,25 +13,23 @@
           <span> Kembali </span>
         </p>
       </v-btn>
-      <div>
-        <v-btn
-          @click="handleCreate"
-          depressed
-          color="primary"
-          class="rounded-lg mr-4"
-        >
-          <p class="header-button-title ma-0">
-            <v-icon class="mr-1" small>mdi-plus</v-icon>
-            <span> Tambah Siswa </span>
-          </p>
-        </v-btn>
-        <!-- <v-btn depressed class="rounded-lg outlined-custom">
+      <v-btn
+        @click="handleCreate"
+        depressed
+        color="primary"
+        class="rounded-lg mr-4"
+      >
+        <p class="header-button-title ma-0">
+          <v-icon class="mr-1" small>mdi-plus</v-icon>
+          <span> Tambah Siswa </span>
+        </p>
+      </v-btn>
+      <!-- <v-btn depressed class="rounded-lg outlined-custom">
           <p class="header-button-export ma-0">
             <v-icon class="mr-1" small>mdi-download</v-icon>
             <span> Export Kelas {{ kelas }} </span>
           </p>
         </v-btn> -->
-      </div>
     </div>
     <div class="d-flex flex-row justify-space-between mb-9 mt-1">
       <div>

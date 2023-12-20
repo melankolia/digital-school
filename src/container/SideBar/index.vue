@@ -133,11 +133,11 @@ export default {
             },
             {
               title: "Seluruh Siswa",
-              to: "/siswa",
+              to: { name: SISWA.ALL.BROWSE },
             },
             {
               title: "Rekapitulasi Siswa",
-              to: "/rekapitulasi",
+              to: { name: SISWA.REKAPITULASI.BROWSE },
             },
           ],
           active: true,
